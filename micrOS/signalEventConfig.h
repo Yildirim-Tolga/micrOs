@@ -2,7 +2,7 @@
  * filename     : signalEventConfig.h
  * description  :
  * author       : Tolga Yildirim
- * copyright    : 
+ * copyright    :
  * datetime     :
  *
  * Version History:  +,-,/,*: add, remove, change, fix
@@ -39,7 +39,8 @@ typedef enum eEventId_
 typedef enum eSignalId_
 {
     SIGNAL_ID__TEST_SINGAL_1,
-    SIGNAL_ID__TEST_SINGAL_2
+    SIGNAL_ID__TEST_SINGAL_2,
+    SIGNAL_ID__TEST_SINGAL_3
 }eSignalId;
 
 #endif //SIGNAL_EVENT_CONFIG_H_

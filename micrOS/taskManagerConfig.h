@@ -2,7 +2,7 @@
  * filename     : taskManagerConfig.h
  * description  :
  * author       : Tolga Yildirim
- * copyright    : 
+ * copyright    :
  * datetime     :
  *
  * Version History:  +,-,/,*: add, remove, change, fix
@@ -65,6 +65,8 @@ static sMicrOsTask micrOsTask[SYSTEM_TASK_COUNT] =
         .bTaskStartUpState = TASK_STATE_RUN
     }
 };
+
+const uint8_t structSize[SIGNAL_TYPE__COUNT] = {sizeof(sSignalOnlyId),sizeof(sSignalWithU8Data)};
 
 
 #endif //TASK_MANAGER_CONFIG_H_

@@ -2,7 +2,7 @@
  * filename     : signalStructures.h
  * description  :
  * author       : Tolga Yildirim
- * copyright    : 
+ * copyright    :
  * datetime     :
  *
  * Version History:  +,-,/,*: add, remove, change, fix
@@ -48,7 +48,7 @@ typedef struct sSignalGeneral_
 {
     eSignalTypes signalType;
     void *signalStruct;
-}sSignalGeneral; 
+}sSignalGeneral;
 #else
 typedef struct sSignalGeneral_
 {

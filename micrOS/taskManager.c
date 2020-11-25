@@ -2,7 +2,7 @@
  * filename     : taskManager.c
  * description  :
  * author       : Tolga Yildirim
- * copyright    : 
+ * copyright    :
  * datetime     :
  *
  * Version History:  +,-,/,*: add, remove, change, fix
@@ -26,10 +26,21 @@ typedef struct sEventSubscribeList_
     struct sEventSubscribeList *next;
 }sEventSubscribeList;
 
+/*
+** Structure of Timer List
+*/
+typedef struct sTimer_
+{
+    uint16_t timerKey;
+    uint32_t interval;
+
+    struct sTimer *next;
+}sTimer;
+
 static sEventSubscribeList *eventSignal[SYSTEM_EVENT_COUNT];
 
 static bool getSignal(eTaskId taskId,sSignalGeneral *signal);
-static void setSignal(eTaskId taskId,sSignalGeneral signal);
+static void setSignal(eTaskId taskId,sSignalGeneral *signal);
 
 static void addTaskSubscribeList(eEventId enEventID, eTaskId enTaskId);
 static void deleteTaskSubscribeList(eEventId enEventID, eTaskId enTaskId);
@@ -84,21 +95,21 @@ static bool getSignal(eTaskId taskId,sSignalGeneral *signal)
     }
 }
 
-static void setSignal(eTaskId taskId,sSignalGeneral signal)
+static void setSignal(eTaskId taskId,sSignalGeneral *signal)
 {
     sSignalList **ppAddingSignalList = &(micrOsTask[taskId].pSignalListHead);;
     while((*ppAddingSignalList) != NULL)
     {
-        (*ppAddingSignalList) = (*ppAddingSignalList)->next;
+        ppAddingSignalList = &(*ppAddingSignalList)->next;
     }
     // allocate memory for new signal list
     *ppAddingSignalList = malloc(sizeof(sSignalList));
     // get signal type
-    (*ppAddingSignalList)->signalGeneral.signalType = signal.signalType;
+    (*ppAddingSignalList)->signalGeneral.signalType = signal->signalType;
     // allocate memory for signal structure
-    (*ppAddingSignalList)->signalGeneral.signalStruct = malloc(sizeof(*(signal.signalStruct)));
+    (*ppAddingSignalList)->signalGeneral.signalStruct = malloc(structSize[signal->signalType]);
     // get signal variables
-    memcpy((*ppAddingSignalList)->signalGeneral.signalStruct,signal.signalStruct,sizeof(*(signal.signalStruct)));
+    memcpy((*ppAddingSignalList)->signalGeneral.signalStruct,signal->signalStruct,structSize[signal->signalType]);
 }
 
 void micrOs_setTaskRunState(eTaskId enTaskId, bool bRunState)
@@ -115,7 +126,7 @@ void micrOs_dispatchEventToTask(const sSignalGeneral* signalGeneral, eTaskId enT
 {
     if(!micrOsTask[enTaskId].bTaskStartUpState) //control run state
         return;
-    setSignal(enTaskId,*signalGeneral);
+    setSignal(enTaskId,signalGeneral);
 }
 
 void micrOs_publishEventToSubscribers(eEventId enEventID, const sSignalGeneral* signalGeneral)		// publish-Subscribers
@@ -138,12 +149,12 @@ void micrOs_setEventSubscriptionState(eEventId enEventID, eTaskId enTaskId, bool
 
 static void addTaskSubscribeList(eEventId enEventID, eTaskId enTaskId)
 {
-    sEventSubscribeList **ppAddingSubscribeList = &eventSignal[enTaskId];
+    sEventSubscribeList **ppAddingSubscribeList = &eventSignal[enEventID];
     while((*ppAddingSubscribeList) != NULL)
     {
         if((*ppAddingSubscribeList)->taskId == enTaskId)// already added list
             return;
-        (*ppAddingSubscribeList) = (*ppAddingSubscribeList)->next;
+        ppAddingSubscribeList = &(*ppAddingSubscribeList)->next;
     }
     // allocate memory for new subscribe list
     *ppAddingSubscribeList = malloc(sizeof(sEventSubscribeList));
@@ -153,7 +164,7 @@ static void addTaskSubscribeList(eEventId enEventID, eTaskId enTaskId)
 
 static void deleteTaskSubscribeList(eEventId enEventID, eTaskId enTaskId)
 {
-    sEventSubscribeList **ppCurrentSubscribeList = &eventSignal[enTaskId];
+    sEventSubscribeList **ppCurrentSubscribeList = &eventSignal[enEventID];
     sEventSubscribeList **ppPrevSubscribeList;
     if((*ppCurrentSubscribeList) == NULL)// not detect this task id in list
         return;
