@@ -14,6 +14,7 @@
 #include "taskManagerConfig.h"
 #include "taskManager.h"
 #include "taskManagerFunctions.h"
+#include "../errorHandler/errorHandler.h"
 #include <stddef.h>
 #include <stdlib.h>
 
@@ -104,10 +105,23 @@ static void setSignal(eTaskId taskId,sSignalGeneral *signal)
     }
     // allocate memory for new signal list
     *ppAddingSignalList = malloc(sizeof(sSignalList));
+    // control memory allocation
+    if(*ppAddingSignalList == NULL)
+    {
+        errorHandler(ERR_CODE_MALLOC_SIGNAL_LIST);
+        return;
+    }
     // get signal type
     (*ppAddingSignalList)->signalGeneral.signalType = signal->signalType;
     // allocate memory for signal structure
     (*ppAddingSignalList)->signalGeneral.signalStruct = malloc(structSize[signal->signalType]);
+    // control memory allocation
+    if((*ppAddingSignalList) == NULL)
+    {
+        free((*ppAddingSignalList));
+        errorHandler(ERR_CODE_MALLOC_SIGNAL_STRUCT);
+        return;
+    }
     // get signal variables
     memcpy((*ppAddingSignalList)->signalGeneral.signalStruct,signal->signalStruct,structSize[signal->signalType]);
 }
@@ -158,6 +172,12 @@ static void addTaskSubscribeList(eEventId enEventID, eTaskId enTaskId)
     }
     // allocate memory for new subscribe list
     *ppAddingSubscribeList = malloc(sizeof(sEventSubscribeList));
+    // control memory allocation
+    if(*ppAddingSubscribeList == NULL)
+    {
+        errorHandler(ERR_CODE_MALLOC_SUBSCRIBE_LIST);
+        return;
+    }
     // set task id
     (*ppAddingSubscribeList)->taskId = enTaskId;
 }
