@@ -15,6 +15,7 @@
 #include "taskManager.h"
 #include "taskManagerFunctions.h"
 #include "../errorHandler/errorHandler.h"
+#include "micrOs_softTimer/micrOs_softTimer.h"
 #include <stddef.h>
 #include <stdlib.h>
 
@@ -24,21 +25,11 @@
 typedef struct sEventSubscribeList_
 {
     eTaskId taskId;
-    struct sEventSubscribeList *next;
+    sEventSubscribeList *next;
 }sEventSubscribeList;
 
-/*
-** Structure of Timer List
-*/
-typedef struct sTimer_
-{
-    uint16_t timerKey;
-    uint32_t interval;
-
-    struct sTimer *next;
-}sTimer;
-
 static sEventSubscribeList *eventSignal[SYSTEM_EVENT_COUNT];
+static sTimerList timers;
 
 static bool getSignal(eTaskId taskId,sSignalGeneral *signal);
 static void setSignal(eTaskId taskId,sSignalGeneral *signal);
@@ -209,17 +200,60 @@ static void deleteTaskSubscribeList(eEventId enEventID, eTaskId enTaskId)
     free((*ppCurrentSubscribeList));
 }
 
-uint8_t micrOs_startEventPublishTimer(bool bTimerType, uint32_t dwInterval, eEventId enEventID, const sSignalGeneral* signalGeneral)
+uint8_t *micrOs_startEventPublishTimer(bool bTimerType, uint32_t dwInterval, eEventId enEventID, const sSignalGeneral* signalGeneral)
+{
+    sTimerList *pListOfTimer;
+    if(createTimer(pListOfTimer)==NULL)
+        return NULL;    
+    pListOfTimer->timer->event = enEventID;
+    pListOfTimer->timer->interval = dwInterval;
+    pListOfTimer->timer->signalGeneral.signalType = signalGeneral->signalType;
+    pListOfTimer->timer->signalGeneral.signalStruct = signalGeneral->signalStruct;
+    pListOfTimer->timer->timeoutFlag = false;
+    //pListOfTimer->timer->startingTime = getCurrentTimeFunction will be add
+    pListOfTimer->timer->timerType = bTimerType;
+    pListOfTimer->timer->callbackType = TIMER_CALLBACK_TYPE_EVENT;
+    return pListOfTimer->timer->pTimerKey;
+}
+
+uint8_t *micrOs_startEventDispachTimer(bool bTimerType, uint32_t dwInterval, eTaskId enTaskId, const sSignalGeneral* signalGeneral)
+{
+    sTimerList *pListOfTimer;
+    if(createTimer(pListOfTimer)==NULL)
+        return NULL;    
+    pListOfTimer->timer->event = enTaskId;
+    pListOfTimer->timer->interval = dwInterval;
+    pListOfTimer->timer->signalGeneral.signalType = signalGeneral->signalType;
+    pListOfTimer->timer->signalGeneral.signalStruct = signalGeneral->signalStruct;
+    pListOfTimer->timer->timeoutFlag = false;
+    //pListOfTimer->timer->startingTime = getCurrentTimeFunction will be add
+    pListOfTimer->timer->timerType = bTimerType;
+    pListOfTimer->timer->callbackType = TIMER_CALLBACK_TYPE_TASK;
+    return pListOfTimer->timer->pTimerKey;
+}
+
+void micrOs_cancelTimer(uint8_t *byTimerKey)
 {
     //will be added
 }
 
-uint8_t micrOs_startEventDispachTimer(bool bTimerType, uint32_t dwInterval, eTaskId enTaskId, const sSignalGeneral* signalGeneral)
+static uint8_t *createTimer(sTimerList *pListOfTimer)
 {
-    //will be added
-}
-
-void micrOs_cancelTimer(uint8_t byTimerKey)
-{
-    //will be added
+    pListOfTimer = &timers;
+    while(pListOfTimer->timer != NULL)
+    {
+        pListOfTimer = pListOfTimer->next;
+    }
+    pListOfTimer->timer = malloc(sizeof(sMicrOs_Timer));
+    if(pListOfTimer->timer == NULL)
+    {
+        errorHandler(ERR_CODE_MALLOC_TIMER_LIST);
+        return NULL;
+    }
+    pListOfTimer->timer->pTimerKey = malloc(sizeof(uint8_t));
+    if(pListOfTimer->timer->pTimerKey)
+    {
+        errorHandler(ERR_CODE_MALLOC_TIMER_KEY);
+        return NULL;
+    }
 }

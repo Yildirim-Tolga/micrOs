@@ -20,6 +20,6 @@ void micrOs_dispatchEventToTask(const sSignalGeneral* signalGeneral, eTaskId enT
 void micrOs_publishEventToSubscribers(eEventId enEventID, const sSignalGeneral* signalGeneral);		// publish-Subscribers
 void micrOs_setEventSubscriptionState(eEventId enEventID, eTaskId enTaskId, bool bSubscribeState);
 
-uint8_t micrOs_startEventPublishTimer(bool bTimerType, uint32_t dwInterval, eEventId enEventID, const sSignalGeneral* signalGeneral);
-uint8_t micrOs_startEventDispachTimer(bool bTimerType, uint32_t dwInterval, eTaskId enTaskId, const sSignalGeneral* signalGeneral);
-void micrOs_cancelTimer(uint8_t byTimerKey);
+uint8_t *micrOs_startEventPublishTimer(bool bTimerType, uint32_t dwInterval, eEventId enEventID, const sSignalGeneral* signalGeneral);
+uint8_t *micrOs_startEventDispachTimer(bool bTimerType, uint32_t dwInterval, eTaskId enTaskId, const sSignalGeneral* signalGeneral);
+void micrOs_cancelTimer(uint8_t *byTimerKey);
