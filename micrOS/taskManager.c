@@ -128,16 +128,22 @@ static void setSignal(eTaskId taskId,sSignalGeneral *signal)
 
 void micrOs_setTaskRunState(eTaskId enTaskId, bool bRunState)
 {
+    if(enTaskId >= SYSTEM_TASK_COUNT) // unknown task id
+        return;
     micrOsTask[enTaskId].bTaskStartUpState = bRunState;
 }
 
 bool micrOs_getTaskRunState(eTaskId enTaskId)
 {
+    if(enTaskId >= SYSTEM_TASK_COUNT) // unknown task id
+        return false;
     return micrOsTask[enTaskId].bTaskStartUpState;
 }
 
 void micrOs_dispatchEventToTask(const sSignalGeneral* signalGeneral, eTaskId enTaskId)
 {
+    if(enTaskId >= SYSTEM_TASK_COUNT) // unknown task id
+        return;
     if(!micrOsTask[enTaskId].bTaskStartUpState) //control run state
         return;
     setSignal(enTaskId,signalGeneral);
@@ -145,6 +151,8 @@ void micrOs_dispatchEventToTask(const sSignalGeneral* signalGeneral, eTaskId enT
 
 void micrOs_publishEventToSubscribers(eEventId enEventID, const sSignalGeneral* signalGeneral)		// publish-Subscribers
 {
+    if(enEventID >= SYSTEM_EVENT_COUNT) // unknown event id
+        return;
     sEventSubscribeList *currentEventSubList = eventSignal[enEventID];
     while( currentEventSubList != NULL)
     {
@@ -155,6 +163,8 @@ void micrOs_publishEventToSubscribers(eEventId enEventID, const sSignalGeneral* 
 
 void micrOs_setEventSubscriptionState(eEventId enEventID, eTaskId enTaskId, bool bSubscribeState)
 {
+    if(enEventID >= SYSTEM_EVENT_COUNT || enTaskId >= SYSTEM_TASK_COUNT) // unknown event id or task id
+        return;
     if(bSubscribeState)
         addTaskSubscribeList(enEventID,enTaskId);
     else
