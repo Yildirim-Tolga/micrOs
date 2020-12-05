@@ -208,7 +208,7 @@ uint8_t *micrOs_startEventPublishTimer(bool bTimerType, uint32_t dwInterval, eEv
     pListOfTimer->timer->event = enEventID;
     pListOfTimer->timer->interval = dwInterval;
     pListOfTimer->timer->signalGeneral.signalType = signalGeneral->signalType;
-    pListOfTimer->timer->signalGeneral.signalStruct = signalGeneral->signalStruct;
+    memcpy(pListOfTimer->timer->signalGeneral.signalStruct,signalGeneral->signalStruct,structSize[signalGeneral->signalType]);
     pListOfTimer->timer->timeoutFlag = false;
     //pListOfTimer->timer->startingTime = getCurrentTimeFunction will be add
     pListOfTimer->timer->timerType = bTimerType;
@@ -224,7 +224,7 @@ uint8_t *micrOs_startEventDispachTimer(bool bTimerType, uint32_t dwInterval, eTa
     pListOfTimer->timer->event = enTaskId;
     pListOfTimer->timer->interval = dwInterval;
     pListOfTimer->timer->signalGeneral.signalType = signalGeneral->signalType;
-    pListOfTimer->timer->signalGeneral.signalStruct = signalGeneral->signalStruct;
+    memcpy(pListOfTimer->timer->signalGeneral.signalStruct,signalGeneral->signalStruct,structSize[signalGeneral->signalType]);
     pListOfTimer->timer->timeoutFlag = false;
     //pListOfTimer->timer->startingTime = getCurrentTimeFunction will be add
     pListOfTimer->timer->timerType = bTimerType;
