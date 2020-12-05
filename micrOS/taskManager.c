@@ -234,7 +234,16 @@ uint8_t *micrOs_startEventDispachTimer(bool bTimerType, uint32_t dwInterval, eTa
 
 void micrOs_cancelTimer(uint8_t *byTimerKey)
 {
-    //will be added
+    sTimerList *pTimer = &timers;
+    while(pTimer->timer != NULL && pTimer->timer->pTimerKey != byTimerKey)
+    {
+        pTimer = pTimer->next;
+    }
+    if(pTimer->timer != NULL)
+    {
+        free(pTimer->timer->pTimerKey);
+        free(pTimer->timer);
+    }
 }
 
 static uint8_t *createTimer(sTimerList *pListOfTimer)
