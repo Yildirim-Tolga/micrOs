@@ -65,4 +65,7 @@ typedef struct sTimerList_
     sTimerList *next;
 }sTimerList;
 
+bool microsSofttimer_createTimer(sTimerList *pListOfTimer);
+void microsSofttimer_deleteTimer(sTimerList *pListOfTimer, uint8_t *timerKey);
+
 #endif //MICROS_SOFTTIMER_H_

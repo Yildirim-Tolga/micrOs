@@ -10,47 +10,41 @@
  *
  *
  **************************************************************************************************/
-#include <stdint.h>
-#include <stdbool.h>
-#include "../signalStructures.h"
+#include "micrOs_softTimer.h"
+#include "../../errorHandler/errorHandler.h"
+#include <stddef.h>
 
-#define TIMER_CALLBACK_TYPE_CALLBACK_FUNC 0
-#define TIMER_CALLBACK_TYPE_TASK 1
-#define TIMER_CALLBACK_TYPE_EVENT 2
-
-/*
-** Timer Structure
-*/
-typedef struct sMicrOs_Timer_
+bool microsSofttimer_createTimer(sTimerList *pListOfTimer)
 {
-    uint8_t *pTimerKey; // timer key pointer
-    uint32_t startingTime;
-    uint32_t interval; // in ms
-    bool timerType; // one shot or periodic timer
-
-    // use for timer output type -use callback function, send signal to task or send signal to subscribers-
-    uint8_t callbackType:3;
-    union
+    while(pListOfTimer->timer != NULL)
     {
-        void (*pfnTimeoutCallback)(void);
-        struct{
-            union{
-                eEventId event;
-                eTaskId task;
-            };
-            sSignalGeneral signalGeneral;
-            bool timeoutFlag;
-        };
-    };
-}sMicrOs_Timer;
+        pListOfTimer = pListOfTimer->next;
+    }
+    pListOfTimer->timer = malloc(sizeof(sMicrOs_Timer));
+    if(pListOfTimer->timer == NULL)
+    {
+        errorHandler(ERR_CODE_MALLOC_TIMER_LIST);
+        return false;
+    }
+    pListOfTimer->timer->pTimerKey = malloc(sizeof(uint8_t));
+    if(pListOfTimer->timer->pTimerKey)
+    {
+        errorHandler(ERR_CODE_MALLOC_TIMER_KEY);
+        return false;
+    }
+    //pListOfTimer->timer->startingTime = getCurrentTimeFunction will be add
+    return true;
+}
 
-/*
-** Timer List Structure
-*/
-typedef struct sTimerList_
+void microsSofttimer_deleteTimer(sTimerList *pListOfTimer, uint8_t *timerKey)
 {
-    sMicrOs_Timer *timer;
-    struct sTimerList *next;
-}sTimerList;
-
-static sTimerList timers;
+    while(pListOfTimer->timer != NULL && pListOfTimer->timer->pTimerKey != timerKey)
+    {
+        pListOfTimer = pListOfTimer->next;
+    }
+    if(pListOfTimer->timer != NULL)
+    {
+        free(pListOfTimer->timer->pTimerKey);
+        free(pListOfTimer->timer);
+    }
+}

@@ -202,15 +202,14 @@ static void deleteTaskSubscribeList(eEventId enEventID, eTaskId enTaskId)
 
 uint8_t *micrOs_startEventPublishTimer(bool bTimerType, uint32_t dwInterval, eEventId enEventID, const sSignalGeneral* signalGeneral)
 {
-    sTimerList *pListOfTimer;
-    if(createTimer(pListOfTimer)==NULL)
+    sTimerList *pListOfTimer = &timers;
+    if(microsSofttimer_createTimer(pListOfTimer))
         return NULL;    
     pListOfTimer->timer->event = enEventID;
     pListOfTimer->timer->interval = dwInterval;
     pListOfTimer->timer->signalGeneral.signalType = signalGeneral->signalType;
     memcpy(pListOfTimer->timer->signalGeneral.signalStruct,signalGeneral->signalStruct,structSize[signalGeneral->signalType]);
     pListOfTimer->timer->timeoutFlag = false;
-    //pListOfTimer->timer->startingTime = getCurrentTimeFunction will be add
     pListOfTimer->timer->timerType = bTimerType;
     pListOfTimer->timer->callbackType = TIMER_CALLBACK_TYPE_EVENT;
     return pListOfTimer->timer->pTimerKey;
@@ -218,15 +217,14 @@ uint8_t *micrOs_startEventPublishTimer(bool bTimerType, uint32_t dwInterval, eEv
 
 uint8_t *micrOs_startEventDispachTimer(bool bTimerType, uint32_t dwInterval, eTaskId enTaskId, const sSignalGeneral* signalGeneral)
 {
-    sTimerList *pListOfTimer;
-    if(createTimer(pListOfTimer)==NULL)
+    sTimerList *pListOfTimer = &timers;
+    if(microsSofttimer_createTimer(pListOfTimer))
         return NULL;    
     pListOfTimer->timer->event = enTaskId;
     pListOfTimer->timer->interval = dwInterval;
     pListOfTimer->timer->signalGeneral.signalType = signalGeneral->signalType;
     memcpy(pListOfTimer->timer->signalGeneral.signalStruct,signalGeneral->signalStruct,structSize[signalGeneral->signalType]);
     pListOfTimer->timer->timeoutFlag = false;
-    //pListOfTimer->timer->startingTime = getCurrentTimeFunction will be add
     pListOfTimer->timer->timerType = bTimerType;
     pListOfTimer->timer->callbackType = TIMER_CALLBACK_TYPE_TASK;
     return pListOfTimer->timer->pTimerKey;
@@ -234,35 +232,5 @@ uint8_t *micrOs_startEventDispachTimer(bool bTimerType, uint32_t dwInterval, eTa
 
 void micrOs_cancelTimer(uint8_t *byTimerKey)
 {
-    sTimerList *pTimer = &timers;
-    while(pTimer->timer != NULL && pTimer->timer->pTimerKey != byTimerKey)
-    {
-        pTimer = pTimer->next;
-    }
-    if(pTimer->timer != NULL)
-    {
-        free(pTimer->timer->pTimerKey);
-        free(pTimer->timer);
-    }
-}
-
-static uint8_t *createTimer(sTimerList *pListOfTimer)
-{
-    pListOfTimer = &timers;
-    while(pListOfTimer->timer != NULL)
-    {
-        pListOfTimer = pListOfTimer->next;
-    }
-    pListOfTimer->timer = malloc(sizeof(sMicrOs_Timer));
-    if(pListOfTimer->timer == NULL)
-    {
-        errorHandler(ERR_CODE_MALLOC_TIMER_LIST);
-        return NULL;
-    }
-    pListOfTimer->timer->pTimerKey = malloc(sizeof(uint8_t));
-    if(pListOfTimer->timer->pTimerKey)
-    {
-        errorHandler(ERR_CODE_MALLOC_TIMER_KEY);
-        return NULL;
-    }
+    microsSofttimer_deleteTimer(&timers,byTimerKey);
 }
