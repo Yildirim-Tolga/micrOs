@@ -45,7 +45,7 @@ bool microsSofttimer_createTimer(sMicrOs_Timer *timer)
         return false;
     }
     (*ppListOfTimer)->timer.startingTime = timeCounter;
-    timer = (*ppListOfTimer)->timer;
+    timer = &((*ppListOfTimer)->timer);
     return true;
 }
 
@@ -84,25 +84,25 @@ void microsSofttimer_deleteTimer(uint8_t *timerKey)
 void controlTimeout(sTimerList *timerList)
 {
     sTimerList *pListOfTimer = timerList;
-    while(pListOfTimer->timer != NULL)
+    while(pListOfTimer != NULL)
     {
-        if(pListOfTimer->timer->runState == false)
+        if(pListOfTimer->timer.runState == false)
         {
             pListOfTimer = (sTimerList*)pListOfTimer->next;
             continue;
         }
         uint32_t elapsedTime;
-        if(pListOfTimer->timer->startingTime > timeCounter)
-            elapsedTime = (0xFFFFFFFF - pListOfTimer->timer->startingTime) + timeCounter;
+        if(pListOfTimer->timer.startingTime > timeCounter)
+            elapsedTime = (0xFFFFFFFF - pListOfTimer->timer.startingTime) + timeCounter;
         else
-            elapsedTime = timeCounter - pListOfTimer->timer->startingTime;
-        if(elapsedTime >= pListOfTimer->timer->interval)
+            elapsedTime = timeCounter - pListOfTimer->timer.startingTime;
+        if(elapsedTime >= pListOfTimer->timer.interval)
         {
-            if(pListOfTimer->timer->callbackType == TIMER_CALLBACK_TYPE_CALLBACK_FUNC)
+            if(pListOfTimer->timer.callbackType == TIMER_CALLBACK_TYPE_CALLBACK_FUNC)
             {
-                pListOfTimer->timer->pfnTimeoutCallback(); // run callback function of timer
-                if(pListOfTimer->timer->timerType == MICROS_TIMER_TYPE_PERIODIC) // restart timer
-                    pListOfTimer->timer->startingTime = timeCounter;
+                pListOfTimer->timer.pfnTimeoutCallback(); // run callback function of timer
+                if(pListOfTimer->timer.timerType == MICROS_TIMER_TYPE_PERIODIC) // restart timer
+                    pListOfTimer->timer.startingTime = timeCounter;
                 else // delete in timersUseWithCallbackFunc list
                 {
                     uint8_t *timerKey = pListOfTimer->timer.pTimerKey;
@@ -110,9 +110,16 @@ void controlTimeout(sTimerList *timerList)
                     microsSofttimer_deleteTimer(timerKey);
                     continue;
                 }
-            }       
-            pListOfTimer->timer->timeoutFlag = true; // set timeout flag
+            }
+            pListOfTimer->timer.timeoutFlag = true; // set timeout flag
         }
         pListOfTimer = (sTimerList*)pListOfTimer->next;
     }
+}
+
+void microsSofttimer_mcuTimerCallback(uint16_t callbackPeriod)
+{
+    timeCounter += callbackPeriod;
+    controlTimeout(timersUseWithCallbackFunc);
+    controlTimeout(timers);
 }

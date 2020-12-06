@@ -69,4 +69,6 @@ typedef struct sTimerList_
 bool microsSofttimer_createTimer(sMicrOs_Timer *timer);
 void microsSofttimer_deleteTimer(uint8_t *timerKey);
 
+void microsSofttimer_mcuTimerCallback(uint16_t callbackPeriod);
+
 #endif //MICROS_SOFTTIMER_H_
