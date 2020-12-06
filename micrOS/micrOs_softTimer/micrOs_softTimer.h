@@ -16,15 +16,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "../signalStructures.h"
-
-/*
-** Define Timer Types
-*/
-#define MICROS_TIMER_TYPE_ONE_SHOT 0
-#define MICROS_TIMER_TYPE_PERIODIC 1
-
-
+#include "../taskManagerFunctions.h"
 
 #define TIMER_CALLBACK_TYPE_CALLBACK_FUNC 0
 #define TIMER_CALLBACK_TYPE_TASK 1
@@ -66,8 +58,9 @@ typedef struct sTimerList_
     struct sTimerList *next;
 }sTimerList;
 
-bool microsSofttimer_createTimer(sMicrOs_Timer *timer);
+bool microsSofttimer_createTimer(sMicrOs_Timer **timer,uint8_t callbackType);
 void microsSofttimer_deleteTimer(uint8_t *timerKey);
+sTimerList *getTimerList(void);
 
 void microsSofttimer_mcuTimerCallback(uint16_t callbackPeriod);
 

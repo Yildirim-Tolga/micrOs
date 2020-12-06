@@ -38,6 +38,12 @@ void taskLedInit(void)
     signal.signalStruct = &signalU8Struct;
  //   micrOs_dispatchEventToTask(&signal,TASK_ID__LED);
     micrOs_publishEventToSubscribers(EVENT_TYPE__TEST_EVENT_2,&signal);
+    signalU8Struct.data = 8;
+    micrOs_publishEventToSubscribers(EVENT_TYPE__TEST_EVENT_2,&signal);
+    signalU8Struct.data = 10;
+    micrOs_startEventDispachTimer(MICROS_TIMER_TYPE_ONE_SHOT,10,TASK_ID__LED,&signal);
+    signalU8Struct.data = 15;
+    micrOs_startEventDispachTimer(MICROS_TIMER_TYPE_ONE_SHOT,10,TASK_ID__LED,&signal);
 }
 
 void taskLedGetSignal(sSignalGeneral *signalVar)

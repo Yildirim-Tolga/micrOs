@@ -51,6 +51,26 @@ void micrOs_taskInit(eTaskId enTaskId)
 
 void micrOs_main(void)
 {
+    sTimerList *timerList = getTimerList();
+    while(timerList != NULL)
+    {
+        if(timerList->timer.timeoutFlag)
+        {
+            if(timerList->timer.callbackType == TIMER_CALLBACK_TYPE_TASK)
+            {
+                micrOs_dispatchEventToTask(&(timerList->timer.signalGeneral),timerList->timer.task);
+                //perdiyodiklik ekle
+                microsSofttimer_deleteTimer(timerList->timer.pTimerKey);
+            }
+            else
+            {
+                micrOs_publishEventToSubscribers(timerList->timer.event,&(timerList->timer.signalGeneral));
+                //perdiyodiklik ekle
+                microsSofttimer_deleteTimer(timerList->timer.pTimerKey);
+            }
+        }
+        timerList = (sTimerList*)timerList->next;
+    }
     for(uint8_t taskIdCounter = 0; taskIdCounter < SYSTEM_TASK_COUNT; taskIdCounter++)
     {
         if(!micrOsTask[taskIdCounter].bTaskStartUpState) //control run state
@@ -202,39 +222,40 @@ static void deleteTaskSubscribeList(eEventId enEventID, eTaskId enTaskId)
 
 uint8_t *micrOs_startEventPublishTimer(bool bTimerType, uint32_t dwInterval, eEventId enEventID, const sSignalGeneral* signalGeneral)
 {
-    sMicrOs_Timer tmpTimer;
-    tmpTimer.callbackType = TIMER_CALLBACK_TYPE_EVENT;
-    sMicrOs_Timer *timer = &tmpTimer;
-    if(microsSofttimer_createTimer(timer))
+    sMicrOs_Timer *tempTimer;
+    sMicrOs_Timer **ppTimer = &tempTimer;
+    eSignalTypes tempSignalType = signalGeneral->signalType;
+    if(microsSofttimer_createTimer(ppTimer,TIMER_CALLBACK_TYPE_EVENT))
         return NULL;
-    timer->event = enEventID;
-    timer->interval = dwInterval;
-    timer->signalGeneral.signalType = signalGeneral->signalType;
-    memcpy(timer->signalGeneral.signalStruct,signalGeneral->signalStruct,structSize[signalGeneral->signalType]);
-    timer->timeoutFlag = false;
-    timer->timerType = bTimerType;
-    timer->callbackType = TIMER_CALLBACK_TYPE_EVENT;
-    timer->runState = true;
-    return timer->pTimerKey;
+    (*ppTimer)->event = enEventID;
+    (*ppTimer)->interval = dwInterval;
+    (*ppTimer)->signalGeneral.signalType = tempSignalType;
+    (*ppTimer)->signalGeneral.signalStruct = malloc(structSize[(*ppTimer)->signalGeneral.signalType]);
+    memcpy((*ppTimer)->signalGeneral.signalStruct,signalGeneral->signalStruct,structSize[tempSignalType]);
+    (*ppTimer)->timeoutFlag = false;
+    (*ppTimer)->timerType = bTimerType;
+    (*ppTimer)->callbackType = TIMER_CALLBACK_TYPE_EVENT;
+    (*ppTimer)->runState = true;
+    return (*ppTimer)->pTimerKey;
 }
 
 uint8_t *micrOs_startEventDispachTimer(bool bTimerType, uint32_t dwInterval, eTaskId enTaskId, const sSignalGeneral* signalGeneral)
 {
-    sMicrOs_Timer tmpTimer;
-    tmpTimer.callbackType = TIMER_CALLBACK_TYPE_TASK;
-    sMicrOs_Timer *timer = &tmpTimer;
-    if(microsSofttimer_createTimer(timer))
+    sMicrOs_Timer *tempTimer;
+    sMicrOs_Timer **ppTimer = &tempTimer;
+    eSignalTypes tempSignalType = signalGeneral->signalType;
+    if(!microsSofttimer_createTimer(ppTimer,TIMER_CALLBACK_TYPE_TASK))
         return NULL;
-    timer->event = enTaskId;
-    timer->interval = dwInterval;
-    timer->signalGeneral.signalType = signalGeneral->signalType;
-    timer->signalGeneral.signalStruct = malloc(structSize[timer->signalGeneral.signalType]);
-    memcpy(timer->signalGeneral.signalStruct,signalGeneral->signalStruct,structSize[signalGeneral->signalType]);
-    timer->timeoutFlag = false;
-    timer->timerType = bTimerType;
-    timer->callbackType = TIMER_CALLBACK_TYPE_TASK;
-    timer->runState = true;
-    return timer->pTimerKey;
+    (*ppTimer)->event = enTaskId;
+    (*ppTimer)->interval = dwInterval;
+    (*ppTimer)->signalGeneral.signalType = tempSignalType;
+    (*ppTimer)->signalGeneral.signalStruct = malloc(structSize[(*ppTimer)->signalGeneral.signalType]);
+    memcpy((*ppTimer)->signalGeneral.signalStruct,signalGeneral->signalStruct,structSize[tempSignalType]);
+    (*ppTimer)->timeoutFlag = false;
+    (*ppTimer)->timerType = bTimerType;
+    (*ppTimer)->callbackType = TIMER_CALLBACK_TYPE_TASK;
+    (*ppTimer)->runState = true;
+    return (*ppTimer)->pTimerKey;
 }
 
 void micrOs_cancelTimer(uint8_t *byTimerKey)

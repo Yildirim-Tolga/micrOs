@@ -15,6 +15,12 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+/*
+** Define Timer Types
+*/
+#define MICROS_TIMER_TYPE_ONE_SHOT 0
+#define MICROS_TIMER_TYPE_PERIODIC 1
+
 void micrOs_setTaskRunState(eTaskId enTaskId, bool bRunState);
 bool micrOs_getTaskRunState(eTaskId enTaskId);
 void micrOs_dispatchEventToTask(const sSignalGeneral* signalGeneral, eTaskId enTaskId);

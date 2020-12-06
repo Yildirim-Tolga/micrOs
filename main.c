@@ -2,7 +2,7 @@
  * filename     : main.h
  * description  :
  * author       : Tolga Yildirim
- * copyright    : 
+ * copyright    :
  * datetime     :
  *
  * Version History:  +,-,/,*: add, remove, change, fix
@@ -13,13 +13,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "micrOS/taskManager.h"
+#include "micrOS/micrOs_softTimer/micrOs_softTimer.h"
 
 int main()
 {
     micrOs_allTaskInit();
+    uint16_t fakeMicrosecondInterruptCnt = 0;
     while(1)
     {
         micrOs_main();
+        fakeMicrosecondInterruptCnt++;
+        if(fakeMicrosecondInterruptCnt == 10000)
+        {
+            fakeMicrosecondInterruptCnt = 0;
+            microsSofttimer_mcuTimerCallback(1);
+        }
     }
     return 0;
 }
