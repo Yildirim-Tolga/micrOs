@@ -2,7 +2,7 @@
  * filename     : taskManagerFunctions.h
  * description  :
  * author       : Tolga Yildirim
- * copyright    : 
+ * copyright    :
  * datetime     :
  *
  * Version History:  +,-,/,*: add, remove, change, fix
@@ -13,6 +13,7 @@
 #include "signalEventConfig.h"
 #include "signalStructures.h"
 #include <stdint.h>
+#include <stdbool.h>
 
 void micrOs_setTaskRunState(eTaskId enTaskId, bool bRunState);
 bool micrOs_getTaskRunState(eTaskId enTaskId);

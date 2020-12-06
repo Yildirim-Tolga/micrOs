@@ -2,7 +2,7 @@
  * filename     : micrOsTask_button.c
  * description  :
  * author       : Tolga Yildirim
- * copyright    : 
+ * copyright    :
  * datetime     :
  *
  * Version History:  +,-,/,*: add, remove, change, fix
@@ -13,8 +13,7 @@
 
 #include "buttonTask.h"
 #include "micrOsTask_button.h"
-#include "../micrOS/signalEventConfig.h"
-#include "../micrOS/signalStructures.h"
+#include "../micrOS/taskManagerFunctions.h"
 
 void taskButtonMain(void)
 {

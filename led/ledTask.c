@@ -13,10 +13,7 @@
 
 #include "ledTask.h"
 #include "micrOsTask_led.h"
-#include "../micrOS/signalEventConfig.h"
-#include "../micrOS/signalStructures.h"
-#include <stdint.h>
-#include <stddef.h>
+#include "../micrOS/taskManagerFunctions.h"
 
 void taskLedMain(void)
 {
@@ -25,7 +22,7 @@ void taskLedMain(void)
 
 void taskLedInit(void)
 {
-    micrOs_setEventSubscriptionState(EVENT_TYPE__TEST_EVENT_2,TASK_ID__LED,1);
+    micrOs_setEventSubscriptionState(EVENT_TYPE__TEST_EVENT_2,TASK_ID__LED,true);
 
     sSignalGeneral signal;
     signal.signalType = SIGNAL_TYPE__ONLY_ID;
@@ -50,13 +47,15 @@ void taskLedGetSignal(sSignalGeneral *signalVar)
         case SIGNAL_TYPE__ONLY_ID:
         {
             sSignalOnlyId gettingSignal = *(sSignalOnlyId*)(signalVar->signalStruct);
-            printf("Get Led signal ==> signal type code : %d , signal code : %d",signalVar->signalType,gettingSignal.signalId);
+            if(gettingSignal.signalId == 0)// for do not get warning from compiler
+                return;
             break;
         }
         case SIGNAL_TYPE__WITH_U8_DATA:
         {
             sSignalWithU8Data gettingSignal = *(sSignalWithU8Data*)(signalVar->signalStruct);
-            printf("Get Led signal ==> signal type code : %d , signal code : %d data : %d",signalVar->signalType,gettingSignal.signalId);
+            if(gettingSignal.signalId == 0)// for do not get warning from compiler
+                return;
             break;
         }
     }

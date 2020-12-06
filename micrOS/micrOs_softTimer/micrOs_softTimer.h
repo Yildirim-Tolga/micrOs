@@ -54,6 +54,7 @@ typedef struct sMicrOs_Timer_
             bool timeoutFlag;
         };
     };
+    bool runState;
 }sMicrOs_Timer;
 
 /*
@@ -62,10 +63,10 @@ typedef struct sMicrOs_Timer_
 typedef struct sTimerList_
 {
     sMicrOs_Timer *timer;
-    sTimerList *next;
+    struct sTimerList *next;
 }sTimerList;
 
-bool microsSofttimer_createTimer(sTimerList *pListOfTimer);
-void microsSofttimer_deleteTimer(sTimerList *pListOfTimer, uint8_t *timerKey);
+bool microsSofttimer_createTimer(sMicrOs_Timer *timer);
+void microsSofttimer_deleteTimer(uint8_t *timerKey);
 
 #endif //MICROS_SOFTTIMER_H_

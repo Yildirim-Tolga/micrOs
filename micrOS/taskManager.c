@@ -18,6 +18,7 @@
 #include "micrOs_softTimer/micrOs_softTimer.h"
 #include <stddef.h>
 #include <stdlib.h>
+#include <string.h>
 
 /*
 ** Structure of Event Subscribe List
@@ -25,11 +26,10 @@
 typedef struct sEventSubscribeList_
 {
     eTaskId taskId;
-    sEventSubscribeList *next;
+    struct sEventSubscribeList *next;
 }sEventSubscribeList;
 
 static sEventSubscribeList *eventSignal[SYSTEM_EVENT_COUNT];
-static sTimerList timers;
 
 static bool getSignal(eTaskId taskId,sSignalGeneral *signal);
 static void setSignal(eTaskId taskId,sSignalGeneral *signal);
@@ -65,7 +65,7 @@ void micrOs_main(void)
             // get signal head address for delete
             sSignalList **ppSignalListHead = &(micrOsTask[taskIdCounter].pSignalListHead);
             // set head address to next signal address
-            sSignalList *pSignalListNext = micrOsTask[taskIdCounter].pSignalListHead->next;
+            sSignalList *pSignalListNext = (sSignalList*)micrOsTask[taskIdCounter].pSignalListHead->next;
             // delete head list
             free(*ppSignalListHead);
             // set signal list head
@@ -92,7 +92,7 @@ static void setSignal(eTaskId taskId,sSignalGeneral *signal)
     sSignalList **ppAddingSignalList = &(micrOsTask[taskId].pSignalListHead);;
     while((*ppAddingSignalList) != NULL)
     {
-        ppAddingSignalList = &(*ppAddingSignalList)->next;
+        ppAddingSignalList = (sSignalList**)&(*ppAddingSignalList)->next;
     }
     // allocate memory for new signal list
     *ppAddingSignalList = malloc(sizeof(sSignalList));
@@ -137,7 +137,7 @@ void micrOs_dispatchEventToTask(const sSignalGeneral* signalGeneral, eTaskId enT
         return;
     if(!micrOsTask[enTaskId].bTaskStartUpState) //control run state
         return;
-    setSignal(enTaskId,signalGeneral);
+    setSignal(enTaskId,(sSignalGeneral*)signalGeneral);
 }
 
 void micrOs_publishEventToSubscribers(eEventId enEventID, const sSignalGeneral* signalGeneral)		// publish-Subscribers
@@ -148,7 +148,7 @@ void micrOs_publishEventToSubscribers(eEventId enEventID, const sSignalGeneral* 
     while( currentEventSubList != NULL)
     {
         micrOs_dispatchEventToTask(signalGeneral,currentEventSubList->taskId);
-        currentEventSubList = currentEventSubList->next;
+        currentEventSubList = (sEventSubscribeList*)currentEventSubList->next;
     }
 }
 
@@ -169,7 +169,7 @@ static void addTaskSubscribeList(eEventId enEventID, eTaskId enTaskId)
     {
         if((*ppAddingSubscribeList)->taskId == enTaskId)// already added list
             return;
-        ppAddingSubscribeList = &(*ppAddingSubscribeList)->next;
+        ppAddingSubscribeList = (sEventSubscribeList**)&(*ppAddingSubscribeList)->next;
     }
     // allocate memory for new subscribe list
     *ppAddingSubscribeList = malloc(sizeof(sEventSubscribeList));
@@ -192,7 +192,7 @@ static void deleteTaskSubscribeList(eEventId enEventID, eTaskId enTaskId)
     while((*ppCurrentSubscribeList)->taskId != enTaskId)
     {
         ppPrevSubscribeList = ppCurrentSubscribeList;
-        (*ppCurrentSubscribeList) = (*ppCurrentSubscribeList)->next;
+        (*ppCurrentSubscribeList) = (sEventSubscribeList*)(*ppCurrentSubscribeList)->next;
         if((*ppCurrentSubscribeList) == NULL)// not detect this task id in list
             return;
     }
@@ -202,35 +202,40 @@ static void deleteTaskSubscribeList(eEventId enEventID, eTaskId enTaskId)
 
 uint8_t *micrOs_startEventPublishTimer(bool bTimerType, uint32_t dwInterval, eEventId enEventID, const sSignalGeneral* signalGeneral)
 {
-    sTimerList *pListOfTimer = &timers;
-    if(microsSofttimer_createTimer(pListOfTimer))
-        return NULL;    
-    pListOfTimer->timer->event = enEventID;
-    pListOfTimer->timer->interval = dwInterval;
-    pListOfTimer->timer->signalGeneral.signalType = signalGeneral->signalType;
-    memcpy(pListOfTimer->timer->signalGeneral.signalStruct,signalGeneral->signalStruct,structSize[signalGeneral->signalType]);
-    pListOfTimer->timer->timeoutFlag = false;
-    pListOfTimer->timer->timerType = bTimerType;
-    pListOfTimer->timer->callbackType = TIMER_CALLBACK_TYPE_EVENT;
-    return pListOfTimer->timer->pTimerKey;
+    sMicrOs_Timer tmpTimer;
+    sMicrOs_Timer *timer = &tmpTimer;
+    if(microsSofttimer_createTimer(timer))
+        return NULL;
+    timer->event = enEventID;
+    timer->interval = dwInterval;
+    timer->signalGeneral.signalType = signalGeneral->signalType;
+    memcpy(timer->signalGeneral.signalStruct,signalGeneral->signalStruct,structSize[signalGeneral->signalType]);
+    timer->timeoutFlag = false;
+    timer->timerType = bTimerType;
+    timer->callbackType = TIMER_CALLBACK_TYPE_EVENT;
+    timer->runState = true;
+    return timer->pTimerKey;
 }
 
 uint8_t *micrOs_startEventDispachTimer(bool bTimerType, uint32_t dwInterval, eTaskId enTaskId, const sSignalGeneral* signalGeneral)
 {
-    sTimerList *pListOfTimer = &timers;
-    if(microsSofttimer_createTimer(pListOfTimer))
-        return NULL;    
-    pListOfTimer->timer->event = enTaskId;
-    pListOfTimer->timer->interval = dwInterval;
-    pListOfTimer->timer->signalGeneral.signalType = signalGeneral->signalType;
-    memcpy(pListOfTimer->timer->signalGeneral.signalStruct,signalGeneral->signalStruct,structSize[signalGeneral->signalType]);
-    pListOfTimer->timer->timeoutFlag = false;
-    pListOfTimer->timer->timerType = bTimerType;
-    pListOfTimer->timer->callbackType = TIMER_CALLBACK_TYPE_TASK;
-    return pListOfTimer->timer->pTimerKey;
+    sMicrOs_Timer tmpTimer;
+    sMicrOs_Timer *timer = &tmpTimer;
+    if(microsSofttimer_createTimer(timer))
+        return NULL;
+    timer->event = enTaskId;
+    timer->interval = dwInterval;
+    timer->signalGeneral.signalType = signalGeneral->signalType;
+    timer->signalGeneral.signalStruct = malloc(structSize[timer->signalGeneral.signalType]);
+    memcpy(timer->signalGeneral.signalStruct,signalGeneral->signalStruct,structSize[signalGeneral->signalType]);
+    timer->timeoutFlag = false;
+    timer->timerType = bTimerType;
+    timer->callbackType = TIMER_CALLBACK_TYPE_TASK;
+    timer->runState = true;
+    return timer->pTimerKey;
 }
 
 void micrOs_cancelTimer(uint8_t *byTimerKey)
 {
-    microsSofttimer_deleteTimer(&timers,byTimerKey);
+    microsSofttimer_deleteTimer(byTimerKey);
 }
