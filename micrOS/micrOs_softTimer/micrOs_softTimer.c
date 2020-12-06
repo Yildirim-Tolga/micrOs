@@ -16,50 +16,74 @@
 #include <stdlib.h>
 
 volatile uint32_t timeCounter;
-static sTimerList timers;
+static sTimerList *timers;
+static sTimerList *timersUseWithCallbackFunc;
+
+void controlTimeout(sTimerList *timerList);
 
 bool microsSofttimer_createTimer(sMicrOs_Timer *timer)
 {
-    sTimerList *pListOfTimer = &timers;
-    while(pListOfTimer->timer != NULL)
+    sTimerList **ppListOfTimer = &timers;
+    if(timer->callbackType == TIMER_CALLBACK_TYPE_CALLBACK_FUNC)
+        ppListOfTimer = &timersUseWithCallbackFunc;
+    while((*ppListOfTimer) != NULL)
     {
-        pListOfTimer = (sTimerList*)pListOfTimer->next;
+        ppListOfTimer = (sTimerList**)&(*ppListOfTimer)->next;
     }
-    pListOfTimer->timer = malloc(sizeof(sMicrOs_Timer));
-    pListOfTimer->timer->runState = false;
-    if(pListOfTimer->timer == NULL)
+    // allocate memory for new (next) timer list
+    *ppListOfTimer = malloc(sizeof(sTimerList));
+    (*ppListOfTimer)->timer.runState = false;
+    if(*ppListOfTimer == NULL)
     {
         errorHandler(ERR_CODE_MALLOC_TIMER_LIST);
         return false;
     }
-    pListOfTimer->timer->pTimerKey = malloc(sizeof(uint8_t));
-    if(pListOfTimer->timer->pTimerKey)
+    (*ppListOfTimer)->timer.pTimerKey = malloc(sizeof(uint8_t));
+    if((*ppListOfTimer)->timer.pTimerKey)
     {
         errorHandler(ERR_CODE_MALLOC_TIMER_KEY);
         return false;
     }
-    pListOfTimer->timer->startingTime = timeCounter;
-    timer = pListOfTimer->timer;
+    (*ppListOfTimer)->timer.startingTime = timeCounter;
+    timer = (*ppListOfTimer)->timer;
     return true;
 }
 
 void microsSofttimer_deleteTimer(uint8_t *timerKey)
 {
-    sTimerList *pListOfTimer = &timers;
-    while(pListOfTimer->timer != NULL && pListOfTimer->timer->pTimerKey != timerKey)
+    sTimerList **ppListOfTimer = &timers;
+    sTimerList **ppPrevListOfTimer;
+    bool timerDetected = true;
+    while((*ppListOfTimer)->timer.pTimerKey != timerKey)
     {
-        pListOfTimer = (sTimerList*)pListOfTimer->next;
+        ppPrevListOfTimer = ppListOfTimer;
+        (*ppListOfTimer) = (sTimerList*)(*ppListOfTimer)->next;
+        if((*ppListOfTimer) == NULL) // can not detect in normal timer list
+        {
+            timerDetected = false;
+            break;
+        }
     }
-    if(pListOfTimer->timer != NULL)
+    if(timerDetected == false)
     {
-        free(pListOfTimer->timer->pTimerKey);
-        free(pListOfTimer->timer);
+        ppListOfTimer = &timersUseWithCallbackFunc;
+        ppPrevListOfTimer = NULL;
+        while((*ppListOfTimer)->timer.pTimerKey != timerKey)
+        {
+            ppPrevListOfTimer = ppListOfTimer;
+            (*ppListOfTimer) = (sTimerList*)(*ppListOfTimer)->next;
+            if((*ppListOfTimer) == NULL) // can not detect in callback timer list
+                return;
+        }
     }
+    (*ppPrevListOfTimer)->next = (*ppListOfTimer)->next;
+    free((*ppListOfTimer)->timer.pTimerKey);
+    free(*ppListOfTimer);
 }
 
-void controlTimeout(void)
+void controlTimeout(sTimerList *timerList)
 {
-    sTimerList *pListOfTimer = &timers;
+    sTimerList *pListOfTimer = timerList;
     while(pListOfTimer->timer != NULL)
     {
         if(pListOfTimer->timer->runState == false)
@@ -75,9 +99,19 @@ void controlTimeout(void)
         if(elapsedTime >= pListOfTimer->timer->interval)
         {
             if(pListOfTimer->timer->callbackType == TIMER_CALLBACK_TYPE_CALLBACK_FUNC)
+            {
                 pListOfTimer->timer->pfnTimeoutCallback(); // run callback function of timer
-            else
-                pListOfTimer->timer->timeoutFlag = true; // set timeout flag
+                if(pListOfTimer->timer->timerType == MICROS_TIMER_TYPE_PERIODIC) // restart timer
+                    pListOfTimer->timer->startingTime = timeCounter;
+                else // delete in timersUseWithCallbackFunc list
+                {
+                    uint8_t *timerKey = pListOfTimer->timer.pTimerKey;
+                    pListOfTimer = (sTimerList*)pListOfTimer->next;
+                    microsSofttimer_deleteTimer(timerKey);
+                    continue;
+                }
+            }       
+            pListOfTimer->timer->timeoutFlag = true; // set timeout flag
         }
         pListOfTimer = (sTimerList*)pListOfTimer->next;
     }

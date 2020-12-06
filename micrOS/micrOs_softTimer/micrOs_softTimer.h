@@ -51,9 +51,9 @@ typedef struct sMicrOs_Timer_
                 eTaskId task;
             };
             sSignalGeneral signalGeneral;
-            bool timeoutFlag;
         };
     };
+    bool timeoutFlag;
     bool runState;
 }sMicrOs_Timer;
 
@@ -62,7 +62,7 @@ typedef struct sMicrOs_Timer_
 */
 typedef struct sTimerList_
 {
-    sMicrOs_Timer *timer;
+    sMicrOs_Timer timer;
     struct sTimerList *next;
 }sTimerList;
 

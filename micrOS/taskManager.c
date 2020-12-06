@@ -203,6 +203,7 @@ static void deleteTaskSubscribeList(eEventId enEventID, eTaskId enTaskId)
 uint8_t *micrOs_startEventPublishTimer(bool bTimerType, uint32_t dwInterval, eEventId enEventID, const sSignalGeneral* signalGeneral)
 {
     sMicrOs_Timer tmpTimer;
+    tmpTimer.callbackType = TIMER_CALLBACK_TYPE_EVENT;
     sMicrOs_Timer *timer = &tmpTimer;
     if(microsSofttimer_createTimer(timer))
         return NULL;
@@ -220,6 +221,7 @@ uint8_t *micrOs_startEventPublishTimer(bool bTimerType, uint32_t dwInterval, eEv
 uint8_t *micrOs_startEventDispachTimer(bool bTimerType, uint32_t dwInterval, eTaskId enTaskId, const sSignalGeneral* signalGeneral)
 {
     sMicrOs_Timer tmpTimer;
+    tmpTimer.callbackType = TIMER_CALLBACK_TYPE_TASK;
     sMicrOs_Timer *timer = &tmpTimer;
     if(microsSofttimer_createTimer(timer))
         return NULL;
