@@ -17,6 +17,7 @@
 
 int main()
 {
+    micrOs_init();
     micrOs_allTaskInit();
     uint16_t fakeMicrosecondInterruptCnt = 0;
     while(1)

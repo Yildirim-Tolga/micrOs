@@ -16,6 +16,7 @@
 #include "taskManagerFunctions.h"
 #include "../errorHandler/errorHandler.h"
 #include "micrOs_softTimer/micrOs_softTimer.h"
+#include "micrOs_mcuTimer/micrOs_mcuTimer.h"
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
@@ -37,6 +38,10 @@ static void setSignal(eTaskId taskId,sSignalGeneral *signal);
 static void addTaskSubscribeList(eEventId enEventID, eTaskId enTaskId);
 static void deleteTaskSubscribeList(eEventId enEventID, eTaskId enTaskId);
 
+void micrOs_init(void)
+{
+    microsMcuTimer_init();
+}
 
 void micrOs_allTaskInit(void)
 {
