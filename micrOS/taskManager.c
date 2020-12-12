@@ -64,14 +64,24 @@ void micrOs_main(void)
             if(timerList->timer.callbackType == TIMER_CALLBACK_TYPE_TASK)
             {
                 micrOs_dispatchEventToTask(&(timerList->timer.signalGeneral),timerList->timer.task);
-                //perdiyodiklik ekle
-                microsSofttimer_deleteTimer(timerList->timer.pTimerKey);
+                if(timerList->timer.timerType == MICROS_TIMER_TYPE_PERIODIC)
+                {
+                    timerList->timer.timeoutFlag = false;
+                    timerList->timer.startingTime = getTimeCounterValue();
+                }
+                else
+                    microsSofttimer_deleteTimer(timerList->timer.pTimerKey);
             }
             else
             {
                 micrOs_publishEventToSubscribers(timerList->timer.event,&(timerList->timer.signalGeneral));
-                //perdiyodiklik ekle
-                microsSofttimer_deleteTimer(timerList->timer.pTimerKey);
+                if(timerList->timer.timerType == MICROS_TIMER_TYPE_PERIODIC)
+                {
+                    timerList->timer.timeoutFlag = false;
+                    timerList->timer.startingTime = getTimeCounterValue();
+                }
+                else
+                    microsSofttimer_deleteTimer(timerList->timer.pTimerKey);
             }
         }
         timerList = (sTimerList*)timerList->next;

@@ -125,3 +125,8 @@ sTimerList *getTimerList(void)
 {
     return timers;
 }
+
+uint32_t getTimeCounterValue(void)
+{
+    return timeCounter;
+}
