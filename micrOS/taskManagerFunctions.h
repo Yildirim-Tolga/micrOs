@@ -29,4 +29,5 @@ void micrOs_setEventSubscriptionState(eEventId enEventID, eTaskId enTaskId, bool
 
 uint8_t *micrOs_startEventPublishTimer(bool bTimerType, uint32_t dwInterval, eEventId enEventID, const sSignalGeneral* signalGeneral);
 uint8_t *micrOs_startEventDispachTimer(bool bTimerType, uint32_t dwInterval, eTaskId enTaskId, const sSignalGeneral* signalGeneral);
+uint8_t *micrOs_startCallbackTimer(bool bTimerType, uint32_t dwInterval, void (*pfnCallbackFunc)(void));
 void micrOs_cancelTimer(uint8_t *byTimerKey);

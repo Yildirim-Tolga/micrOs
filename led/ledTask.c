@@ -15,6 +15,8 @@
 #include "micrOsTask_led.h"
 #include "../micrOS/taskManagerFunctions.h"
 
+void timerCallbackTestFunction(void);
+
 void taskLedMain(void)
 {
 
@@ -29,7 +31,7 @@ void taskLedInit(void)
     sSignalOnlyId signalStruct;
     signalStruct.signalId = SIGNAL_ID__TEST_SINGAL_2;
     signal.signalStruct = &signalStruct;
-    micrOs_dispatchEventToTask(&signal,TASK_ID__LED);
+    //micrOs_dispatchEventToTask(&signal,TASK_ID__LED);
 
     signal.signalType = SIGNAL_TYPE__WITH_U8_DATA;
     sSignalWithU8Data signalU8Struct;
@@ -37,13 +39,14 @@ void taskLedInit(void)
     signalU8Struct.data = 5;
     signal.signalStruct = &signalU8Struct;
  //   micrOs_dispatchEventToTask(&signal,TASK_ID__LED);
-    micrOs_publishEventToSubscribers(EVENT_TYPE__TEST_EVENT_2,&signal);
+    //micrOs_publishEventToSubscribers(EVENT_TYPE__TEST_EVENT_2,&signal);
     signalU8Struct.data = 8;
-    micrOs_publishEventToSubscribers(EVENT_TYPE__TEST_EVENT_2,&signal);
+    //micrOs_publishEventToSubscribers(EVENT_TYPE__TEST_EVENT_2,&signal);
     signalU8Struct.data = 10;
     micrOs_startEventDispachTimer(MICROS_TIMER_TYPE_ONE_SHOT,10,TASK_ID__LED,&signal);
     signalU8Struct.data = 15;
     micrOs_startEventDispachTimer(MICROS_TIMER_TYPE_ONE_SHOT,10,TASK_ID__LED,&signal);
+    micrOs_startCallbackTimer(MICROS_TIMER_TYPE_ONE_SHOT,10,timerCallbackTestFunction);
 }
 
 void taskLedGetSignal(sSignalGeneral *signalVar)
@@ -65,4 +68,14 @@ void taskLedGetSignal(sSignalGeneral *signalVar)
             break;
         }
     }
+}
+
+void timerCallbackTestFunction(void)
+{
+    static a = 5;
+    if(a==6)
+    {
+        micrOs_startCallbackTimer(MICROS_TIMER_TYPE_ONE_SHOT,10,timerCallbackTestFunction);
+    }
+    a++;
 }

@@ -258,6 +258,21 @@ uint8_t *micrOs_startEventDispachTimer(bool bTimerType, uint32_t dwInterval, eTa
     return (*ppTimer)->pTimerKey;
 }
 
+uint8_t *micrOs_startCallbackTimer(bool bTimerType, uint32_t dwInterval, void (*pfnCallbackFunc)(void))
+{
+    sMicrOs_Timer *tempTimer;
+    sMicrOs_Timer **ppTimer = &tempTimer;
+    if(!microsSofttimer_createTimer(ppTimer,TIMER_CALLBACK_TYPE_CALLBACK_FUNC))
+        return NULL;
+    (*ppTimer)->pfnTimeoutCallback = pfnCallbackFunc;
+    (*ppTimer)->interval = dwInterval;
+    (*ppTimer)->timeoutFlag = false;
+    (*ppTimer)->timerType = bTimerType;
+    (*ppTimer)->callbackType = TIMER_CALLBACK_TYPE_CALLBACK_FUNC;
+    (*ppTimer)->runState = true;
+    return (*ppTimer)->pTimerKey;
+}
+
 void micrOs_cancelTimer(uint8_t *byTimerKey)
 {
     microsSofttimer_deleteTimer(byTimerKey);
