@@ -19,10 +19,15 @@ volatile uint32_t timeCounter;
 static sTimerList *timers;
 static sTimerList *timersUseWithCallbackFunc;
 
+static bool callStackInDeleteTimer = false;
+static bool reCallCallbackTimer = false;
+static bool callStackInCreateTimer = false;
+
 void controlTimeout(sTimerList *timerList);
 
 bool microsSofttimer_createTimer(sMicrOs_Timer **timer,uint8_t callbackType)
 {
+    callStackInCreateTimer = true;
     sTimerList **ppListOfTimer = &timers;
     if(callbackType == TIMER_CALLBACK_TYPE_CALLBACK_FUNC)
         ppListOfTimer = &timersUseWithCallbackFunc;
@@ -35,22 +40,32 @@ bool microsSofttimer_createTimer(sMicrOs_Timer **timer,uint8_t callbackType)
     (*ppListOfTimer)->timer.runState = false;
     if(*ppListOfTimer == NULL)
     {
+        callStackInCreateTimer = false;
+        if(reCallCallbackTimer)
+            microsSofttimer_mcuTimerCallback(0);
         errorHandler(ERR_CODE_MALLOC_TIMER_LIST);
         return false;
     }
     (*ppListOfTimer)->timer.pTimerKey = malloc(sizeof(uint8_t));
     if((*ppListOfTimer)->timer.pTimerKey == NULL)
     {
+        callStackInCreateTimer = false;
+        if(reCallCallbackTimer)
+            microsSofttimer_mcuTimerCallback(0);
         errorHandler(ERR_CODE_MALLOC_TIMER_KEY);
         return false;
     }
     (*ppListOfTimer)->timer.startingTime = timeCounter;
     *timer = &((*ppListOfTimer)->timer);
+    callStackInCreateTimer = false;
+    if(reCallCallbackTimer)
+        microsSofttimer_mcuTimerCallback(0);
     return true;
 }
 
 void microsSofttimer_deleteTimer(uint8_t *timerKey)
 {
+    callStackInDeleteTimer = true;
     sTimerList **ppListOfTimer = &timers;
     bool timerDetected = true;
     while((*ppListOfTimer)->timer.pTimerKey != timerKey)
@@ -69,13 +84,21 @@ void microsSofttimer_deleteTimer(uint8_t *timerKey)
         {
             ppListOfTimer = &(*ppListOfTimer)->next;
             if((*ppListOfTimer) == NULL) // can not detect in callback timer list
+            {
+                callStackInDeleteTimer = false;
+                if(reCallCallbackTimer)
+                    microsSofttimer_mcuTimerCallback(0);
                 return;
+            }
         }
     }
     sTimerList **ppNextListOfTimer = &((*ppListOfTimer)->next);
     free((*ppListOfTimer)->timer.pTimerKey);
     free(*ppListOfTimer);
     *ppListOfTimer = *ppNextListOfTimer;
+    callStackInDeleteTimer = false;
+    if(reCallCallbackTimer)
+        microsSofttimer_mcuTimerCallback(0);
 }
 
 void controlTimeout(sTimerList *timerList)
@@ -117,6 +140,12 @@ void controlTimeout(sTimerList *timerList)
 void microsSofttimer_mcuTimerCallback(uint16_t callbackPeriod)
 {
     timeCounter += callbackPeriod;
+    if(callStackInCreateTimer || callStackInDeleteTimer)
+    {
+        reCallCallbackTimer = true;
+        return;
+    }
+    reCallCallbackTimer = false;
     controlTimeout(timersUseWithCallbackFunc);
     controlTimeout(timers);
 }
