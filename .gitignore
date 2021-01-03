@@ -1,9 +1,9 @@
-.vscode
+*.vscode
 
-.bak
+*.bak
 
-.hex
-.o
-.crf
-.d
-.axf
+*.hex
+*.o
+*.crf
+*.d
+*.axf
