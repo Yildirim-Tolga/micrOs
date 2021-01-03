@@ -22,6 +22,29 @@
 #define TIMER_CALLBACK_TYPE_TASK 1
 #define TIMER_CALLBACK_TYPE_EVENT 2
 
+/* ========================================  Start of section using anonymous unions  ======================================== */
+#if defined (__CC_ARM)
+  #pragma push
+  #pragma anon_unions
+#elif defined (__ICCARM__)
+  #pragma language=extended
+#elif defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wc11-extensions"
+  #pragma clang diagnostic ignored "-Wreserved-id-macro"
+  #pragma clang diagnostic ignored "-Wgnu-anonymous-struct"
+  #pragma clang diagnostic ignored "-Wnested-anon-types"
+#elif defined (__GNUC__)
+  /* anonymous unions are enabled by default */
+#elif defined (__TMS470__)
+  /* anonymous unions are enabled by default */
+#elif defined (__TASKING__)
+  #pragma warning 586
+#elif defined (__CSMC__)
+  /* anonymous unions are enabled by default */
+#else
+  #warning Not supported compiler type
+#endif
 /*
 ** Timer Structure
 */
@@ -48,6 +71,22 @@ typedef struct sMicrOs_Timer_
     bool timeoutFlag;
     bool runState;
 }sMicrOs_Timer;
+/* =========================================  End of section using anonymous unions  ========================================= */
+#if defined (__CC_ARM)
+  #pragma pop
+#elif defined (__ICCARM__)
+  /* leave anonymous unions enabled */
+#elif (__ARMCC_VERSION >= 6010050)
+  #pragma clang diagnostic pop
+#elif defined (__GNUC__)
+  /* anonymous unions are enabled by default */
+#elif defined (__TMS470__)
+  /* anonymous unions are enabled by default */
+#elif defined (__TASKING__)
+  #pragma warning restore
+#elif defined (__CSMC__)
+  /* anonymous unions are enabled by default */
+#endif
 
 /*
 ** Timer List Structure
