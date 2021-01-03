@@ -1,0 +1,16 @@
+ledbuttonexample\taskmanager.o: ..\micrOS\taskManager.c
+ledbuttonexample\taskmanager.o: ..\micrOS\taskManagerConfig.h
+ledbuttonexample\taskmanager.o: ..\micrOS\signalStructures.h
+ledbuttonexample\taskmanager.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+ledbuttonexample\taskmanager.o: ..\micrOS\signalEventConfig.h
+ledbuttonexample\taskmanager.o: ..\micrOS\../button/micrOsTask_button.h
+ledbuttonexample\taskmanager.o: ..\micrOS\../led/micrOsTask_led.h
+ledbuttonexample\taskmanager.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+ledbuttonexample\taskmanager.o: ..\micrOS\taskManager.h
+ledbuttonexample\taskmanager.o: ..\micrOS\taskManagerFunctions.h
+ledbuttonexample\taskmanager.o: ..\errorHandler\errorHandler.h
+ledbuttonexample\taskmanager.o: ..\micrOS\micrOs_softTimer\micrOs_softTimer.h
+ledbuttonexample\taskmanager.o: ..\micrOS\micrOs_mcuTimer\micrOs_mcuTimer.h
+ledbuttonexample\taskmanager.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+ledbuttonexample\taskmanager.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+ledbuttonexample\taskmanager.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
