@@ -43,9 +43,9 @@ typedef struct sSignalList_
 */
 typedef struct sMicrosTask_
 {
-    void const (*pfnInitTask)(void);
-    void const (*pfnMainTask)(void);
-    void const (*pfnGetSignal)(sSignalGeneral*);
+    void (*const pfnInitTask)(void);
+    void (*const pfnMainTask)(void);
+    void (*const pfnGetSignal)(sSignalGeneral*);
     bool bTaskStartUpState;
     sSignalList *pSignalListHead;
 }sMicrOsTask;

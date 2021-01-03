@@ -91,7 +91,7 @@ void micrOs_main(void)
         if(!micrOsTask[taskIdCounter].bTaskStartUpState) //control run state
             return;
         sSignalGeneral gettingSignal;
-        while(getSignal(taskIdCounter,&gettingSignal))// if signal not received go to main function directly, else run get signal function.
+        while(getSignal((eTaskId)taskIdCounter,&gettingSignal))// if signal not received go to main function directly, else run get signal function.
         {
             // run task get signal function
             micrOsTask[taskIdCounter].pfnGetSignal(&gettingSignal);
@@ -137,6 +137,7 @@ static void setSignal(eTaskId taskId,sSignalGeneral *signal)
         errorHandler(ERR_CODE_MALLOC_SIGNAL_LIST);
         return;
     }
+	(*ppAddingSignalList)->next = NULL;
     // get signal type
     (*ppAddingSignalList)->signalGeneral.signalType = signal->signalType;
     // allocate memory for signal structure
@@ -216,6 +217,7 @@ static void addTaskSubscribeList(eEventId enEventID, eTaskId enTaskId)
     }
     // set task id
     (*ppAddingSubscribeList)->taskId = enTaskId;
+	(*ppAddingSubscribeList)->next = NULL;
 }
 
 static void deleteTaskSubscribeList(eEventId enEventID, eTaskId enTaskId)
@@ -261,7 +263,7 @@ uint8_t *micrOs_startEventDispachTimer(bool bTimerType, uint32_t dwInterval, eTa
     eSignalTypes tempSignalType = signalGeneral->signalType;
     if(!microsSofttimer_createTimer(ppTimer,TIMER_CALLBACK_TYPE_TASK))
         return NULL;
-    (*ppTimer)->event = enTaskId;
+	(*ppTimer)->task = enTaskId;
     (*ppTimer)->interval = dwInterval;
     (*ppTimer)->signalGeneral.signalType = tempSignalType;
     (*ppTimer)->signalGeneral.signalStruct = malloc(structSize[(*ppTimer)->signalGeneral.signalType]);

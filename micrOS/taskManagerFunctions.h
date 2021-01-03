@@ -10,6 +10,9 @@
  *
  *
  **************************************************************************************************/
+#ifndef TASK_MANAGER_FUNCTIONS_H_
+#define TASK_MANAGER_FUNCTIONS_H_
+
 #include "signalEventConfig.h"
 #include "signalStructures.h"
 #include <stdint.h>
@@ -31,3 +34,5 @@ uint8_t *micrOs_startEventPublishTimer(bool bTimerType, uint32_t dwInterval, eEv
 uint8_t *micrOs_startEventDispachTimer(bool bTimerType, uint32_t dwInterval, eTaskId enTaskId, const sSignalGeneral* signalGeneral);
 uint8_t *micrOs_startCallbackTimer(bool bTimerType, uint32_t dwInterval, void (*pfnCallbackFunc)(void));
 void micrOs_cancelTimer(uint8_t *byTimerKey);
+
+#endif //TASK_MANAGER_FUNCTIONS_H_
