@@ -37,6 +37,7 @@ bool microsSofttimer_createTimer(sMicrOs_Timer **timer,uint8_t callbackType)
     }
     // allocate memory for new (next) timer list
     *ppListOfTimer = malloc(sizeof(sTimerList));
+	(*ppListOfTimer)->next = NULL;
     (*ppListOfTimer)->timer.runState = false;
     if(*ppListOfTimer == NULL)
     {
@@ -65,12 +66,14 @@ bool microsSofttimer_createTimer(sMicrOs_Timer **timer,uint8_t callbackType)
 
 void microsSofttimer_deleteTimer(uint8_t *timerKey)
 {
+		if(timerKey == NULL)
+			return;
     callStackInDeleteTimer = true;
     sTimerList **ppListOfTimer = &timers;
     bool timerDetected = true;
     while((*ppListOfTimer)->timer.pTimerKey != timerKey)
     {
-        ppListOfTimer = &(*ppListOfTimer)->next;
+        ppListOfTimer = (sTimerList**)&((*ppListOfTimer)->next);
         if((*ppListOfTimer) == NULL) // can not detect in normal timer list
         {
             timerDetected = false;
@@ -82,7 +85,7 @@ void microsSofttimer_deleteTimer(uint8_t *timerKey)
         ppListOfTimer = &timersUseWithCallbackFunc;
         while((*ppListOfTimer)->timer.pTimerKey != timerKey)
         {
-            ppListOfTimer = &(*ppListOfTimer)->next;
+            ppListOfTimer = (sTimerList**)&((*ppListOfTimer)->next);
             if((*ppListOfTimer) == NULL) // can not detect in callback timer list
             {
                 callStackInDeleteTimer = false;
@@ -92,7 +95,10 @@ void microsSofttimer_deleteTimer(uint8_t *timerKey)
             }
         }
     }
-    sTimerList **ppNextListOfTimer = &((*ppListOfTimer)->next);
+    sTimerList **ppNextListOfTimer = (sTimerList**)&((*ppListOfTimer)->next);
+	if((*ppListOfTimer)->timer.callbackType == TIMER_CALLBACK_TYPE_TASK ||
+		(*ppListOfTimer)->timer.callbackType == TIMER_CALLBACK_TYPE_EVENT)
+			free((*ppListOfTimer)->timer.signalGeneral.signalStruct);
     free((*ppListOfTimer)->timer.pTimerKey);
     free(*ppListOfTimer);
     *ppListOfTimer = *ppNextListOfTimer;
