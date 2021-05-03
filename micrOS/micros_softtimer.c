@@ -224,7 +224,7 @@ void micros_timer_cancel(uint8_t tm_key)
 
 void micros_softtimer_init(void)
 {
-    //TODO: mcu timer initialize function will be added
+    micros_mcu_timer_init(micros_timer_mcu_cb);
 }
 
 void micros_softtimer_main(void)
