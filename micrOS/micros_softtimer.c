@@ -108,12 +108,12 @@ static uint8_t micros_timer_create_tmkey(void);
  * @brief Search timer with timer key function. Return find or not. If find set ppNode and ppPrev
  * 
  * @param tm_key Timer key
- * @param ppNode Node which node's key = tm_key
- * @param ppPrev Previous node, if ppNode is first node this value set with NULL
+ * @param pppNode Node which node's key = tm_key
+ * @param pppPrev Previous node, if ppNode is first node this value set with NULL
  * @return true Timer found
  * @return false Timer not found
  */
-static bool micros_timer_search(uint8_t tm_key, sMicros_tm_node **ppNode, sMicros_tm_node **ppPrev);
+static bool micros_timer_search(uint8_t tm_key, sMicros_tm_node ***pppNode, sMicros_tm_node ***ppPrev);
 
 /**
  * @brief Delete timer node with node address and prev node address
@@ -218,7 +218,7 @@ uint8_t micros_timer_start(bool tm_type, bool cancelable, uint32_t interval, voi
 void micros_timer_cancel(uint8_t tm_key)
 {
     sMicros_tm_node **ppNode, **ppPrev;
-    if (micros_timer_search(tm_key, ppNode, ppPrev))
+    if (micros_timer_search(tm_key, &ppNode, &ppPrev))
         micros_timer_delete(ppNode, ppPrev);
 }
 
@@ -272,8 +272,8 @@ static uint8_t micros_timer_create_tmkey(void)
 {
     static uint8_t tm_key = 1;
     uint8_t key_start = tm_key;
-    sMicros_tm_node **temp;
-    while (micros_timer_search(tm_key, temp, temp))
+    sMicros_tm_node **temp1, **temp2;
+    while (micros_timer_search(tm_key, &temp1, &temp2))
     {
         tm_key++;
         if (tm_key == 0)
@@ -287,21 +287,21 @@ static uint8_t micros_timer_create_tmkey(void)
     return tm_key;
 }
 
-static bool micros_timer_search(uint8_t tm_key, sMicros_tm_node **ppNode, sMicros_tm_node **ppPrev)
+static bool micros_timer_search(uint8_t tm_key, sMicros_tm_node ***pppNode, sMicros_tm_node ***pppPrev)
 {
     sMicros_tm_node **ppNode_current = &pTm_head;
-    ppPrev = NULL;
+    *pppPrev = NULL;
     while (*ppNode_current != NULL)
     {
         if ((*ppNode_current)->tm.key == tm_key)
         {
-            *ppNode = *ppNode_current;
+            *pppNode = ppNode_current;
             return true;
         }
-        ppPrev = ppNode_current;
+        *pppPrev = ppNode_current;
         ppNode_current = &((*ppNode_current)->next);
     }
-    *ppNode = *ppPrev = NULL;
+    *pppNode = *pppPrev = NULL;
     return false;
 }
 
