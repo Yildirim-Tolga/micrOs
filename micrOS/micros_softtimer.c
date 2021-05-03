@@ -176,7 +176,7 @@ uint8_t micros_timer_event_publish(bool tm_type, bool cancelable, uint32_t inter
     timer.timeout = 0;
     timer.type = tm_type;
     micros_timer_add(&timer);
-		return timer.key;
+    return timer.key;
 }
 
 uint8_t micros_timer_event_dispatch(bool tm_type, bool cancelable, uint32_t interval, eTaskId task_id, const sSig_gen *sig_gen)
@@ -195,7 +195,7 @@ uint8_t micros_timer_event_dispatch(bool tm_type, bool cancelable, uint32_t inte
     timer.timeout = 0;
     timer.type = tm_type;
     micros_timer_add(&timer);
-		return timer.key;
+    return timer.key;
 }
 
 uint8_t micros_timer_start(bool tm_type, bool cancelable, uint32_t interval, void (*pfnCallbackFunc)(void))
@@ -212,7 +212,7 @@ uint8_t micros_timer_start(bool tm_type, bool cancelable, uint32_t interval, voi
     timer.timeout = 0;
     timer.type = tm_type;
     micros_timer_add(&timer);
-		return timer.key;
+    return timer.key;
 }
 
 void micros_timer_cancel(uint8_t tm_key)
@@ -242,7 +242,7 @@ void micros_softtimer_main(void)
             break;
 
         case TIMER_CALLBACK_TYPE_TASK:
-            micros_event_dispatch(&(pNode->tm.sig_gen),pNode->tm.task_id);
+            micros_event_dispatch(&(pNode->tm.sig_gen), pNode->tm.task_id);
             break;
 
         case TIMER_CALLBACK_TYPE_CALLBACK_FUNC:
@@ -251,17 +251,17 @@ void micros_softtimer_main(void)
         }
         sMicros_tm_node *pTemp = pNode;
         pNode = pNode->next;
-        switch(pTemp->tm.type)
+        switch (pTemp->tm.type)
         {
-            case MICROS_TM_TYPE_ONE_SHOT:
-                micros_timer_cancel(pTemp->tm.key);
+        case MICROS_TM_TYPE_ONE_SHOT:
+            micros_timer_cancel(pTemp->tm.key);
             break;
 
-            case MICROS_TM_TYPE_PERIODIC:
-                pTemp->tm.start = time_counter;
+        case MICROS_TM_TYPE_PERIODIC:
+            pTemp->tm.start = time_counter;
             break;
 
-            default:
+        default:
             // TODO: error function will be added
             break;
         }

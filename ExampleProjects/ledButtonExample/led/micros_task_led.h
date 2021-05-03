@@ -17,6 +17,6 @@
 
 void led_main(void);
 void led_init(void);
-void led_get_signal(sSig_gen*);
+void led_get_signal(sSig_gen *);
 
-#endif//MICROS_TASK_LED_H_
+#endif //MICROS_TASK_LED_H_

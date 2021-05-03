@@ -11,8 +11,8 @@
  *  v1.0:   First release.
  */
 
- #ifndef MICROS_TASK_CONFIG_
- #define MICROS_TASK_CONFIG_
+#ifndef MICROS_TASK_CONFIG_
+#define MICROS_TASK_CONFIG_
 
 #include <stdlib.h>
 #include "micros_tse_config.h"

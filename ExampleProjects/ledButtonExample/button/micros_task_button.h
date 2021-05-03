@@ -17,6 +17,6 @@
 
 void button_main(void);
 void button_init(void);
-void button_get_signal(sSig_gen*);
+void button_get_signal(sSig_gen *);
 
-#endif//MICROS_TASK_BUTTON_H_
+#endif //MICROS_TASK_BUTTON_H_

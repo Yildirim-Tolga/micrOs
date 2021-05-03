@@ -180,13 +180,13 @@ static void micros_enqueue_signal(sSig_node **ppHead, sSig_node **ppTail, const 
 
 static sSig_gen micros_dequeue_signal(sSig_node **ppHead, sSig_node **ppTail)
 {
-    sSig_gen retval ={.sig_type = (*ppHead)->sig_gen.sig_type, .ptr_sig = (*ppHead)->sig_gen.ptr_sig};
+    sSig_gen retval = {.sig_type = (*ppHead)->sig_gen.sig_type, .ptr_sig = (*ppHead)->sig_gen.ptr_sig};
     sSig_node *pTemp = *ppHead;
     *ppHead = (*ppHead)->next;
     // if queue is empty
-    if(*ppHead == NULL)
+    if (*ppHead == NULL)
         *ppTail = NULL;
-    micros_memory_deallocate(pTemp,sizeof(sSig_node));
+    micros_memory_deallocate(pTemp, sizeof(sSig_node));
     return retval;
 }
 

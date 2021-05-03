@@ -26,9 +26,9 @@ void (*pfnCb)(void);
 
 void micros_mcu_timer_init(void (*pfnCallback)(void))
 {
-    #ifdef MICROS_MCU_TIMER_TYPE_INTERRUPT
+#ifdef MICROS_MCU_TIMER_TYPE_INTERRUPT
     micros_mcu_timer_init_periph();
-    #endif // MICROS_MCU_TIMER_TYPE_INTERRUPT
+#endif // MICROS_MCU_TIMER_TYPE_INTERRUPT
     pfnCb = pfnCallback;
 }
 
@@ -49,8 +49,7 @@ static void micros_mcu_timer_init_periph(void)
 void mcu_timer_fake_interrupt(void);
 void mcu_timer_fake_interrupt(void)
 {
-	pfnCb();
+    pfnCb();
 }
 
 #endif // MICROS_MCU_TIMER_TYPE_INTERRUPT
-
