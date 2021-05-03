@@ -316,7 +316,8 @@ static void micros_timer_delete(sMicros_tm_node **ppNode, sMicros_tm_node **ppPr
         pTm_head = (*ppNode)->next;
     else
         (*ppPrev)->next = (*ppNode)->next;
-    micros_memory_deallocate((*ppNode)->tm.sig_gen.ptr_sig, sig_size[(*ppNode)->tm.sig_gen.sig_type]);
+    if( (*ppNode)->tm.cb_type == TIMER_CALLBACK_TYPE_TASK || (*ppNode)->tm.cb_type == TIMER_CALLBACK_TYPE_EVENT)
+        micros_memory_deallocate((*ppNode)->tm.sig_gen.ptr_sig, sig_size[(*ppNode)->tm.sig_gen.sig_type]);
     micros_memory_deallocate(*ppNode, sizeof(sMicros_tm_node));
     callstack_in_delete_timer = 0;
     if (timeout_ctrl_break)
@@ -335,8 +336,11 @@ static void micros_timer_add(sMicros_timer *timer)
         return;
     }
     memcpy(&(newNode->tm), timer, sizeof(sMicros_timer));
-    newNode->tm.sig_gen.ptr_sig = micros_memory_allocate(sig_size[newNode->tm.sig_gen.sig_type]);
-    memcpy(newNode->tm.sig_gen.ptr_sig, timer->sig_gen.ptr_sig, sig_size[newNode->tm.sig_gen.sig_type]);
+    if( newNode->tm.cb_type == TIMER_CALLBACK_TYPE_TASK || newNode->tm.cb_type == TIMER_CALLBACK_TYPE_EVENT)
+    {
+        newNode->tm.sig_gen.ptr_sig = micros_memory_allocate(sig_size[newNode->tm.sig_gen.sig_type]);
+        memcpy(newNode->tm.sig_gen.ptr_sig, timer->sig_gen.ptr_sig, sig_size[newNode->tm.sig_gen.sig_type]);
+    }
     newNode->next = pTm_head;
     pTm_head = newNode;
     callstack_in_create_timer = 0;
