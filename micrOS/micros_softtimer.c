@@ -312,13 +312,15 @@ static bool micros_timer_search(uint8_t tm_key, sMicros_tm_node ***pppNode, sMic
 static void micros_timer_delete(sMicros_tm_node **ppNode, sMicros_tm_node **ppPrev)
 {
     callstack_in_delete_timer = 1;
+    sMicros_tm_node **ppHead = &pTm_head;
     if (*ppNode == pTm_head)
-        pTm_head = (*ppNode)->next;
+        ppHead = &((*ppNode)->next);
     else
         (*ppPrev)->next = (*ppNode)->next;
     if( (*ppNode)->tm.cb_type == TIMER_CALLBACK_TYPE_TASK || (*ppNode)->tm.cb_type == TIMER_CALLBACK_TYPE_EVENT)
         micros_memory_deallocate((*ppNode)->tm.sig_gen.ptr_sig, sig_size[(*ppNode)->tm.sig_gen.sig_type]);
     micros_memory_deallocate(*ppNode, sizeof(sMicros_tm_node));
+    pTm_head = *ppHead;
     callstack_in_delete_timer = 0;
     if (timeout_ctrl_break)
         micros_timer_timeout_ctrl(); // timeout control available now
