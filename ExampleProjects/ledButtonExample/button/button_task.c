@@ -211,7 +211,7 @@ void button_state_wait_debounce(void)
 	}
 	// button state changed in debounce time
 	if ((pfn_prev_button_state == button_state_wait_press && !isButtonPressed) ||
-		((pfn_prev_button_state == button_state_wait_long_press || pfn_prev_button_state == button_state_wait_long_press) && isButtonPressed))
+		((pfn_prev_button_state == button_state_wait_long_press || pfn_prev_button_state == button_state_wait_release) && isButtonPressed))
 	{
 		micros_timer_cancel(tm_key_debounce);
 		pfn_current_button_state = pfn_prev_button_state;
