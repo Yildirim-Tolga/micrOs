@@ -1,7 +1,7 @@
 *.vscode
-
+*.htm
 *.bak
-
+*.sct
 *.hex
 *.o
 *.crf
