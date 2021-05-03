@@ -15,7 +15,7 @@
 #include "micros_mem.h"
 #include "micros_mcu_timer.h"
 #include "micros_config.h"
-#include <string.h> //EKLENDI
+#include <string.h>
 
 #define TIMER_CALLBACK_TYPE_CALLBACK_FUNC 0
 #define TIMER_CALLBACK_TYPE_TASK 1

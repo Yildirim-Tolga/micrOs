@@ -102,6 +102,6 @@ uint8_t micros_timer_start(bool tm_type, bool cancelable, uint32_t interval, voi
  * 
  * @param tm_key Timer key
  */
-void micros_timer_cancel(uint8_t tm_key); //EKLENDI
+void micros_timer_cancel(uint8_t tm_key);
 
 #endif //MICROS_H_
