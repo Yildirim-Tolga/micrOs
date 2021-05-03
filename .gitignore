@@ -7,3 +7,8 @@
 *.crf
 *.d
 *.axf
+*.lnp
+*.iex
+*.map
+*.dep
+*.yildirim

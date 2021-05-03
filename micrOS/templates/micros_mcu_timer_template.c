@@ -12,6 +12,7 @@
  */
 
 #include "micros_mcu_timer.h"
+#include "micros_config.h"
 
 #ifdef MICROS_MCU_TIMER_TYPE_INTERRUPT
 /**
