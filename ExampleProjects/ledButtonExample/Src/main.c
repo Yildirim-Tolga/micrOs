@@ -102,7 +102,7 @@ int main(void)
     /* USER CODE BEGIN 3 */
 		micros_main();
 		fake_tm_counter++;
-		if(fake_tm_counter == 50000)
+		if(fake_tm_counter == 50)
 		{
 			fake_tm_counter = 0;
 			mcu_timer_fake_interrupt();
