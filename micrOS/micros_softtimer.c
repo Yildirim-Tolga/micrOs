@@ -233,7 +233,10 @@ void micros_softtimer_main(void)
     while (pNode != NULL)
     {
         if (pNode->tm.timeout == 0)
+        {
+            pNode = pNode->next;
             continue;
+        }
         pNode->tm.timeout = 0;
         switch (pNode->tm.cb_type)
         {
