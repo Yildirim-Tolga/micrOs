@@ -11,7 +11,6 @@ Section Cross References
     startup_stm32l072xx.o(RESET) refers to stm32l0xx_it.o(i.SVC_Handler) for SVC_Handler
     startup_stm32l072xx.o(RESET) refers to stm32l0xx_it.o(i.PendSV_Handler) for PendSV_Handler
     startup_stm32l072xx.o(RESET) refers to stm32l0xx_it.o(i.SysTick_Handler) for SysTick_Handler
-    startup_stm32l072xx.o(RESET) refers to micros_mcutimer.o(i.TIM2_IRQHandler) for TIM2_IRQHandler
     startup_stm32l072xx.o(.text) refers to system_stm32l0xx.o(i.SystemInit) for SystemInit
     startup_stm32l072xx.o(.text) refers to entry.o(.ARM.Collect$$$$00000000) for __main
     main.o(i.SystemClock_Config) refers to memseta.o(.text) for __aeabi_memclr4
@@ -20,9 +19,11 @@ Section Cross References
     main.o(i.SystemClock_Config) refers to stm32l0xx_hal_rcc.o(i.HAL_RCC_ClockConfig) for HAL_RCC_ClockConfig
     main.o(i.main) refers to stm32l0xx_hal.o(i.HAL_Init) for HAL_Init
     main.o(i.main) refers to main.o(i.SystemClock_Config) for SystemClock_Config
-    main.o(i.main) refers to taskmanager.o(i.micrOs_init) for micrOs_init
-    main.o(i.main) refers to taskmanager.o(i.micrOs_allTaskInit) for micrOs_allTaskInit
-    main.o(i.main) refers to taskmanager.o(i.micrOs_main) for micrOs_main
+    main.o(i.main) refers to micros_core.o(i.micros_init) for micros_init
+    main.o(i.main) refers to micros_core.o(i.micros_allTaskInit) for micros_allTaskInit
+    main.o(i.main) refers to micros_core.o(i.micros_main) for micros_main
+    main.o(i.main) refers to micros_mcu_timer.o(i.mcu_timer_fake_interrupt) for mcu_timer_fake_interrupt
+    main.o(i.main) refers to main.o(.data) for fake_tm_counter
     stm32l0xx_it.o(i.SysTick_Handler) refers to stm32l0xx_hal.o(i.HAL_IncTick) for HAL_IncTick
     stm32l0xx_hal_msp.o(i.HAL_TIM_Base_MspDeInit) refers to stm32l0xx_hal_cortex.o(i.HAL_NVIC_DisableIRQ) for HAL_NVIC_DisableIRQ
     stm32l0xx_hal_msp.o(i.HAL_TIM_Base_MspInit) refers to stm32l0xx_hal_cortex.o(i.HAL_NVIC_SetPriority) for HAL_NVIC_SetPriority
@@ -93,7 +94,7 @@ Section Cross References
     stm32l0xx_hal_tim.o(i.HAL_TIM_IRQHandler) refers to stm32l0xx_hal_tim.o(i.HAL_TIM_IC_CaptureCallback) for HAL_TIM_IC_CaptureCallback
     stm32l0xx_hal_tim.o(i.HAL_TIM_IRQHandler) refers to stm32l0xx_hal_tim.o(i.HAL_TIM_OC_DelayElapsedCallback) for HAL_TIM_OC_DelayElapsedCallback
     stm32l0xx_hal_tim.o(i.HAL_TIM_IRQHandler) refers to stm32l0xx_hal_tim.o(i.HAL_TIM_PWM_PulseFinishedCallback) for HAL_TIM_PWM_PulseFinishedCallback
-    stm32l0xx_hal_tim.o(i.HAL_TIM_IRQHandler) refers to micros_mcutimer.o(i.HAL_TIM_PeriodElapsedCallback) for HAL_TIM_PeriodElapsedCallback
+    stm32l0xx_hal_tim.o(i.HAL_TIM_IRQHandler) refers to stm32l0xx_hal_tim.o(i.HAL_TIM_PeriodElapsedCallback) for HAL_TIM_PeriodElapsedCallback
     stm32l0xx_hal_tim.o(i.HAL_TIM_IRQHandler) refers to stm32l0xx_hal_tim.o(i.HAL_TIM_TriggerCallback) for HAL_TIM_TriggerCallback
     stm32l0xx_hal_tim.o(i.HAL_TIM_OC_ConfigChannel) refers to stm32l0xx_hal_tim.o(i.TIM_OC1_SetConfig) for TIM_OC1_SetConfig
     stm32l0xx_hal_tim.o(i.HAL_TIM_OC_ConfigChannel) refers to stm32l0xx_hal_tim.o(i.TIM_OC2_SetConfig) for TIM_OC2_SetConfig
@@ -149,7 +150,7 @@ Section Cross References
     stm32l0xx_hal_tim.o(i.TIM_DMADelayPulseCplt) refers to stm32l0xx_hal_tim.o(i.HAL_TIM_PWM_PulseFinishedCallback) for HAL_TIM_PWM_PulseFinishedCallback
     stm32l0xx_hal_tim.o(i.TIM_DMADelayPulseHalfCplt) refers to stm32l0xx_hal_tim.o(i.HAL_TIM_PWM_PulseFinishedHalfCpltCallback) for HAL_TIM_PWM_PulseFinishedHalfCpltCallback
     stm32l0xx_hal_tim.o(i.TIM_DMAError) refers to stm32l0xx_hal_tim.o(i.HAL_TIM_ErrorCallback) for HAL_TIM_ErrorCallback
-    stm32l0xx_hal_tim.o(i.TIM_DMAPeriodElapsedCplt) refers to micros_mcutimer.o(i.HAL_TIM_PeriodElapsedCallback) for HAL_TIM_PeriodElapsedCallback
+    stm32l0xx_hal_tim.o(i.TIM_DMAPeriodElapsedCplt) refers to stm32l0xx_hal_tim.o(i.HAL_TIM_PeriodElapsedCallback) for HAL_TIM_PeriodElapsedCallback
     stm32l0xx_hal_tim.o(i.TIM_DMAPeriodElapsedHalfCplt) refers to stm32l0xx_hal_tim.o(i.HAL_TIM_PeriodElapsedHalfCpltCallback) for HAL_TIM_PeriodElapsedHalfCpltCallback
     stm32l0xx_hal_tim.o(i.TIM_DMATriggerCplt) refers to stm32l0xx_hal_tim.o(i.HAL_TIM_TriggerCallback) for HAL_TIM_TriggerCallback
     stm32l0xx_hal_tim.o(i.TIM_DMATriggerHalfCplt) refers to stm32l0xx_hal_tim.o(i.HAL_TIM_TriggerHalfCpltCallback) for HAL_TIM_TriggerHalfCpltCallback
@@ -517,128 +518,127 @@ Section Cross References
     system_stm32l0xx.o(i.SystemCoreClockUpdate) refers to uidiv.o(.text) for __aeabi_uidivmod
     system_stm32l0xx.o(i.SystemCoreClockUpdate) refers to system_stm32l0xx.o(.data) for SystemCoreClock
     system_stm32l0xx.o(i.SystemCoreClockUpdate) refers to system_stm32l0xx.o(.constdata) for PLLMulTable
-    taskmanager.o(i.addTaskSubscribeList) refers to malloc.o(i.malloc) for malloc
-    taskmanager.o(i.addTaskSubscribeList) refers to errorhandler.o(i.errorHandler) for errorHandler
-    taskmanager.o(i.addTaskSubscribeList) refers to taskmanager.o(.data) for eventSignal
-    taskmanager.o(i.deleteTaskSubscribeList) refers to malloc.o(i.free) for free
-    taskmanager.o(i.deleteTaskSubscribeList) refers to taskmanager.o(.data) for eventSignal
-    taskmanager.o(i.getSignal) refers to taskmanager.o(.data) for micrOsTask
-    taskmanager.o(i.micrOs_allTaskInit) refers to taskmanager.o(.data) for micrOsTask
-    taskmanager.o(i.micrOs_cancelTimer) refers to micros_softtimer.o(i.microsSofttimer_deleteTimer) for microsSofttimer_deleteTimer
-    taskmanager.o(i.micrOs_dispatchEventToTask) refers to taskmanager.o(i.setSignal) for setSignal
-    taskmanager.o(i.micrOs_dispatchEventToTask) refers to taskmanager.o(.data) for micrOsTask
-    taskmanager.o(i.micrOs_getTaskRunState) refers to taskmanager.o(.data) for micrOsTask
-    taskmanager.o(i.micrOs_init) refers to micros_mcutimer.o(i.microsMcuTimer_init) for microsMcuTimer_init
-    taskmanager.o(i.micrOs_main) refers to micros_softtimer.o(i.getTimerList) for getTimerList
-    taskmanager.o(i.micrOs_main) refers to taskmanager.o(i.micrOs_dispatchEventToTask) for micrOs_dispatchEventToTask
-    taskmanager.o(i.micrOs_main) refers to micros_softtimer.o(i.getTimeCounterValue) for getTimeCounterValue
-    taskmanager.o(i.micrOs_main) refers to micros_softtimer.o(i.microsSofttimer_deleteTimer) for microsSofttimer_deleteTimer
-    taskmanager.o(i.micrOs_main) refers to taskmanager.o(i.micrOs_publishEventToSubscribers) for micrOs_publishEventToSubscribers
-    taskmanager.o(i.micrOs_main) refers to malloc.o(i.free) for free
-    taskmanager.o(i.micrOs_main) refers to taskmanager.o(i.getSignal) for getSignal
-    taskmanager.o(i.micrOs_main) refers to taskmanager.o(.data) for micrOsTask
-    taskmanager.o(i.micrOs_publishEventToSubscribers) refers to taskmanager.o(i.micrOs_dispatchEventToTask) for micrOs_dispatchEventToTask
-    taskmanager.o(i.micrOs_publishEventToSubscribers) refers to taskmanager.o(.data) for eventSignal
-    taskmanager.o(i.micrOs_setEventSubscriptionState) refers to taskmanager.o(i.addTaskSubscribeList) for addTaskSubscribeList
-    taskmanager.o(i.micrOs_setEventSubscriptionState) refers to taskmanager.o(i.deleteTaskSubscribeList) for deleteTaskSubscribeList
-    taskmanager.o(i.micrOs_setTaskRunState) refers to taskmanager.o(.data) for micrOsTask
-    taskmanager.o(i.micrOs_startCallbackTimer) refers to micros_softtimer.o(i.microsSofttimer_createTimer) for microsSofttimer_createTimer
-    taskmanager.o(i.micrOs_startEventDispachTimer) refers to micros_softtimer.o(i.microsSofttimer_createTimer) for microsSofttimer_createTimer
-    taskmanager.o(i.micrOs_startEventDispachTimer) refers to malloc.o(i.malloc) for malloc
-    taskmanager.o(i.micrOs_startEventDispachTimer) refers to memcpya.o(.text) for __aeabi_memcpy
-    taskmanager.o(i.micrOs_startEventDispachTimer) refers to taskmanager.o(.constdata) for structSize
-    taskmanager.o(i.micrOs_startEventPublishTimer) refers to micros_softtimer.o(i.microsSofttimer_createTimer) for microsSofttimer_createTimer
-    taskmanager.o(i.micrOs_startEventPublishTimer) refers to malloc.o(i.malloc) for malloc
-    taskmanager.o(i.micrOs_startEventPublishTimer) refers to memcpya.o(.text) for __aeabi_memcpy
-    taskmanager.o(i.micrOs_startEventPublishTimer) refers to taskmanager.o(.constdata) for structSize
-    taskmanager.o(i.micrOs_taskInit) refers to taskmanager.o(.data) for micrOsTask
-    taskmanager.o(i.setSignal) refers to malloc.o(i.malloc) for malloc
-    taskmanager.o(i.setSignal) refers to errorhandler.o(i.errorHandler) for errorHandler
-    taskmanager.o(i.setSignal) refers to malloc.o(i.free) for free
-    taskmanager.o(i.setSignal) refers to memcpya.o(.text) for __aeabi_memcpy
-    taskmanager.o(i.setSignal) refers to taskmanager.o(.data) for micrOsTask
-    taskmanager.o(i.setSignal) refers to taskmanager.o(.constdata) for structSize
-    taskmanager.o(.data) refers to ledtask.o(i.taskLedInit) for taskLedInit
-    taskmanager.o(.data) refers to ledtask.o(i.taskLedMain) for taskLedMain
-    taskmanager.o(.data) refers to ledtask.o(i.taskLedGetSignal) for taskLedGetSignal
-    taskmanager.o(.data) refers to buttontask.o(i.taskButtonInit) for taskButtonInit
-    taskmanager.o(.data) refers to buttontask.o(i.taskButtonMain) for taskButtonMain
-    taskmanager.o(.data) refers to buttontask.o(i.taskButtonGetSignal) for taskButtonGetSignal
-    micros_mcutimer.o(i.HAL_TIM_PeriodElapsedCallback) refers to micros_softtimer.o(i.microsSofttimer_mcuTimerCallback) for microsSofttimer_mcuTimerCallback
-    micros_mcutimer.o(i.TIM2_IRQHandler) refers to stm32l0xx_hal_tim.o(i.HAL_TIM_IRQHandler) for HAL_TIM_IRQHandler
-    micros_mcutimer.o(i.TIM2_IRQHandler) refers to micros_mcutimer.o(.bss) for mcuTimer
-    micros_mcutimer.o(i.microsMcuTimer_init) refers to stm32l0xx_hal_tim.o(i.HAL_TIM_Base_Init) for HAL_TIM_Base_Init
-    micros_mcutimer.o(i.microsMcuTimer_init) refers to errorhandler.o(i.errorHandler) for errorHandler
-    micros_mcutimer.o(i.microsMcuTimer_init) refers to stm32l0xx_hal_tim.o(i.HAL_TIM_ConfigClockSource) for HAL_TIM_ConfigClockSource
-    micros_mcutimer.o(i.microsMcuTimer_init) refers to stm32l0xx_hal_tim_ex.o(i.HAL_TIMEx_MasterConfigSynchronization) for HAL_TIMEx_MasterConfigSynchronization
-    micros_mcutimer.o(i.microsMcuTimer_init) refers to stm32l0xx_hal_tim.o(i.HAL_TIM_Base_Start_IT) for HAL_TIM_Base_Start_IT
-    micros_mcutimer.o(i.microsMcuTimer_init) refers to micros_mcutimer.o(.bss) for mcuTimer
-    micros_softtimer.o(i.controlTimeout) refers to micros_softtimer.o(i.microsSofttimer_deleteTimer) for microsSofttimer_deleteTimer
-    micros_softtimer.o(i.controlTimeout) refers to micros_softtimer.o(.data) for timeCounter
-    micros_softtimer.o(i.getTimeCounterValue) refers to micros_softtimer.o(.data) for timeCounter
-    micros_softtimer.o(i.getTimerList) refers to micros_softtimer.o(.data) for timers
-    micros_softtimer.o(i.microsSofttimer_createTimer) refers to malloc.o(i.malloc) for malloc
-    micros_softtimer.o(i.microsSofttimer_createTimer) refers to micros_softtimer.o(i.microsSofttimer_mcuTimerCallback) for microsSofttimer_mcuTimerCallback
-    micros_softtimer.o(i.microsSofttimer_createTimer) refers to errorhandler.o(i.errorHandler) for errorHandler
-    micros_softtimer.o(i.microsSofttimer_createTimer) refers to micros_softtimer.o(.data) for callStackInCreateTimer
-    micros_softtimer.o(i.microsSofttimer_deleteTimer) refers to micros_softtimer.o(i.microsSofttimer_mcuTimerCallback) for microsSofttimer_mcuTimerCallback
-    micros_softtimer.o(i.microsSofttimer_deleteTimer) refers to malloc.o(i.free) for free
-    micros_softtimer.o(i.microsSofttimer_deleteTimer) refers to micros_softtimer.o(.data) for callStackInDeleteTimer
-    micros_softtimer.o(i.microsSofttimer_mcuTimerCallback) refers to micros_softtimer.o(i.controlTimeout) for controlTimeout
-    micros_softtimer.o(i.microsSofttimer_mcuTimerCallback) refers to micros_softtimer.o(.data) for timeCounter
-    ledtask.o(i.getOnlyIdSignal) refers to stm32l0xx_hal_gpio.o(i.HAL_GPIO_TogglePin) for HAL_GPIO_TogglePin
-    ledtask.o(i.getOnlyIdSignal) refers to ledtask.o(.data) for ledMode
-    ledtask.o(i.getSignalAndData) refers to taskmanager.o(i.micrOs_cancelTimer) for micrOs_cancelTimer
-    ledtask.o(i.getSignalAndData) refers to stm32l0xx_hal_gpio.o(i.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
-    ledtask.o(i.getSignalAndData) refers to stm32l0xx_hal_gpio.o(i.HAL_GPIO_TogglePin) for HAL_GPIO_TogglePin
-    ledtask.o(i.getSignalAndData) refers to taskmanager.o(i.micrOs_startEventDispachTimer) for micrOs_startEventDispachTimer
-    ledtask.o(i.getSignalAndData) refers to ledtask.o(.data) for selectedLed
-    ledtask.o(i.getSignalAndData) refers to ledtask.o(.constdata) for .constdata
-    ledtask.o(i.getSignalAndData) refers to ledtask.o(.bss) for ledTimerKey
-    ledtask.o(i.taskLedGetSignal) refers to ledtask.o(i.getOnlyIdSignal) for getOnlyIdSignal
-    ledtask.o(i.taskLedGetSignal) refers to ledtask.o(i.getSignalAndData) for getSignalAndData
-    ledtask.o(i.taskLedInit) refers to memseta.o(.text) for __aeabi_memclr4
-    ledtask.o(i.taskLedInit) refers to stm32l0xx_hal_gpio.o(i.HAL_GPIO_Init) for HAL_GPIO_Init
-    ledtask.o(i.taskLedInit) refers to stm32l0xx_hal_gpio.o(i.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
-    ledtask.o(i.taskLedInit) refers to taskmanager.o(i.micrOs_setEventSubscriptionState) for micrOs_setEventSubscriptionState
-    buttontask.o(i.buttonLongPressOp) refers to taskmanager.o(i.micrOs_publishEventToSubscribers) for micrOs_publishEventToSubscribers
-    buttontask.o(i.buttonLongPressOp) refers to buttontask.o(.data) for selectedLed
-    buttontask.o(i.buttonLongPressOp) refers to buttontask.o(.constdata) for .constdata
-    buttontask.o(i.buttonShortPressOp) refers to taskmanager.o(i.micrOs_publishEventToSubscribers) for micrOs_publishEventToSubscribers
-    buttontask.o(i.buttonShortPressOp) refers to buttontask.o(.data) for selectedLed
-    buttontask.o(i.buttonStateWaitDebounce) refers to taskmanager.o(i.micrOs_cancelTimer) for micrOs_cancelTimer
-    buttontask.o(i.buttonStateWaitDebounce) refers to buttontask.o(i.buttonShortPressOp) for buttonShortPressOp
-    buttontask.o(i.buttonStateWaitDebounce) refers to taskmanager.o(i.micrOs_startEventDispachTimer) for micrOs_startEventDispachTimer
-    buttontask.o(i.buttonStateWaitDebounce) refers to buttontask.o(i.buttonPressOp) for buttonPressOp
-    buttontask.o(i.buttonStateWaitDebounce) refers to buttontask.o(i.buttonUnpressOp) for buttonUnpressOp
-    buttontask.o(i.buttonStateWaitDebounce) refers to stm32l0xx_hal_gpio.o(i.HAL_GPIO_ReadPin) for HAL_GPIO_ReadPin
-    buttontask.o(i.buttonStateWaitDebounce) refers to buttontask.o(.data) for debounceTimeout
-    buttontask.o(i.buttonStateWaitDebounce) refers to buttontask.o(i.buttonStateWaitLongPress) for buttonStateWaitLongPress
-    buttontask.o(i.buttonStateWaitDebounce) refers to buttontask.o(.constdata) for .constdata
-    buttontask.o(i.buttonStateWaitDebounce) refers to buttontask.o(i.buttonStateWaitPress) for buttonStateWaitPress
-    buttontask.o(i.buttonStateWaitLongPress) refers to buttontask.o(i.buttonLongPressOp) for buttonLongPressOp
-    buttontask.o(i.buttonStateWaitLongPress) refers to buttontask.o(i.buttonStateWaitUnpress) for buttonStateWaitUnpress
-    buttontask.o(i.buttonStateWaitLongPress) refers to buttontask.o(.data) for longPressTimeout
-    buttontask.o(i.buttonStateWaitPress) refers to stm32l0xx_hal_gpio.o(i.HAL_GPIO_ReadPin) for HAL_GPIO_ReadPin
-    buttontask.o(i.buttonStateWaitPress) refers to taskmanager.o(i.micrOs_startEventDispachTimer) for micrOs_startEventDispachTimer
-    buttontask.o(i.buttonStateWaitPress) refers to buttontask.o(.data) for signalContainer
-    buttontask.o(i.buttonStateWaitPress) refers to buttontask.o(.constdata) for .constdata
-    buttontask.o(i.buttonStateWaitPress) refers to buttontask.o(i.buttonStateWaitDebounce) for buttonStateWaitDebounce
-    buttontask.o(i.buttonStateWaitPress) refers to buttontask.o(i.buttonStateWaitLongPress) for buttonStateWaitLongPress
-    buttontask.o(i.buttonStateWaitUnpress) refers to stm32l0xx_hal_gpio.o(i.HAL_GPIO_ReadPin) for HAL_GPIO_ReadPin
-    buttontask.o(i.buttonStateWaitUnpress) refers to taskmanager.o(i.micrOs_startEventDispachTimer) for micrOs_startEventDispachTimer
-    buttontask.o(i.buttonStateWaitUnpress) refers to buttontask.o(.data) for signalContainer
-    buttontask.o(i.buttonStateWaitUnpress) refers to buttontask.o(.constdata) for .constdata
-    buttontask.o(i.buttonStateWaitUnpress) refers to buttontask.o(i.buttonStateWaitDebounce) for buttonStateWaitDebounce
-    buttontask.o(i.buttonStateWaitUnpress) refers to buttontask.o(i.buttonStateWaitPress) for buttonStateWaitPress
-    buttontask.o(i.getOnlyIdSignal) refers to buttontask.o(.data) for debounceTimeout
-    buttontask.o(i.taskButtonGetSignal) refers to buttontask.o(i.getOnlyIdSignal) for getOnlyIdSignal
-    buttontask.o(i.taskButtonGetSignal) refers to buttontask.o(i.getSignalAndData) for getSignalAndData
-    buttontask.o(i.taskButtonInit) refers to memseta.o(.text) for __aeabi_memclr4
-    buttontask.o(i.taskButtonInit) refers to stm32l0xx_hal_gpio.o(i.HAL_GPIO_Init) for HAL_GPIO_Init
-    buttontask.o(i.taskButtonInit) refers to buttontask.o(i.buttonStateWaitPress) for buttonStateWaitPress
-    buttontask.o(i.taskButtonInit) refers to buttontask.o(.data) for pfnCurrentButtonState
-    buttontask.o(i.taskButtonMain) refers to buttontask.o(.data) for pfnCurrentButtonState
+    led_task.o(i.led_get_signal) refers to led_task.o(i.led_get_signal_id) for led_get_signal_id
+    led_task.o(i.led_get_signal) refers to led_task.o(i.led_get_signal_id_u8) for led_get_signal_id_u8
+    led_task.o(i.led_get_signal_id) refers to stm32l0xx_hal_gpio.o(i.HAL_GPIO_TogglePin) for HAL_GPIO_TogglePin
+    led_task.o(i.led_get_signal_id) refers to led_task.o(.data) for led_mode
+    led_task.o(i.led_get_signal_id_u8) refers to micros_softtimer.o(i.micros_timer_cancel) for micros_timer_cancel
+    led_task.o(i.led_get_signal_id_u8) refers to stm32l0xx_hal_gpio.o(i.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
+    led_task.o(i.led_get_signal_id_u8) refers to stm32l0xx_hal_gpio.o(i.HAL_GPIO_TogglePin) for HAL_GPIO_TogglePin
+    led_task.o(i.led_get_signal_id_u8) refers to micros_softtimer.o(i.micros_timer_event_dispatch) for micros_timer_event_dispatch
+    led_task.o(i.led_get_signal_id_u8) refers to led_task.o(.data) for selected_led
+    led_task.o(i.led_get_signal_id_u8) refers to led_task.o(.constdata) for .constdata
+    led_task.o(i.led_init) refers to memseta.o(.text) for __aeabi_memclr4
+    led_task.o(i.led_init) refers to stm32l0xx_hal_gpio.o(i.HAL_GPIO_Init) for HAL_GPIO_Init
+    led_task.o(i.led_init) refers to stm32l0xx_hal_gpio.o(i.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
+    led_task.o(i.led_init) refers to micros_core.o(i.micros_event_substate_set) for micros_event_substate_set
+    button_task.o(i.button_get_signal) refers to button_task.o(i.button_get_signal_id) for button_get_signal_id
+    button_task.o(i.button_get_signal) refers to button_task.o(i.button_get_signal_id_u8) for button_get_signal_id_u8
+    button_task.o(i.button_get_signal_id) refers to button_task.o(.data) for timeout_debounce
+    button_task.o(i.button_init) refers to memseta.o(.text) for __aeabi_memclr4
+    button_task.o(i.button_init) refers to stm32l0xx_hal_gpio.o(i.HAL_GPIO_Init) for HAL_GPIO_Init
+    button_task.o(i.button_init) refers to button_task.o(i.button_state_wait_press) for button_state_wait_press
+    button_task.o(i.button_init) refers to button_task.o(.data) for pfn_current_button_state
+    button_task.o(i.button_long_press_operation) refers to micros_core.o(i.micros_event_publish) for micros_event_publish
+    button_task.o(i.button_long_press_operation) refers to button_task.o(.data) for selected_led
+    button_task.o(i.button_long_press_operation) refers to button_task.o(.constdata) for .constdata
+    button_task.o(i.button_main) refers to button_task.o(.data) for pfn_current_button_state
+    button_task.o(i.button_short_press_operation) refers to micros_core.o(i.micros_event_publish) for micros_event_publish
+    button_task.o(i.button_short_press_operation) refers to button_task.o(.data) for selected_led
+    button_task.o(i.button_short_press_operation) refers to button_task.o(.constdata) for .constdata
+    button_task.o(i.button_state_wait_debounce) refers to micros_softtimer.o(i.micros_timer_cancel) for micros_timer_cancel
+    button_task.o(i.button_state_wait_debounce) refers to button_task.o(i.button_short_press_operation) for button_short_press_operation
+    button_task.o(i.button_state_wait_debounce) refers to micros_softtimer.o(i.micros_timer_event_dispatch) for micros_timer_event_dispatch
+    button_task.o(i.button_state_wait_debounce) refers to button_task.o(i.button_press_operation) for button_press_operation
+    button_task.o(i.button_state_wait_debounce) refers to button_task.o(i.button_release_operation) for button_release_operation
+    button_task.o(i.button_state_wait_debounce) refers to stm32l0xx_hal_gpio.o(i.HAL_GPIO_ReadPin) for HAL_GPIO_ReadPin
+    button_task.o(i.button_state_wait_debounce) refers to button_task.o(.data) for timeout_debounce
+    button_task.o(i.button_state_wait_debounce) refers to button_task.o(i.button_state_wait_long_press) for button_state_wait_long_press
+    button_task.o(i.button_state_wait_debounce) refers to button_task.o(.constdata) for .constdata
+    button_task.o(i.button_state_wait_debounce) refers to button_task.o(i.button_state_wait_press) for button_state_wait_press
+    button_task.o(i.button_state_wait_long_press) refers to button_task.o(i.button_long_press_operation) for button_long_press_operation
+    button_task.o(i.button_state_wait_long_press) refers to button_task.o(i.button_state_wait_release) for button_state_wait_release
+    button_task.o(i.button_state_wait_long_press) refers to button_task.o(.data) for timeout_long_press
+    button_task.o(i.button_state_wait_press) refers to stm32l0xx_hal_gpio.o(i.HAL_GPIO_ReadPin) for HAL_GPIO_ReadPin
+    button_task.o(i.button_state_wait_press) refers to micros_softtimer.o(i.micros_timer_event_dispatch) for micros_timer_event_dispatch
+    button_task.o(i.button_state_wait_press) refers to button_task.o(.data) for signal_container
+    button_task.o(i.button_state_wait_press) refers to button_task.o(.constdata) for .constdata
+    button_task.o(i.button_state_wait_press) refers to button_task.o(i.button_state_wait_debounce) for button_state_wait_debounce
+    button_task.o(i.button_state_wait_press) refers to button_task.o(i.button_state_wait_long_press) for button_state_wait_long_press
+    button_task.o(i.button_state_wait_release) refers to stm32l0xx_hal_gpio.o(i.HAL_GPIO_ReadPin) for HAL_GPIO_ReadPin
+    button_task.o(i.button_state_wait_release) refers to micros_softtimer.o(i.micros_timer_event_dispatch) for micros_timer_event_dispatch
+    button_task.o(i.button_state_wait_release) refers to button_task.o(.data) for signal_container
+    button_task.o(i.button_state_wait_release) refers to button_task.o(.constdata) for .constdata
+    button_task.o(i.button_state_wait_release) refers to button_task.o(i.button_state_wait_debounce) for button_state_wait_debounce
+    button_task.o(i.button_state_wait_release) refers to button_task.o(i.button_state_wait_press) for button_state_wait_press
+    micros_core.o(i.micros_add_task_subs) refers to micros_mem.o(i.micros_memory_allocate) for micros_memory_allocate
+    micros_core.o(i.micros_allTaskInit) refers to micros_core.o(.data) for micros_task
+    micros_core.o(i.micros_dequeue_signal) refers to micros_mem.o(i.micros_memory_deallocate) for micros_memory_deallocate
+    micros_core.o(i.micros_enqueue_signal) refers to micros_mem.o(i.micros_memory_allocate) for micros_memory_allocate
+    micros_core.o(i.micros_enqueue_signal) refers to memcpya.o(.text) for __aeabi_memcpy
+    micros_core.o(i.micros_enqueue_signal) refers to micros_core.o(i.micros_is_empty_sig_list) for micros_is_empty_sig_list
+    micros_core.o(i.micros_enqueue_signal) refers to micros_core.o(.constdata) for sig_size
+    micros_core.o(i.micros_event_dispatch) refers to micros_core.o(i.micros_enqueue_signal) for micros_enqueue_signal
+    micros_core.o(i.micros_event_dispatch) refers to micros_core.o(.data) for micros_task
+    micros_core.o(i.micros_event_publish) refers to micros_core.o(i.micros_event_dispatch) for micros_event_dispatch
+    micros_core.o(i.micros_event_publish) refers to micros_core.o(.bss) for pEvent_subs
+    micros_core.o(i.micros_event_substate_set) refers to micros_core.o(i.micros_add_task_subs) for micros_add_task_subs
+    micros_core.o(i.micros_event_substate_set) refers to micros_core.o(i.micros_remove_task_subs) for micros_remove_task_subs
+    micros_core.o(i.micros_event_substate_set) refers to micros_core.o(.bss) for pEvent_subs
+    micros_core.o(i.micros_init) refers to micros_softtimer.o(i.micros_softtimer_init) for micros_softtimer_init
+    micros_core.o(i.micros_init) refers to micros_core.o(.data) for micros_task
+    micros_core.o(i.micros_main) refers to micros_softtimer.o(i.micros_softtimer_main) for micros_softtimer_main
+    micros_core.o(i.micros_main) refers to micros_core.o(i.micros_dequeue_signal) for micros_dequeue_signal
+    micros_core.o(i.micros_main) refers to micros_mem.o(i.micros_memory_deallocate) for micros_memory_deallocate
+    micros_core.o(i.micros_main) refers to micros_core.o(i.micros_is_empty_sig_list) for micros_is_empty_sig_list
+    micros_core.o(i.micros_main) refers to micros_core.o(.data) for micros_task
+    micros_core.o(i.micros_main) refers to micros_core.o(.constdata) for sig_size
+    micros_core.o(i.micros_remove_task_subs) refers to micros_mem.o(i.micros_memory_deallocate) for micros_memory_deallocate
+    micros_core.o(i.micros_taskInit) refers to micros_core.o(.data) for micros_task
+    micros_core.o(i.micros_task_runstate_get) refers to micros_core.o(.data) for micros_task
+    micros_core.o(i.micros_task_runstate_set) refers to micros_core.o(.data) for micros_task
+    micros_core.o(.data) refers to led_task.o(i.led_init) for led_init
+    micros_core.o(.data) refers to led_task.o(i.led_main) for led_main
+    micros_core.o(.data) refers to led_task.o(i.led_get_signal) for led_get_signal
+    micros_core.o(.data) refers to button_task.o(i.button_init) for button_init
+    micros_core.o(.data) refers to button_task.o(i.button_main) for button_main
+    micros_core.o(.data) refers to button_task.o(i.button_get_signal) for button_get_signal
+    micros_mem.o(i.micros_memory_allocate) refers to malloc.o(i.malloc) for malloc
+    micros_mem.o(i.micros_memory_deallocate) refers to malloc.o(i.free) for free
+    micros_softtimer.o(i.micros_softtimer_main) refers to micros_core.o(i.micros_event_publish) for micros_event_publish
+    micros_softtimer.o(i.micros_softtimer_main) refers to micros_core.o(i.micros_event_dispatch) for micros_event_dispatch
+    micros_softtimer.o(i.micros_softtimer_main) refers to micros_softtimer.o(i.micros_timer_cancel) for micros_timer_cancel
+    micros_softtimer.o(i.micros_softtimer_main) refers to micros_softtimer.o(.data) for pTm_head
+    micros_softtimer.o(i.micros_timer_add) refers to micros_mem.o(i.micros_memory_allocate) for micros_memory_allocate
+    micros_softtimer.o(i.micros_timer_add) refers to memcpya.o(.text) for __aeabi_memcpy4
+    micros_softtimer.o(i.micros_timer_add) refers to micros_softtimer.o(i.micros_timer_timeout_ctrl) for micros_timer_timeout_ctrl
+    micros_softtimer.o(i.micros_timer_add) refers to micros_softtimer.o(.data) for callstack_in_create_timer
+    micros_softtimer.o(i.micros_timer_add) refers to micros_core.o(.constdata) for sig_size
+    micros_softtimer.o(i.micros_timer_cancel) refers to micros_softtimer.o(i.micros_timer_search) for micros_timer_search
+    micros_softtimer.o(i.micros_timer_cancel) refers to micros_softtimer.o(i.micros_timer_delete) for micros_timer_delete
+    micros_softtimer.o(i.micros_timer_create_tmkey) refers to micros_softtimer.o(i.micros_timer_search) for micros_timer_search
+    micros_softtimer.o(i.micros_timer_create_tmkey) refers to micros_softtimer.o(.data) for tm_key
+    micros_softtimer.o(i.micros_timer_delete) refers to micros_mem.o(i.micros_memory_deallocate) for micros_memory_deallocate
+    micros_softtimer.o(i.micros_timer_delete) refers to micros_softtimer.o(i.micros_timer_timeout_ctrl) for micros_timer_timeout_ctrl
+    micros_softtimer.o(i.micros_timer_delete) refers to micros_softtimer.o(.data) for callstack_in_delete_timer
+    micros_softtimer.o(i.micros_timer_delete) refers to micros_core.o(.constdata) for sig_size
+    micros_softtimer.o(i.micros_timer_event_dispatch) refers to micros_softtimer.o(i.micros_timer_create_tmkey) for micros_timer_create_tmkey
+    micros_softtimer.o(i.micros_timer_event_dispatch) refers to micros_softtimer.o(i.micros_timer_add) for micros_timer_add
+    micros_softtimer.o(i.micros_timer_event_dispatch) refers to micros_softtimer.o(.data) for time_counter
+    micros_softtimer.o(i.micros_timer_event_publish) refers to micros_softtimer.o(i.micros_timer_create_tmkey) for micros_timer_create_tmkey
+    micros_softtimer.o(i.micros_timer_event_publish) refers to micros_softtimer.o(i.micros_timer_add) for micros_timer_add
+    micros_softtimer.o(i.micros_timer_event_publish) refers to micros_softtimer.o(.data) for time_counter
+    micros_softtimer.o(i.micros_timer_mcu_cb) refers to micros_softtimer.o(i.micros_timer_timeout_ctrl) for micros_timer_timeout_ctrl
+    micros_softtimer.o(i.micros_timer_mcu_cb) refers to micros_softtimer.o(.data) for time_counter
+    micros_softtimer.o(i.micros_timer_search) refers to micros_softtimer.o(.data) for pTm_head
+    micros_softtimer.o(i.micros_timer_start) refers to micros_softtimer.o(i.micros_timer_create_tmkey) for micros_timer_create_tmkey
+    micros_softtimer.o(i.micros_timer_start) refers to micros_softtimer.o(i.micros_timer_add) for micros_timer_add
+    micros_softtimer.o(i.micros_timer_start) refers to micros_softtimer.o(.data) for time_counter
+    micros_softtimer.o(i.micros_timer_timeout_ctrl) refers to micros_softtimer.o(i.micros_timer_calc_elapsed_time) for micros_timer_calc_elapsed_time
+    micros_softtimer.o(i.micros_timer_timeout_ctrl) refers to micros_softtimer.o(.data) for timeout_ctrl_break
+    micros_mcu_timer.o(i.mcu_timer_fake_interrupt) refers to micros_mcu_timer.o(.data) for pfnCb
+    micros_mcu_timer.o(i.micros_mcu_timer_init) refers to micros_mcu_timer.o(i.micros_mcu_timer_init_periph) for micros_mcu_timer_init_periph
+    micros_mcu_timer.o(i.micros_mcu_timer_init) refers to micros_mcu_timer.o(.data) for pfnCb
     entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry10a.o(.ARM.Collect$$$$0000000D) for __rt_final_cpp
     entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry11a.o(.ARM.Collect$$$$0000000F) for __rt_final_exit
     entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry7b.o(.ARM.Collect$$$$00000008) for _main_clock
@@ -699,17 +699,21 @@ Removing Unused input sections from the image.
     Removing stm32l0xx_hal_msp.o(.rev16_text), (4 bytes).
     Removing stm32l0xx_hal_msp.o(.revsh_text), (4 bytes).
     Removing stm32l0xx_hal_msp.o(i.HAL_TIM_Base_MspDeInit), (40 bytes).
+    Removing stm32l0xx_hal_msp.o(i.HAL_TIM_Base_MspInit), (48 bytes).
     Removing stm32l0xx_hal_tim.o(.rev16_text), (4 bytes).
     Removing stm32l0xx_hal_tim.o(.revsh_text), (4 bytes).
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_Base_DeInit), (68 bytes).
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_Base_GetState), (8 bytes).
+    Removing stm32l0xx_hal_tim.o(i.HAL_TIM_Base_Init), (56 bytes).
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_Base_MspDeInit), (2 bytes).
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_Base_MspInit), (2 bytes).
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_Base_Start), (42 bytes).
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_Base_Start_DMA), (140 bytes).
+    Removing stm32l0xx_hal_tim.o(i.HAL_TIM_Base_Start_IT), (42 bytes).
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_Base_Stop), (52 bytes).
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_Base_Stop_DMA), (68 bytes).
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_Base_Stop_IT), (52 bytes).
+    Removing stm32l0xx_hal_tim.o(i.HAL_TIM_ConfigClockSource), (272 bytes).
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_ConfigOCrefClear), (294 bytes).
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_ConfigTI1Input), (32 bytes).
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_DMABurst_ReadStart), (460 bytes).
@@ -729,6 +733,7 @@ Removing Unused input sections from the image.
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_Encoder_Stop_IT), (148 bytes).
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_ErrorCallback), (2 bytes).
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_GenerateEvent), (54 bytes).
+    Removing stm32l0xx_hal_tim.o(i.HAL_TIM_IC_CaptureCallback), (2 bytes).
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_IC_CaptureHalfCpltCallback), (2 bytes).
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_IC_ConfigChannel), (226 bytes).
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_IC_DeInit), (68 bytes).
@@ -742,8 +747,10 @@ Removing Unused input sections from the image.
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_IC_Stop), (52 bytes).
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_IC_Stop_DMA), (168 bytes).
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_IC_Stop_IT), (132 bytes).
+    Removing stm32l0xx_hal_tim.o(i.HAL_TIM_IRQHandler), (380 bytes).
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_OC_ConfigChannel), (118 bytes).
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_OC_DeInit), (68 bytes).
+    Removing stm32l0xx_hal_tim.o(i.HAL_TIM_OC_DelayElapsedCallback), (2 bytes).
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_OC_GetState), (8 bytes).
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_OC_Init), (56 bytes).
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_OC_MspDeInit), (2 bytes).
@@ -770,6 +777,7 @@ Removing Unused input sections from the image.
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_PWM_Init), (56 bytes).
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_PWM_MspDeInit), (2 bytes).
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_PWM_MspInit), (2 bytes).
+    Removing stm32l0xx_hal_tim.o(i.HAL_TIM_PWM_PulseFinishedCallback), (2 bytes).
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_PWM_PulseFinishedHalfCpltCallback), (2 bytes).
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_PWM_Start), (44 bytes).
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_PWM_Start_DMA), (356 bytes).
@@ -782,7 +790,9 @@ Removing Unused input sections from the image.
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_ReadCapturedValue), (52 bytes).
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_SlaveConfigSynchro), (112 bytes).
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_SlaveConfigSynchro_IT), (112 bytes).
+    Removing stm32l0xx_hal_tim.o(i.HAL_TIM_TriggerCallback), (2 bytes).
     Removing stm32l0xx_hal_tim.o(i.HAL_TIM_TriggerHalfCpltCallback), (2 bytes).
+    Removing stm32l0xx_hal_tim.o(i.TIM_Base_SetConfig), (124 bytes).
     Removing stm32l0xx_hal_tim.o(i.TIM_CCxChannelCmd), (34 bytes).
     Removing stm32l0xx_hal_tim.o(i.TIM_DMACaptureCplt), (70 bytes).
     Removing stm32l0xx_hal_tim.o(i.TIM_DMACaptureHalfCplt), (70 bytes).
@@ -793,17 +803,22 @@ Removing Unused input sections from the image.
     Removing stm32l0xx_hal_tim.o(i.TIM_DMAPeriodElapsedHalfCplt), (20 bytes).
     Removing stm32l0xx_hal_tim.o(i.TIM_DMATriggerCplt), (20 bytes).
     Removing stm32l0xx_hal_tim.o(i.TIM_DMATriggerHalfCplt), (20 bytes).
+    Removing stm32l0xx_hal_tim.o(i.TIM_ETR_SetConfig), (28 bytes).
+    Removing stm32l0xx_hal_tim.o(i.TIM_ITRx_SetConfig), (24 bytes).
     Removing stm32l0xx_hal_tim.o(i.TIM_OC1_SetConfig), (56 bytes).
     Removing stm32l0xx_hal_tim.o(i.TIM_OC2_SetConfig), (68 bytes).
     Removing stm32l0xx_hal_tim.o(i.TIM_OC3_SetConfig), (62 bytes).
     Removing stm32l0xx_hal_tim.o(i.TIM_OC4_SetConfig), (72 bytes).
     Removing stm32l0xx_hal_tim.o(i.TIM_SlaveTimer_SetConfig), (176 bytes).
+    Removing stm32l0xx_hal_tim.o(i.TIM_TI1_ConfigInputStage), (50 bytes).
     Removing stm32l0xx_hal_tim.o(i.TIM_TI1_SetConfig), (116 bytes).
+    Removing stm32l0xx_hal_tim.o(i.TIM_TI2_ConfigInputStage), (50 bytes).
     Removing stm32l0xx_hal_tim.o(i.TIM_TI2_SetConfig), (72 bytes).
     Removing stm32l0xx_hal_tim.o(i.TIM_TI3_SetConfig), (70 bytes).
     Removing stm32l0xx_hal_tim.o(i.TIM_TI4_SetConfig), (78 bytes).
     Removing stm32l0xx_hal_tim_ex.o(.rev16_text), (4 bytes).
     Removing stm32l0xx_hal_tim_ex.o(.revsh_text), (4 bytes).
+    Removing stm32l0xx_hal_tim_ex.o(i.HAL_TIMEx_MasterConfigSynchronization), (92 bytes).
     Removing stm32l0xx_hal_tim_ex.o(i.HAL_TIMEx_RemapConfig), (42 bytes).
     Removing stm32l0xx_hal.o(.rev16_text), (4 bytes).
     Removing stm32l0xx_hal.o(.revsh_text), (4 bytes).
@@ -1067,6 +1082,7 @@ Removing Unused input sections from the image.
     Removing stm32l0xx_hal_cortex.o(i.HAL_MPU_Enable), (48 bytes).
     Removing stm32l0xx_hal_cortex.o(i.HAL_NVIC_ClearPendingIRQ), (24 bytes).
     Removing stm32l0xx_hal_cortex.o(i.HAL_NVIC_DisableIRQ), (24 bytes).
+    Removing stm32l0xx_hal_cortex.o(i.HAL_NVIC_EnableIRQ), (24 bytes).
     Removing stm32l0xx_hal_cortex.o(i.HAL_NVIC_GetPendingIRQ), (40 bytes).
     Removing stm32l0xx_hal_cortex.o(i.HAL_NVIC_GetPriority), (72 bytes).
     Removing stm32l0xx_hal_cortex.o(i.HAL_NVIC_SetPendingIRQ), (24 bytes).
@@ -1077,20 +1093,21 @@ Removing Unused input sections from the image.
     Removing system_stm32l0xx.o(.rev16_text), (4 bytes).
     Removing system_stm32l0xx.o(.revsh_text), (4 bytes).
     Removing system_stm32l0xx.o(i.SystemCoreClockUpdate), (276 bytes).
-    Removing taskmanager.o(i.micrOs_getTaskRunState), (28 bytes).
-    Removing taskmanager.o(i.micrOs_setTaskRunState), (24 bytes).
-    Removing taskmanager.o(i.micrOs_startCallbackTimer), (60 bytes).
-    Removing taskmanager.o(i.micrOs_startEventPublishTimer), (120 bytes).
-    Removing taskmanager.o(i.micrOs_taskInit), (20 bytes).
-    Removing micros_mcutimer.o(.rev16_text), (4 bytes).
-    Removing micros_mcutimer.o(.revsh_text), (4 bytes).
-    Removing ledtask.o(.rev16_text), (4 bytes).
-    Removing ledtask.o(.revsh_text), (4 bytes).
-    Removing buttontask.o(.rev16_text), (4 bytes).
-    Removing buttontask.o(.revsh_text), (4 bytes).
+    Removing led_task.o(.rev16_text), (4 bytes).
+    Removing led_task.o(.revsh_text), (4 bytes).
+    Removing button_task.o(.rev16_text), (4 bytes).
+    Removing button_task.o(.revsh_text), (4 bytes).
+    Removing micros_core.o(i.micros_taskInit), (20 bytes).
+    Removing micros_core.o(i.micros_task_runstate_get), (28 bytes).
+    Removing micros_core.o(i.micros_task_runstate_set), (20 bytes).
+    Removing micros_softtimer.o(i.micros_timer_event_publish), (116 bytes).
+    Removing micros_softtimer.o(i.micros_timer_mcu_cb), (60 bytes).
+    Removing micros_softtimer.o(i.micros_timer_start), (104 bytes).
+    Removing micros_mcu_timer.o(i.micros_mcu_timer_init), (20 bytes).
+    Removing micros_mcu_timer.o(i.micros_mcu_timer_init_periph), (2 bytes).
     Removing stm32l0xx_hal_tim.o(i.__ARM_common_switch8), (28 bytes).
 
-397 unused section(s) (total 35876 bytes) removed from the image.
+414 unused section(s) (total 37184 bytes) removed from the image.
 
 ==============================================================================
 
@@ -1120,27 +1137,30 @@ Image Symbol Table
     ../Src/stm32l0xx_it.c                    0x00000000   Number         0  stm32l0xx_it.o ABSOLUTE
     ../Src/system_stm32l0xx.c                0x00000000   Number         0  system_stm32l0xx.o ABSOLUTE
     ../clib/microlib/division.c              0x00000000   Number         0  uidiv.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8a.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry2.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry5.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7a.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9a.o ABSOLUTE
-    ../clib/microlib/malloc/malloc.c         0x00000000   Number         0  mallocr.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7b.o ABSOLUTE
     ../clib/microlib/malloc/malloc.c         0x00000000   Number         0  malloc.o ABSOLUTE
-    ../clib/microlib/malloc/malloc.c         0x00000000   Number         0  mallocra.o ABSOLUTE
     ../clib/microlib/malloc/malloc.c         0x00000000   Number         0  malloca.o ABSOLUTE
+    ../clib/microlib/malloc/malloc.c         0x00000000   Number         0  mallocra.o ABSOLUTE
+    ../clib/microlib/malloc/malloc.c         0x00000000   Number         0  mallocr.o ABSOLUTE
     ../clib/microlib/malloc/mvars.c          0x00000000   Number         0  mvars.o ABSOLUTE
-    ../clib/microlib/string/memcpy.c         0x00000000   Number         0  memcpyb.o ABSOLUTE
     ../clib/microlib/string/memcpy.c         0x00000000   Number         0  memcpya.o ABSOLUTE
+    ../clib/microlib/string/memcpy.c         0x00000000   Number         0  memcpyb.o ABSOLUTE
     ../clib/microlib/string/memset.c         0x00000000   Number         0  memseta.o ABSOLUTE
+    ..\..\..\micrOS\micros_core.c            0x00000000   Number         0  micros_core.o ABSOLUTE
+    ..\..\..\micrOS\micros_mem.c             0x00000000   Number         0  micros_mem.o ABSOLUTE
+    ..\..\..\micrOS\micros_softtimer.c       0x00000000   Number         0  micros_softtimer.o ABSOLUTE
     ..\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal.c 0x00000000   Number         0  stm32l0xx_hal.o ABSOLUTE
     ..\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_cortex.c 0x00000000   Number         0  stm32l0xx_hal_cortex.o ABSOLUTE
     ..\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_dma.c 0x00000000   Number         0  stm32l0xx_hal_dma.o ABSOLUTE
@@ -1160,15 +1180,11 @@ Image Symbol Table
     ..\Src\stm32l0xx_hal_msp.c               0x00000000   Number         0  stm32l0xx_hal_msp.o ABSOLUTE
     ..\Src\stm32l0xx_it.c                    0x00000000   Number         0  stm32l0xx_it.o ABSOLUTE
     ..\Src\system_stm32l0xx.c                0x00000000   Number         0  system_stm32l0xx.o ABSOLUTE
-    ..\\button\\buttonTask.c                 0x00000000   Number         0  buttontask.o ABSOLUTE
-    ..\\led\\ledTask.c                       0x00000000   Number         0  ledtask.o ABSOLUTE
-    ..\\micrOS\\micrOs_mcuTimer\\micrOs_mcuTimer.c 0x00000000   Number         0  micros_mcutimer.o ABSOLUTE
-    ..\button\buttonTask.c                   0x00000000   Number         0  buttontask.o ABSOLUTE
-    ..\errorHandler\errorHandler.c           0x00000000   Number         0  errorhandler.o ABSOLUTE
-    ..\led\ledTask.c                         0x00000000   Number         0  ledtask.o ABSOLUTE
-    ..\micrOS\micrOs_mcuTimer\micrOs_mcuTimer.c 0x00000000   Number         0  micros_mcutimer.o ABSOLUTE
-    ..\micrOS\micrOs_softTimer\micrOs_softTimer.c 0x00000000   Number         0  micros_softtimer.o ABSOLUTE
-    ..\micrOS\taskManager.c                  0x00000000   Number         0  taskmanager.o ABSOLUTE
+    ..\\button\\button_task.c                0x00000000   Number         0  button_task.o ABSOLUTE
+    ..\\led\\led_task.c                      0x00000000   Number         0  led_task.o ABSOLUTE
+    ..\button\button_task.c                  0x00000000   Number         0  button_task.o ABSOLUTE
+    ..\led\led_task.c                        0x00000000   Number         0  led_task.o ABSOLUTE
+    ..\micrOS\micros_mcu_timer.c             0x00000000   Number         0  micros_mcu_timer.o ABSOLUTE
     dc.s                                     0x00000000   Number         0  dc.o ABSOLUTE
     handlers.s                               0x00000000   Number         0  handlers.o ABSOLUTE
     init.s                                   0x00000000   Number         0  init.o ABSOLUTE
@@ -1199,136 +1215,125 @@ Image Symbol Table
     i.HAL_Init                               0x080003dc   Section        0  stm32l0xx_hal.o(i.HAL_Init)
     i.HAL_InitTick                           0x08000408   Section        0  stm32l0xx_hal.o(i.HAL_InitTick)
     i.HAL_MspInit                            0x0800045c   Section        0  stm32l0xx_hal_msp.o(i.HAL_MspInit)
-    i.HAL_NVIC_EnableIRQ                     0x0800047c   Section        0  stm32l0xx_hal_cortex.o(i.HAL_NVIC_EnableIRQ)
-    i.HAL_NVIC_SetPriority                   0x08000494   Section        0  stm32l0xx_hal_cortex.o(i.HAL_NVIC_SetPriority)
-    i.HAL_RCC_ClockConfig                    0x080004a8   Section        0  stm32l0xx_hal_rcc.o(i.HAL_RCC_ClockConfig)
-    i.HAL_RCC_GetSysClockFreq                0x080006b0   Section        0  stm32l0xx_hal_rcc.o(i.HAL_RCC_GetSysClockFreq)
-    i.HAL_RCC_OscConfig                      0x08000780   Section        0  stm32l0xx_hal_rcc.o(i.HAL_RCC_OscConfig)
-    i.HAL_SYSTICK_Config                     0x08000e74   Section        0  stm32l0xx_hal_cortex.o(i.HAL_SYSTICK_Config)
-    i.HAL_TIMEx_MasterConfigSynchronization  0x08000eac   Section        0  stm32l0xx_hal_tim_ex.o(i.HAL_TIMEx_MasterConfigSynchronization)
-    i.HAL_TIM_Base_Init                      0x08000f08   Section        0  stm32l0xx_hal_tim.o(i.HAL_TIM_Base_Init)
-    i.HAL_TIM_Base_MspInit                   0x08000f40   Section        0  stm32l0xx_hal_msp.o(i.HAL_TIM_Base_MspInit)
-    i.HAL_TIM_Base_Start_IT                  0x08000f70   Section        0  stm32l0xx_hal_tim.o(i.HAL_TIM_Base_Start_IT)
-    i.HAL_TIM_ConfigClockSource              0x08000f9a   Section        0  stm32l0xx_hal_tim.o(i.HAL_TIM_ConfigClockSource)
-    i.HAL_TIM_IC_CaptureCallback             0x080010aa   Section        0  stm32l0xx_hal_tim.o(i.HAL_TIM_IC_CaptureCallback)
-    i.HAL_TIM_IRQHandler                     0x080010ac   Section        0  stm32l0xx_hal_tim.o(i.HAL_TIM_IRQHandler)
-    i.HAL_TIM_OC_DelayElapsedCallback        0x08001228   Section        0  stm32l0xx_hal_tim.o(i.HAL_TIM_OC_DelayElapsedCallback)
-    i.HAL_TIM_PWM_PulseFinishedCallback      0x0800122a   Section        0  stm32l0xx_hal_tim.o(i.HAL_TIM_PWM_PulseFinishedCallback)
-    i.HAL_TIM_PeriodElapsedCallback          0x0800122c   Section        0  micros_mcutimer.o(i.HAL_TIM_PeriodElapsedCallback)
-    i.HAL_TIM_TriggerCallback                0x08001238   Section        0  stm32l0xx_hal_tim.o(i.HAL_TIM_TriggerCallback)
-    i.HardFault_Handler                      0x0800123a   Section        0  stm32l0xx_it.o(i.HardFault_Handler)
-    i.NMI_Handler                            0x0800123e   Section        0  stm32l0xx_it.o(i.NMI_Handler)
-    i.NVIC_SetPriority                       0x08001240   Section        0  stm32l0xx_hal_cortex.o(i.NVIC_SetPriority)
-    NVIC_SetPriority                         0x08001241   Thumb Code   110  stm32l0xx_hal_cortex.o(i.NVIC_SetPriority)
-    i.PendSV_Handler                         0x080012b8   Section        0  stm32l0xx_it.o(i.PendSV_Handler)
-    i.SVC_Handler                            0x080012ba   Section        0  stm32l0xx_it.o(i.SVC_Handler)
-    i.SysTick_Handler                        0x080012bc   Section        0  stm32l0xx_it.o(i.SysTick_Handler)
-    i.SystemClock_Config                     0x080012c4   Section        0  main.o(i.SystemClock_Config)
-    i.SystemInit                             0x08001338   Section        0  system_stm32l0xx.o(i.SystemInit)
-    i.TIM2_IRQHandler                        0x080013a0   Section        0  micros_mcutimer.o(i.TIM2_IRQHandler)
-    i.TIM_Base_SetConfig                     0x080013b0   Section        0  stm32l0xx_hal_tim.o(i.TIM_Base_SetConfig)
-    TIM_Base_SetConfig                       0x080013b1   Thumb Code   110  stm32l0xx_hal_tim.o(i.TIM_Base_SetConfig)
-    i.TIM_ETR_SetConfig                      0x0800142c   Section        0  stm32l0xx_hal_tim.o(i.TIM_ETR_SetConfig)
-    TIM_ETR_SetConfig                        0x0800142d   Thumb Code    28  stm32l0xx_hal_tim.o(i.TIM_ETR_SetConfig)
-    i.TIM_ITRx_SetConfig                     0x08001448   Section        0  stm32l0xx_hal_tim.o(i.TIM_ITRx_SetConfig)
-    TIM_ITRx_SetConfig                       0x08001449   Thumb Code    24  stm32l0xx_hal_tim.o(i.TIM_ITRx_SetConfig)
-    i.TIM_TI1_ConfigInputStage               0x08001460   Section        0  stm32l0xx_hal_tim.o(i.TIM_TI1_ConfigInputStage)
-    TIM_TI1_ConfigInputStage                 0x08001461   Thumb Code    50  stm32l0xx_hal_tim.o(i.TIM_TI1_ConfigInputStage)
-    i.TIM_TI2_ConfigInputStage               0x08001492   Section        0  stm32l0xx_hal_tim.o(i.TIM_TI2_ConfigInputStage)
-    TIM_TI2_ConfigInputStage                 0x08001493   Thumb Code    50  stm32l0xx_hal_tim.o(i.TIM_TI2_ConfigInputStage)
-    i.__scatterload_copy                     0x080014c4   Section       14  handlers.o(i.__scatterload_copy)
-    i.__scatterload_null                     0x080014d2   Section        2  handlers.o(i.__scatterload_null)
-    i.__scatterload_zeroinit                 0x080014d4   Section       14  handlers.o(i.__scatterload_zeroinit)
-    i.addTaskSubscribeList                   0x080014e4   Section        0  taskmanager.o(i.addTaskSubscribeList)
-    addTaskSubscribeList                     0x080014e5   Thumb Code    70  taskmanager.o(i.addTaskSubscribeList)
-    i.buttonLongPressOp                      0x08001530   Section        0  buttontask.o(i.buttonLongPressOp)
-    buttonLongPressOp                        0x08001531   Thumb Code    62  buttontask.o(i.buttonLongPressOp)
-    i.buttonPressOp                          0x0800157c   Section        0  buttontask.o(i.buttonPressOp)
-    buttonPressOp                            0x0800157d   Thumb Code     2  buttontask.o(i.buttonPressOp)
-    i.buttonShortPressOp                     0x08001580   Section        0  buttontask.o(i.buttonShortPressOp)
-    buttonShortPressOp                       0x08001581   Thumb Code    44  buttontask.o(i.buttonShortPressOp)
-    i.buttonStateWaitDebounce                0x080015b4   Section        0  buttontask.o(i.buttonStateWaitDebounce)
-    buttonStateWaitDebounce                  0x080015b5   Thumb Code   188  buttontask.o(i.buttonStateWaitDebounce)
-    i.buttonStateWaitLongPress               0x080016a0   Section        0  buttontask.o(i.buttonStateWaitLongPress)
-    buttonStateWaitLongPress                 0x080016a1   Thumb Code    36  buttontask.o(i.buttonStateWaitLongPress)
-    i.buttonStateWaitPress                   0x080016d8   Section        0  buttontask.o(i.buttonStateWaitPress)
-    buttonStateWaitPress                     0x080016d9   Thumb Code    70  buttontask.o(i.buttonStateWaitPress)
-    i.buttonStateWaitUnpress                 0x0800174c   Section        0  buttontask.o(i.buttonStateWaitUnpress)
-    buttonStateWaitUnpress                   0x0800174d   Thumb Code    72  buttontask.o(i.buttonStateWaitUnpress)
-    i.buttonUnpressOp                        0x080017c0   Section        0  buttontask.o(i.buttonUnpressOp)
-    buttonUnpressOp                          0x080017c1   Thumb Code     2  buttontask.o(i.buttonUnpressOp)
-    i.controlTimeout                         0x080017c4   Section        0  micros_softtimer.o(i.controlTimeout)
-    i.deleteTaskSubscribeList                0x0800183c   Section        0  taskmanager.o(i.deleteTaskSubscribeList)
-    deleteTaskSubscribeList                  0x0800183d   Thumb Code    64  taskmanager.o(i.deleteTaskSubscribeList)
-    i.errorHandler                           0x08001880   Section        0  errorhandler.o(i.errorHandler)
-    i.free                                   0x08001884   Section        0  malloc.o(i.free)
-    i.getOnlyIdSignal                        0x080018d8   Section        0  ledtask.o(i.getOnlyIdSignal)
-    getOnlyIdSignal                          0x080018d9   Thumb Code   222  ledtask.o(i.getOnlyIdSignal)
-    i.getOnlyIdSignal                        0x080019c4   Section        0  buttontask.o(i.getOnlyIdSignal)
-    getOnlyIdSignal                          0x080019c5   Thumb Code    34  buttontask.o(i.getOnlyIdSignal)
-    i.getSignal                              0x080019f0   Section        0  taskmanager.o(i.getSignal)
-    getSignal                                0x080019f1   Thumb Code    48  taskmanager.o(i.getSignal)
-    i.getSignalAndData                       0x08001a24   Section        0  ledtask.o(i.getSignalAndData)
-    getSignalAndData                         0x08001a25   Thumb Code   556  ledtask.o(i.getSignalAndData)
-    i.getSignalAndData                       0x08001c70   Section        0  buttontask.o(i.getSignalAndData)
-    getSignalAndData                         0x08001c71   Thumb Code     2  buttontask.o(i.getSignalAndData)
-    i.getTimeCounterValue                    0x08001c74   Section        0  micros_softtimer.o(i.getTimeCounterValue)
-    i.getTimerList                           0x08001c80   Section        0  micros_softtimer.o(i.getTimerList)
-    i.main                                   0x08001c8c   Section        0  main.o(i.main)
-    i.malloc                                 0x08001ca4   Section        0  malloc.o(i.malloc)
-    i.micrOs_allTaskInit                     0x08001d10   Section        0  taskmanager.o(i.micrOs_allTaskInit)
-    i.micrOs_cancelTimer                     0x08001d30   Section        0  taskmanager.o(i.micrOs_cancelTimer)
-    i.micrOs_dispatchEventToTask             0x08001d3c   Section        0  taskmanager.o(i.micrOs_dispatchEventToTask)
-    i.micrOs_init                            0x08001d68   Section        0  taskmanager.o(i.micrOs_init)
-    i.micrOs_main                            0x08001d70   Section        0  taskmanager.o(i.micrOs_main)
-    i.micrOs_publishEventToSubscribers       0x08001e50   Section        0  taskmanager.o(i.micrOs_publishEventToSubscribers)
-    i.micrOs_setEventSubscriptionState       0x08001e7c   Section        0  taskmanager.o(i.micrOs_setEventSubscriptionState)
-    i.micrOs_startEventDispachTimer          0x08001ea8   Section        0  taskmanager.o(i.micrOs_startEventDispachTimer)
-    i.microsMcuTimer_init                    0x08001f1c   Section        0  micros_mcutimer.o(i.microsMcuTimer_init)
-    i.microsSofttimer_createTimer            0x08001f9c   Section        0  micros_softtimer.o(i.microsSofttimer_createTimer)
-    i.microsSofttimer_deleteTimer            0x08002058   Section        0  micros_softtimer.o(i.microsSofttimer_deleteTimer)
-    i.microsSofttimer_mcuTimerCallback       0x08002118   Section        0  micros_softtimer.o(i.microsSofttimer_mcuTimerCallback)
-    i.setSignal                              0x08002170   Section        0  taskmanager.o(i.setSignal)
-    setSignal                                0x08002171   Thumb Code   118  taskmanager.o(i.setSignal)
-    i.taskButtonGetSignal                    0x080021f0   Section        0  buttontask.o(i.taskButtonGetSignal)
-    i.taskButtonInit                         0x08002224   Section        0  buttontask.o(i.taskButtonInit)
-    i.taskButtonMain                         0x08002278   Section        0  buttontask.o(i.taskButtonMain)
-    i.taskLedGetSignal                       0x08002288   Section        0  ledtask.o(i.taskLedGetSignal)
-    i.taskLedInit                            0x080022bc   Section        0  ledtask.o(i.taskLedInit)
-    i.taskLedMain                            0x0800237c   Section        0  ledtask.o(i.taskLedMain)
-    .constdata                               0x0800237e   Section       33  system_stm32l0xx.o(.constdata)
-    .constdata                               0x0800239f   Section        2  taskmanager.o(.constdata)
-    .constdata                               0x080023a4   Section        1  ledtask.o(.constdata)
-    .constdata                               0x080023a8   Section       13  buttontask.o(.constdata)
-    .data                                    0x20000000   Section        9  stm32l0xx_hal.o(.data)
-    .data                                    0x2000000c   Section        4  system_stm32l0xx.o(.data)
-    .data                                    0x20000010   Section       44  taskmanager.o(.data)
-    micrOsTask                               0x20000010   Data          40  taskmanager.o(.data)
-    eventSignal                              0x20000038   Data           4  taskmanager.o(.data)
-    .data                                    0x2000003c   Section       15  micros_softtimer.o(.data)
-    timers                                   0x20000040   Data           4  micros_softtimer.o(.data)
-    timersUseWithCallbackFunc                0x20000044   Data           4  micros_softtimer.o(.data)
-    callStackInDeleteTimer                   0x20000048   Data           1  micros_softtimer.o(.data)
-    reCallCallbackTimer                      0x20000049   Data           1  micros_softtimer.o(.data)
-    callStackInCreateTimer                   0x2000004a   Data           1  micros_softtimer.o(.data)
-    .data                                    0x2000004c   Section       19  ledtask.o(.data)
-    signalContainer                          0x2000004c   Data           8  ledtask.o(.data)
-    .data                                    0x20000060   Section       31  buttontask.o(.data)
-    pfnCurrentButtonState                    0x20000060   Data           4  buttontask.o(.data)
-    pfnPrevButtonState                       0x20000064   Data           4  buttontask.o(.data)
-    pfnNextButtonState                       0x20000068   Data           4  buttontask.o(.data)
-    signalContainer                          0x2000006c   Data           8  buttontask.o(.data)
-    debounceTimerKey                         0x20000074   Data           4  buttontask.o(.data)
-    longPressTimerKey                        0x20000078   Data           4  buttontask.o(.data)
-    debounceTimeout                          0x2000007c   Data           1  buttontask.o(.data)
-    longPressTimeout                         0x2000007d   Data           1  buttontask.o(.data)
-    selectedLed                              0x2000007e   Data           1  buttontask.o(.data)
-    .data                                    0x20000080   Section        4  mvars.o(.data)
-    .data                                    0x20000084   Section        4  mvars.o(.data)
-    .bss                                     0x20000088   Section       60  micros_mcutimer.o(.bss)
-    .bss                                     0x200000c4   Section       12  ledtask.o(.bss)
-    HEAP                                     0x200000d0   Section      512  startup_stm32l072xx.o(HEAP)
-    STACK                                    0x200002d0   Section     1024  startup_stm32l072xx.o(STACK)
+    i.HAL_NVIC_SetPriority                   0x0800047c   Section        0  stm32l0xx_hal_cortex.o(i.HAL_NVIC_SetPriority)
+    i.HAL_RCC_ClockConfig                    0x08000490   Section        0  stm32l0xx_hal_rcc.o(i.HAL_RCC_ClockConfig)
+    i.HAL_RCC_GetSysClockFreq                0x08000698   Section        0  stm32l0xx_hal_rcc.o(i.HAL_RCC_GetSysClockFreq)
+    i.HAL_RCC_OscConfig                      0x08000768   Section        0  stm32l0xx_hal_rcc.o(i.HAL_RCC_OscConfig)
+    i.HAL_SYSTICK_Config                     0x08000e5c   Section        0  stm32l0xx_hal_cortex.o(i.HAL_SYSTICK_Config)
+    i.HardFault_Handler                      0x08000e94   Section        0  stm32l0xx_it.o(i.HardFault_Handler)
+    i.NMI_Handler                            0x08000e98   Section        0  stm32l0xx_it.o(i.NMI_Handler)
+    i.NVIC_SetPriority                       0x08000e9c   Section        0  stm32l0xx_hal_cortex.o(i.NVIC_SetPriority)
+    NVIC_SetPriority                         0x08000e9d   Thumb Code   110  stm32l0xx_hal_cortex.o(i.NVIC_SetPriority)
+    i.PendSV_Handler                         0x08000f14   Section        0  stm32l0xx_it.o(i.PendSV_Handler)
+    i.SVC_Handler                            0x08000f16   Section        0  stm32l0xx_it.o(i.SVC_Handler)
+    i.SysTick_Handler                        0x08000f18   Section        0  stm32l0xx_it.o(i.SysTick_Handler)
+    i.SystemClock_Config                     0x08000f20   Section        0  main.o(i.SystemClock_Config)
+    i.SystemInit                             0x08000f94   Section        0  system_stm32l0xx.o(i.SystemInit)
+    i.__scatterload_copy                     0x08000ffc   Section       14  handlers.o(i.__scatterload_copy)
+    i.__scatterload_null                     0x0800100a   Section        2  handlers.o(i.__scatterload_null)
+    i.__scatterload_zeroinit                 0x0800100c   Section       14  handlers.o(i.__scatterload_zeroinit)
+    i.button_get_signal                      0x0800101a   Section        0  button_task.o(i.button_get_signal)
+    i.button_get_signal_id                   0x08001050   Section        0  button_task.o(i.button_get_signal_id)
+    button_get_signal_id                     0x08001051   Thumb Code    34  button_task.o(i.button_get_signal_id)
+    i.button_get_signal_id_u8                0x0800107c   Section        0  button_task.o(i.button_get_signal_id_u8)
+    button_get_signal_id_u8                  0x0800107d   Thumb Code     2  button_task.o(i.button_get_signal_id_u8)
+    i.button_init                            0x08001080   Section        0  button_task.o(i.button_init)
+    i.button_long_press_operation            0x080010d4   Section        0  button_task.o(i.button_long_press_operation)
+    button_long_press_operation              0x080010d5   Thumb Code    62  button_task.o(i.button_long_press_operation)
+    i.button_main                            0x08001120   Section        0  button_task.o(i.button_main)
+    i.button_press_operation                 0x08001130   Section        0  button_task.o(i.button_press_operation)
+    button_press_operation                   0x08001131   Thumb Code     2  button_task.o(i.button_press_operation)
+    i.button_release_operation               0x08001132   Section        0  button_task.o(i.button_release_operation)
+    button_release_operation                 0x08001133   Thumb Code     2  button_task.o(i.button_release_operation)
+    i.button_short_press_operation           0x08001134   Section        0  button_task.o(i.button_short_press_operation)
+    button_short_press_operation             0x08001135   Thumb Code    46  button_task.o(i.button_short_press_operation)
+    i.button_state_wait_debounce             0x08001170   Section        0  button_task.o(i.button_state_wait_debounce)
+    button_state_wait_debounce               0x08001171   Thumb Code   194  button_task.o(i.button_state_wait_debounce)
+    i.button_state_wait_long_press           0x08001264   Section        0  button_task.o(i.button_state_wait_long_press)
+    button_state_wait_long_press             0x08001265   Thumb Code    36  button_task.o(i.button_state_wait_long_press)
+    i.button_state_wait_press                0x0800129c   Section        0  button_task.o(i.button_state_wait_press)
+    button_state_wait_press                  0x0800129d   Thumb Code    76  button_task.o(i.button_state_wait_press)
+    i.button_state_wait_release              0x08001314   Section        0  button_task.o(i.button_state_wait_release)
+    button_state_wait_release                0x08001315   Thumb Code    78  button_task.o(i.button_state_wait_release)
+    i.free                                   0x08001390   Section        0  malloc.o(i.free)
+    i.led_get_signal                         0x080013e4   Section        0  led_task.o(i.led_get_signal)
+    i.led_get_signal_id                      0x0800141c   Section        0  led_task.o(i.led_get_signal_id)
+    led_get_signal_id                        0x0800141d   Thumb Code   222  led_task.o(i.led_get_signal_id)
+    i.led_get_signal_id_u8                   0x08001508   Section        0  led_task.o(i.led_get_signal_id_u8)
+    led_get_signal_id_u8                     0x08001509   Thumb Code   562  led_task.o(i.led_get_signal_id_u8)
+    i.led_init                               0x0800175c   Section        0  led_task.o(i.led_init)
+    i.led_main                               0x0800181c   Section        0  led_task.o(i.led_main)
+    i.main                                   0x08001820   Section        0  main.o(i.main)
+    i.malloc                                 0x08001860   Section        0  malloc.o(i.malloc)
+    i.mcu_timer_fake_interrupt               0x080018cc   Section        0  micros_mcu_timer.o(i.mcu_timer_fake_interrupt)
+    i.micros_add_task_subs                   0x080018dc   Section        0  micros_core.o(i.micros_add_task_subs)
+    micros_add_task_subs                     0x080018dd   Thumb Code    58  micros_core.o(i.micros_add_task_subs)
+    i.micros_allTaskInit                     0x08001918   Section        0  micros_core.o(i.micros_allTaskInit)
+    i.micros_dequeue_signal                  0x08001938   Section        0  micros_core.o(i.micros_dequeue_signal)
+    micros_dequeue_signal                    0x08001939   Thumb Code    56  micros_core.o(i.micros_dequeue_signal)
+    i.micros_enqueue_signal                  0x08001970   Section        0  micros_core.o(i.micros_enqueue_signal)
+    micros_enqueue_signal                    0x08001971   Thumb Code    94  micros_core.o(i.micros_enqueue_signal)
+    i.micros_event_dispatch                  0x080019d4   Section        0  micros_core.o(i.micros_event_dispatch)
+    i.micros_event_publish                   0x080019fc   Section        0  micros_core.o(i.micros_event_publish)
+    i.micros_event_substate_set              0x08001a28   Section        0  micros_core.o(i.micros_event_substate_set)
+    i.micros_init                            0x08001a54   Section        0  micros_core.o(i.micros_init)
+    i.micros_is_empty_sig_list               0x08001a80   Section        0  micros_core.o(i.micros_is_empty_sig_list)
+    micros_is_empty_sig_list                 0x08001a81   Thumb Code    14  micros_core.o(i.micros_is_empty_sig_list)
+    i.micros_main                            0x08001a90   Section        0  micros_core.o(i.micros_main)
+    i.micros_memory_allocate                 0x08001b1c   Section        0  micros_mem.o(i.micros_memory_allocate)
+    i.micros_memory_deallocate               0x08001b28   Section        0  micros_mem.o(i.micros_memory_deallocate)
+    i.micros_remove_task_subs                0x08001b3a   Section        0  micros_core.o(i.micros_remove_task_subs)
+    micros_remove_task_subs                  0x08001b3b   Thumb Code    60  micros_core.o(i.micros_remove_task_subs)
+    i.micros_softtimer_init                  0x08001b76   Section        0  micros_softtimer.o(i.micros_softtimer_init)
+    i.micros_softtimer_main                  0x08001b78   Section        0  micros_softtimer.o(i.micros_softtimer_main)
+    i.micros_timer_add                       0x08001c00   Section        0  micros_softtimer.o(i.micros_timer_add)
+    micros_timer_add                         0x08001c01   Thumb Code    96  micros_softtimer.o(i.micros_timer_add)
+    i.micros_timer_calc_elapsed_time         0x08001c70   Section        0  micros_softtimer.o(i.micros_timer_calc_elapsed_time)
+    micros_timer_calc_elapsed_time           0x08001c71   Thumb Code    20  micros_softtimer.o(i.micros_timer_calc_elapsed_time)
+    i.micros_timer_cancel                    0x08001c84   Section        0  micros_softtimer.o(i.micros_timer_cancel)
+    i.micros_timer_create_tmkey              0x08001ca0   Section        0  micros_softtimer.o(i.micros_timer_create_tmkey)
+    micros_timer_create_tmkey                0x08001ca1   Thumb Code    64  micros_softtimer.o(i.micros_timer_create_tmkey)
+    i.micros_timer_delete                    0x08001ce4   Section        0  micros_softtimer.o(i.micros_timer_delete)
+    micros_timer_delete                      0x08001ce5   Thumb Code    86  micros_softtimer.o(i.micros_timer_delete)
+    i.micros_timer_event_dispatch            0x08001d4c   Section        0  micros_softtimer.o(i.micros_timer_event_dispatch)
+    i.micros_timer_search                    0x08001dc0   Section        0  micros_softtimer.o(i.micros_timer_search)
+    micros_timer_search                      0x08001dc1   Thumb Code    50  micros_softtimer.o(i.micros_timer_search)
+    i.micros_timer_timeout_ctrl              0x08001df8   Section        0  micros_softtimer.o(i.micros_timer_timeout_ctrl)
+    micros_timer_timeout_ctrl                0x08001df9   Thumb Code    48  micros_softtimer.o(i.micros_timer_timeout_ctrl)
+    .constdata                               0x08001e34   Section       33  system_stm32l0xx.o(.constdata)
+    .constdata                               0x08001e58   Section        1  led_task.o(.constdata)
+    .constdata                               0x08001e5c   Section       17  button_task.o(.constdata)
+    .constdata                               0x08001e70   Section        8  micros_core.o(.constdata)
+    .data                                    0x20000000   Section        2  main.o(.data)
+    fake_tm_counter                          0x20000000   Data           2  main.o(.data)
+    .data                                    0x20000004   Section        9  stm32l0xx_hal.o(.data)
+    .data                                    0x20000010   Section        4  system_stm32l0xx.o(.data)
+    .data                                    0x20000014   Section       19  led_task.o(.data)
+    signalContainer                          0x20000014   Data           8  led_task.o(.data)
+    .data                                    0x20000028   Section       25  button_task.o(.data)
+    pfn_current_button_state                 0x20000028   Data           4  button_task.o(.data)
+    pfn_prev_button_state                    0x2000002c   Data           4  button_task.o(.data)
+    pfn_next_button_state                    0x20000030   Data           4  button_task.o(.data)
+    signal_container                         0x20000034   Data           8  button_task.o(.data)
+    tm_key_debounce                          0x2000003c   Data           1  button_task.o(.data)
+    tm_key_long_press                        0x2000003d   Data           1  button_task.o(.data)
+    timeout_debounce                         0x2000003e   Data           1  button_task.o(.data)
+    timeout_long_press                       0x2000003f   Data           1  button_task.o(.data)
+    selected_led                             0x20000040   Data           1  button_task.o(.data)
+    .data                                    0x20000044   Section       48  micros_core.o(.data)
+    micros_task                              0x20000044   Data          48  micros_core.o(.data)
+    .data                                    0x20000074   Section       13  micros_softtimer.o(.data)
+    callstack_in_create_timer                0x20000078   Data           1  micros_softtimer.o(.data)
+    callstack_in_delete_timer                0x20000079   Data           1  micros_softtimer.o(.data)
+    timeout_ctrl_break                       0x2000007a   Data           1  micros_softtimer.o(.data)
+    time_counter                             0x2000007c   Data           4  micros_softtimer.o(.data)
+    tm_key                                   0x20000080   Data           1  micros_softtimer.o(.data)
+    .data                                    0x20000084   Section        4  micros_mcu_timer.o(.data)
+    .data                                    0x20000088   Section        4  mvars.o(.data)
+    .data                                    0x2000008c   Section        4  mvars.o(.data)
+    .bss                                     0x20000090   Section       12  micros_core.o(.bss)
+    HEAP                                     0x200000a0   Section      512  startup_stm32l072xx.o(HEAP)
+    STACK                                    0x200002a0   Section     1024  startup_stm32l072xx.o(STACK)
 
     Global Symbols
 
@@ -1374,6 +1379,7 @@ Image Symbol Table
     SPI2_IRQHandler                          0x080000e7   Thumb Code     0  startup_stm32l072xx.o(.text)
     TIM21_IRQHandler                         0x080000e7   Thumb Code     0  startup_stm32l072xx.o(.text)
     TIM22_IRQHandler                         0x080000e7   Thumb Code     0  startup_stm32l072xx.o(.text)
+    TIM2_IRQHandler                          0x080000e7   Thumb Code     0  startup_stm32l072xx.o(.text)
     TIM3_IRQHandler                          0x080000e7   Thumb Code     0  startup_stm32l072xx.o(.text)
     TIM6_DAC_IRQHandler                      0x080000e7   Thumb Code     0  startup_stm32l072xx.o(.text)
     TIM7_IRQHandler                          0x080000e7   Thumb Code     0  startup_stm32l072xx.o(.text)
@@ -1407,81 +1413,66 @@ Image Symbol Table
     HAL_Init                                 0x080003dd   Thumb Code    38  stm32l0xx_hal.o(i.HAL_Init)
     HAL_InitTick                             0x08000409   Thumb Code    70  stm32l0xx_hal.o(i.HAL_InitTick)
     HAL_MspInit                              0x0800045d   Thumb Code    26  stm32l0xx_hal_msp.o(i.HAL_MspInit)
-    HAL_NVIC_EnableIRQ                       0x0800047d   Thumb Code    18  stm32l0xx_hal_cortex.o(i.HAL_NVIC_EnableIRQ)
-    HAL_NVIC_SetPriority                     0x08000495   Thumb Code    18  stm32l0xx_hal_cortex.o(i.HAL_NVIC_SetPriority)
-    HAL_RCC_ClockConfig                      0x080004a9   Thumb Code   498  stm32l0xx_hal_rcc.o(i.HAL_RCC_ClockConfig)
-    HAL_RCC_GetSysClockFreq                  0x080006b1   Thumb Code   186  stm32l0xx_hal_rcc.o(i.HAL_RCC_GetSysClockFreq)
-    HAL_RCC_OscConfig                        0x08000781   Thumb Code  1764  stm32l0xx_hal_rcc.o(i.HAL_RCC_OscConfig)
-    HAL_SYSTICK_Config                       0x08000e75   Thumb Code    46  stm32l0xx_hal_cortex.o(i.HAL_SYSTICK_Config)
-    HAL_TIMEx_MasterConfigSynchronization    0x08000ead   Thumb Code    92  stm32l0xx_hal_tim_ex.o(i.HAL_TIMEx_MasterConfigSynchronization)
-    HAL_TIM_Base_Init                        0x08000f09   Thumb Code    56  stm32l0xx_hal_tim.o(i.HAL_TIM_Base_Init)
-    HAL_TIM_Base_MspInit                     0x08000f41   Thumb Code    44  stm32l0xx_hal_msp.o(i.HAL_TIM_Base_MspInit)
-    HAL_TIM_Base_Start_IT                    0x08000f71   Thumb Code    42  stm32l0xx_hal_tim.o(i.HAL_TIM_Base_Start_IT)
-    HAL_TIM_ConfigClockSource                0x08000f9b   Thumb Code   272  stm32l0xx_hal_tim.o(i.HAL_TIM_ConfigClockSource)
-    HAL_TIM_IC_CaptureCallback               0x080010ab   Thumb Code     2  stm32l0xx_hal_tim.o(i.HAL_TIM_IC_CaptureCallback)
-    HAL_TIM_IRQHandler                       0x080010ad   Thumb Code   380  stm32l0xx_hal_tim.o(i.HAL_TIM_IRQHandler)
-    HAL_TIM_OC_DelayElapsedCallback          0x08001229   Thumb Code     2  stm32l0xx_hal_tim.o(i.HAL_TIM_OC_DelayElapsedCallback)
-    HAL_TIM_PWM_PulseFinishedCallback        0x0800122b   Thumb Code     2  stm32l0xx_hal_tim.o(i.HAL_TIM_PWM_PulseFinishedCallback)
-    HAL_TIM_PeriodElapsedCallback            0x0800122d   Thumb Code    12  micros_mcutimer.o(i.HAL_TIM_PeriodElapsedCallback)
-    HAL_TIM_TriggerCallback                  0x08001239   Thumb Code     2  stm32l0xx_hal_tim.o(i.HAL_TIM_TriggerCallback)
-    HardFault_Handler                        0x0800123b   Thumb Code     4  stm32l0xx_it.o(i.HardFault_Handler)
-    NMI_Handler                              0x0800123f   Thumb Code     2  stm32l0xx_it.o(i.NMI_Handler)
-    PendSV_Handler                           0x080012b9   Thumb Code     2  stm32l0xx_it.o(i.PendSV_Handler)
-    SVC_Handler                              0x080012bb   Thumb Code     2  stm32l0xx_it.o(i.SVC_Handler)
-    SysTick_Handler                          0x080012bd   Thumb Code     8  stm32l0xx_it.o(i.SysTick_Handler)
-    SystemClock_Config                       0x080012c5   Thumb Code   110  main.o(i.SystemClock_Config)
-    SystemInit                               0x08001339   Thumb Code    88  system_stm32l0xx.o(i.SystemInit)
-    TIM2_IRQHandler                          0x080013a1   Thumb Code    10  micros_mcutimer.o(i.TIM2_IRQHandler)
-    __scatterload_copy                       0x080014c5   Thumb Code    14  handlers.o(i.__scatterload_copy)
-    __scatterload_null                       0x080014d3   Thumb Code     2  handlers.o(i.__scatterload_null)
-    __scatterload_zeroinit                   0x080014d5   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
-    controlTimeout                           0x080017c5   Thumb Code   114  micros_softtimer.o(i.controlTimeout)
-    errorHandler                             0x08001881   Thumb Code     2  errorhandler.o(i.errorHandler)
-    free                                     0x08001885   Thumb Code    80  malloc.o(i.free)
-    getTimeCounterValue                      0x08001c75   Thumb Code     6  micros_softtimer.o(i.getTimeCounterValue)
-    getTimerList                             0x08001c81   Thumb Code     6  micros_softtimer.o(i.getTimerList)
-    main                                     0x08001c8d   Thumb Code    24  main.o(i.main)
-    malloc                                   0x08001ca5   Thumb Code    92  malloc.o(i.malloc)
-    micrOs_allTaskInit                       0x08001d11   Thumb Code    26  taskmanager.o(i.micrOs_allTaskInit)
-    micrOs_cancelTimer                       0x08001d31   Thumb Code    12  taskmanager.o(i.micrOs_cancelTimer)
-    micrOs_dispatchEventToTask               0x08001d3d   Thumb Code    40  taskmanager.o(i.micrOs_dispatchEventToTask)
-    micrOs_init                              0x08001d69   Thumb Code     8  taskmanager.o(i.micrOs_init)
-    micrOs_main                              0x08001d71   Thumb Code   220  taskmanager.o(i.micrOs_main)
-    micrOs_publishEventToSubscribers         0x08001e51   Thumb Code    38  taskmanager.o(i.micrOs_publishEventToSubscribers)
-    micrOs_setEventSubscriptionState         0x08001e7d   Thumb Code    44  taskmanager.o(i.micrOs_setEventSubscriptionState)
-    micrOs_startEventDispachTimer            0x08001ea9   Thumb Code   110  taskmanager.o(i.micrOs_startEventDispachTimer)
-    microsMcuTimer_init                      0x08001f1d   Thumb Code   122  micros_mcutimer.o(i.microsMcuTimer_init)
-    microsSofttimer_createTimer              0x08001f9d   Thumb Code   168  micros_softtimer.o(i.microsSofttimer_createTimer)
-    microsSofttimer_deleteTimer              0x08002059   Thumb Code   176  micros_softtimer.o(i.microsSofttimer_deleteTimer)
-    microsSofttimer_mcuTimerCallback         0x08002119   Thumb Code    64  micros_softtimer.o(i.microsSofttimer_mcuTimerCallback)
-    taskButtonGetSignal                      0x080021f1   Thumb Code    52  buttontask.o(i.taskButtonGetSignal)
-    taskButtonInit                           0x08002225   Thumb Code    68  buttontask.o(i.taskButtonInit)
-    taskButtonMain                           0x08002279   Thumb Code    10  buttontask.o(i.taskButtonMain)
-    taskLedGetSignal                         0x08002289   Thumb Code    52  ledtask.o(i.taskLedGetSignal)
-    taskLedInit                              0x080022bd   Thumb Code   184  ledtask.o(i.taskLedInit)
-    taskLedMain                              0x0800237d   Thumb Code     2  ledtask.o(i.taskLedMain)
-    AHBPrescTable                            0x0800237e   Data          16  system_stm32l0xx.o(.constdata)
-    APBPrescTable                            0x0800238e   Data           8  system_stm32l0xx.o(.constdata)
-    PLLMulTable                              0x08002396   Data           9  system_stm32l0xx.o(.constdata)
-    structSize                               0x0800239f   Data           2  taskmanager.o(.constdata)
-    Region$$Table$$Base                      0x080023b8   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x080023d8   Number         0  anon$$obj.o(Region$$Table)
-    uwTick                                   0x20000000   Data           4  stm32l0xx_hal.o(.data)
-    uwTickPrio                               0x20000004   Data           4  stm32l0xx_hal.o(.data)
-    uwTickFreq                               0x20000008   Data           1  stm32l0xx_hal.o(.data)
-    SystemCoreClock                          0x2000000c   Data           4  system_stm32l0xx.o(.data)
-    timeCounter                              0x2000003c   Data           4  micros_softtimer.o(.data)
-    ledSelTimerKey                           0x20000054   Data           4  ledtask.o(.data)
-    selectedLed                              0x20000058   Data           1  ledtask.o(.data)
-    ledMode                                  0x20000059   Data           3  ledtask.o(.data)
-    heartBeatCnt                             0x2000005c   Data           3  ledtask.o(.data)
-    __microlib_freelist                      0x20000080   Data           4  mvars.o(.data)
-    __microlib_freelist_initialised          0x20000084   Data           4  mvars.o(.data)
-    mcuTimer                                 0x20000088   Data          60  micros_mcutimer.o(.bss)
-    ledTimerKey                              0x200000c4   Data          12  ledtask.o(.bss)
-    __heap_base                              0x200000d0   Data           0  startup_stm32l072xx.o(HEAP)
-    __heap_limit                             0x200002d0   Data           0  startup_stm32l072xx.o(HEAP)
-    __initial_sp                             0x200006d0   Data           0  startup_stm32l072xx.o(STACK)
+    HAL_NVIC_SetPriority                     0x0800047d   Thumb Code    18  stm32l0xx_hal_cortex.o(i.HAL_NVIC_SetPriority)
+    HAL_RCC_ClockConfig                      0x08000491   Thumb Code   498  stm32l0xx_hal_rcc.o(i.HAL_RCC_ClockConfig)
+    HAL_RCC_GetSysClockFreq                  0x08000699   Thumb Code   186  stm32l0xx_hal_rcc.o(i.HAL_RCC_GetSysClockFreq)
+    HAL_RCC_OscConfig                        0x08000769   Thumb Code  1764  stm32l0xx_hal_rcc.o(i.HAL_RCC_OscConfig)
+    HAL_SYSTICK_Config                       0x08000e5d   Thumb Code    46  stm32l0xx_hal_cortex.o(i.HAL_SYSTICK_Config)
+    HardFault_Handler                        0x08000e95   Thumb Code     4  stm32l0xx_it.o(i.HardFault_Handler)
+    NMI_Handler                              0x08000e99   Thumb Code     2  stm32l0xx_it.o(i.NMI_Handler)
+    PendSV_Handler                           0x08000f15   Thumb Code     2  stm32l0xx_it.o(i.PendSV_Handler)
+    SVC_Handler                              0x08000f17   Thumb Code     2  stm32l0xx_it.o(i.SVC_Handler)
+    SysTick_Handler                          0x08000f19   Thumb Code     8  stm32l0xx_it.o(i.SysTick_Handler)
+    SystemClock_Config                       0x08000f21   Thumb Code   110  main.o(i.SystemClock_Config)
+    SystemInit                               0x08000f95   Thumb Code    88  system_stm32l0xx.o(i.SystemInit)
+    __scatterload_copy                       0x08000ffd   Thumb Code    14  handlers.o(i.__scatterload_copy)
+    __scatterload_null                       0x0800100b   Thumb Code     2  handlers.o(i.__scatterload_null)
+    __scatterload_zeroinit                   0x0800100d   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
+    button_get_signal                        0x0800101b   Thumb Code    54  button_task.o(i.button_get_signal)
+    button_init                              0x08001081   Thumb Code    68  button_task.o(i.button_init)
+    button_main                              0x08001121   Thumb Code    10  button_task.o(i.button_main)
+    free                                     0x08001391   Thumb Code    80  malloc.o(i.free)
+    led_get_signal                           0x080013e5   Thumb Code    54  led_task.o(i.led_get_signal)
+    led_init                                 0x0800175d   Thumb Code   184  led_task.o(i.led_init)
+    led_main                                 0x0800181d   Thumb Code     2  led_task.o(i.led_main)
+    main                                     0x08001821   Thumb Code    54  main.o(i.main)
+    malloc                                   0x08001861   Thumb Code    92  malloc.o(i.malloc)
+    mcu_timer_fake_interrupt                 0x080018cd   Thumb Code    10  micros_mcu_timer.o(i.mcu_timer_fake_interrupt)
+    micros_allTaskInit                       0x08001919   Thumb Code    26  micros_core.o(i.micros_allTaskInit)
+    micros_event_dispatch                    0x080019d5   Thumb Code    36  micros_core.o(i.micros_event_dispatch)
+    micros_event_publish                     0x080019fd   Thumb Code    38  micros_core.o(i.micros_event_publish)
+    micros_event_substate_set                0x08001a29   Thumb Code    40  micros_core.o(i.micros_event_substate_set)
+    micros_init                              0x08001a55   Thumb Code    40  micros_core.o(i.micros_init)
+    micros_main                              0x08001a91   Thumb Code   130  micros_core.o(i.micros_main)
+    micros_memory_allocate                   0x08001b1d   Thumb Code    12  micros_mem.o(i.micros_memory_allocate)
+    micros_memory_deallocate                 0x08001b29   Thumb Code    18  micros_mem.o(i.micros_memory_deallocate)
+    micros_softtimer_init                    0x08001b77   Thumb Code     2  micros_softtimer.o(i.micros_softtimer_init)
+    micros_softtimer_main                    0x08001b79   Thumb Code   126  micros_softtimer.o(i.micros_softtimer_main)
+    micros_timer_cancel                      0x08001c85   Thumb Code    28  micros_softtimer.o(i.micros_timer_cancel)
+    micros_timer_event_dispatch              0x08001d4d   Thumb Code   112  micros_softtimer.o(i.micros_timer_event_dispatch)
+    AHBPrescTable                            0x08001e34   Data          16  system_stm32l0xx.o(.constdata)
+    APBPrescTable                            0x08001e44   Data           8  system_stm32l0xx.o(.constdata)
+    PLLMulTable                              0x08001e4c   Data           9  system_stm32l0xx.o(.constdata)
+    sig_size                                 0x08001e70   Data           8  micros_core.o(.constdata)
+    Region$$Table$$Base                      0x08001e78   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x08001e98   Number         0  anon$$obj.o(Region$$Table)
+    uwTick                                   0x20000004   Data           4  stm32l0xx_hal.o(.data)
+    uwTickPrio                               0x20000008   Data           4  stm32l0xx_hal.o(.data)
+    uwTickFreq                               0x2000000c   Data           1  stm32l0xx_hal.o(.data)
+    SystemCoreClock                          0x20000010   Data           4  system_stm32l0xx.o(.data)
+    tm_key_led                               0x2000001c   Data           3  led_task.o(.data)
+    tm_key_led_select                        0x2000001f   Data           1  led_task.o(.data)
+    selected_led                             0x20000020   Data           1  led_task.o(.data)
+    led_mode                                 0x20000021   Data           3  led_task.o(.data)
+    heart_beat_cnt                           0x20000024   Data           3  led_task.o(.data)
+    pTm_head                                 0x20000074   Data           4  micros_softtimer.o(.data)
+    pfnCb                                    0x20000084   Data           4  micros_mcu_timer.o(.data)
+    __microlib_freelist                      0x20000088   Data           4  mvars.o(.data)
+    __microlib_freelist_initialised          0x2000008c   Data           4  mvars.o(.data)
+    pEvent_subs                              0x20000090   Data          12  micros_core.o(.bss)
+    __heap_base                              0x200000a0   Data           0  startup_stm32l072xx.o(HEAP)
+    __heap_limit                             0x200002a0   Data           0  startup_stm32l072xx.o(HEAP)
+    __initial_sp                             0x200006a0   Data           0  startup_stm32l072xx.o(STACK)
 
 
 
@@ -1491,150 +1482,140 @@ Memory Map of the image
 
   Image Entry point : 0x080000c1
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x00002460, Max: 0x00030000, ABSOLUTE)
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x00001f28, Max: 0x00030000, ABSOLUTE)
 
-    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x000023d8, Max: 0x00030000, ABSOLUTE)
+    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x00001e98, Max: 0x00030000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x08000000   0x08000000   0x000000c0   Data   RO            3    RESET               startup_stm32l072xx.o
-    0x080000c0   0x080000c0   0x00000000   Code   RO         3049  * .ARM.Collect$$$$00000000  mc_p.l(entry.o)
-    0x080000c0   0x080000c0   0x00000004   Code   RO         3088    .ARM.Collect$$$$00000001  mc_p.l(entry2.o)
-    0x080000c4   0x080000c4   0x00000004   Code   RO         3091    .ARM.Collect$$$$00000004  mc_p.l(entry5.o)
-    0x080000c8   0x080000c8   0x00000000   Code   RO         3093    .ARM.Collect$$$$00000008  mc_p.l(entry7b.o)
-    0x080000c8   0x080000c8   0x00000000   Code   RO         3095    .ARM.Collect$$$$0000000A  mc_p.l(entry8b.o)
-    0x080000c8   0x080000c8   0x00000008   Code   RO         3096    .ARM.Collect$$$$0000000B  mc_p.l(entry9a.o)
-    0x080000d0   0x080000d0   0x00000000   Code   RO         3098    .ARM.Collect$$$$0000000D  mc_p.l(entry10a.o)
-    0x080000d0   0x080000d0   0x00000000   Code   RO         3100    .ARM.Collect$$$$0000000F  mc_p.l(entry11a.o)
-    0x080000d0   0x080000d0   0x00000004   Code   RO         3089    .ARM.Collect$$$$00002712  mc_p.l(entry2.o)
+    0x080000c0   0x080000c0   0x00000000   Code   RO         3048  * .ARM.Collect$$$$00000000  mc_p.l(entry.o)
+    0x080000c0   0x080000c0   0x00000004   Code   RO         3087    .ARM.Collect$$$$00000001  mc_p.l(entry2.o)
+    0x080000c4   0x080000c4   0x00000004   Code   RO         3090    .ARM.Collect$$$$00000004  mc_p.l(entry5.o)
+    0x080000c8   0x080000c8   0x00000000   Code   RO         3092    .ARM.Collect$$$$00000008  mc_p.l(entry7b.o)
+    0x080000c8   0x080000c8   0x00000000   Code   RO         3094    .ARM.Collect$$$$0000000A  mc_p.l(entry8b.o)
+    0x080000c8   0x080000c8   0x00000008   Code   RO         3095    .ARM.Collect$$$$0000000B  mc_p.l(entry9a.o)
+    0x080000d0   0x080000d0   0x00000000   Code   RO         3097    .ARM.Collect$$$$0000000D  mc_p.l(entry10a.o)
+    0x080000d0   0x080000d0   0x00000000   Code   RO         3099    .ARM.Collect$$$$0000000F  mc_p.l(entry11a.o)
+    0x080000d0   0x080000d0   0x00000004   Code   RO         3088    .ARM.Collect$$$$00002712  mc_p.l(entry2.o)
     0x080000d4   0x080000d4   0x0000001c   Code   RO            4    .text               startup_stm32l072xx.o
-    0x080000f0   0x080000f0   0x0000002c   Code   RO         3052    .text               mc_p.l(uidiv.o)
-    0x0800011c   0x0800011c   0x00000024   Code   RO         3054    .text               mc_p.l(memcpya.o)
-    0x08000140   0x08000140   0x00000024   Code   RO         3056    .text               mc_p.l(memseta.o)
-    0x08000164   0x08000164   0x00000024   Code   RO         3104    .text               mc_p.l(init.o)
+    0x080000f0   0x080000f0   0x0000002c   Code   RO         3051    .text               mc_p.l(uidiv.o)
+    0x0800011c   0x0800011c   0x00000024   Code   RO         3053    .text               mc_p.l(memcpya.o)
+    0x08000140   0x08000140   0x00000024   Code   RO         3055    .text               mc_p.l(memseta.o)
+    0x08000164   0x08000164   0x00000024   Code   RO         3103    .text               mc_p.l(init.o)
     0x08000188   0x08000188   0x00000002   Code   RO           12    i.Error_Handler     main.o
     0x0800018a   0x0800018a   0x00000002   PAD
-    0x0800018c   0x0800018c   0x000001f8   Code   RO         2186    i.HAL_GPIO_Init     stm32l0xx_hal_gpio.o
-    0x08000384   0x08000384   0x00000012   Code   RO         2188    i.HAL_GPIO_ReadPin  stm32l0xx_hal_gpio.o
-    0x08000396   0x08000396   0x00000014   Code   RO         2189    i.HAL_GPIO_TogglePin  stm32l0xx_hal_gpio.o
-    0x080003aa   0x080003aa   0x0000000c   Code   RO         2190    i.HAL_GPIO_WritePin  stm32l0xx_hal_gpio.o
+    0x0800018c   0x0800018c   0x000001f8   Code   RO         2191    i.HAL_GPIO_Init     stm32l0xx_hal_gpio.o
+    0x08000384   0x08000384   0x00000012   Code   RO         2193    i.HAL_GPIO_ReadPin  stm32l0xx_hal_gpio.o
+    0x08000396   0x08000396   0x00000014   Code   RO         2194    i.HAL_GPIO_TogglePin  stm32l0xx_hal_gpio.o
+    0x080003aa   0x080003aa   0x0000000c   Code   RO         2195    i.HAL_GPIO_WritePin  stm32l0xx_hal_gpio.o
     0x080003b6   0x080003b6   0x00000002   PAD
-    0x080003b8   0x080003b8   0x0000000c   Code   RO          939    i.HAL_GetTick       stm32l0xx_hal.o
-    0x080003c4   0x080003c4   0x00000018   Code   RO          945    i.HAL_IncTick       stm32l0xx_hal.o
-    0x080003dc   0x080003dc   0x0000002c   Code   RO          946    i.HAL_Init          stm32l0xx_hal.o
-    0x08000408   0x08000408   0x00000054   Code   RO          947    i.HAL_InitTick      stm32l0xx_hal.o
-    0x0800045c   0x0800045c   0x00000020   Code   RO          187    i.HAL_MspInit       stm32l0xx_hal_msp.o
-    0x0800047c   0x0800047c   0x00000018   Code   RO         2513    i.HAL_NVIC_EnableIRQ  stm32l0xx_hal_cortex.o
-    0x08000494   0x08000494   0x00000012   Code   RO         2517    i.HAL_NVIC_SetPriority  stm32l0xx_hal_cortex.o
-    0x080004a6   0x080004a6   0x00000002   PAD
-    0x080004a8   0x080004a8   0x00000208   Code   RO         1641    i.HAL_RCC_ClockConfig  stm32l0xx_hal_rcc.o
-    0x080006b0   0x080006b0   0x000000d0   Code   RO         1649    i.HAL_RCC_GetSysClockFreq  stm32l0xx_hal_rcc.o
-    0x08000780   0x08000780   0x000006f4   Code   RO         1652    i.HAL_RCC_OscConfig  stm32l0xx_hal_rcc.o
-    0x08000e74   0x08000e74   0x00000038   Code   RO         2521    i.HAL_SYSTICK_Config  stm32l0xx_hal_cortex.o
-    0x08000eac   0x08000eac   0x0000005c   Code   RO          900    i.HAL_TIMEx_MasterConfigSynchronization  stm32l0xx_hal_tim_ex.o
-    0x08000f08   0x08000f08   0x00000038   Code   RO          221    i.HAL_TIM_Base_Init  stm32l0xx_hal_tim.o
-    0x08000f40   0x08000f40   0x00000030   Code   RO          189    i.HAL_TIM_Base_MspInit  stm32l0xx_hal_msp.o
-    0x08000f70   0x08000f70   0x0000002a   Code   RO          226    i.HAL_TIM_Base_Start_IT  stm32l0xx_hal_tim.o
-    0x08000f9a   0x08000f9a   0x00000110   Code   RO          230    i.HAL_TIM_ConfigClockSource  stm32l0xx_hal_tim.o
-    0x080010aa   0x080010aa   0x00000002   Code   RO          250    i.HAL_TIM_IC_CaptureCallback  stm32l0xx_hal_tim.o
-    0x080010ac   0x080010ac   0x0000017c   Code   RO          264    i.HAL_TIM_IRQHandler  stm32l0xx_hal_tim.o
-    0x08001228   0x08001228   0x00000002   Code   RO          267    i.HAL_TIM_OC_DelayElapsedCallback  stm32l0xx_hal_tim.o
-    0x0800122a   0x0800122a   0x00000002   Code   RO          294    i.HAL_TIM_PWM_PulseFinishedCallback  stm32l0xx_hal_tim.o
-    0x0800122c   0x0800122c   0x0000000c   Code   RO         2791    i.HAL_TIM_PeriodElapsedCallback  micros_mcutimer.o
-    0x08001238   0x08001238   0x00000002   Code   RO          307    i.HAL_TIM_TriggerCallback  stm32l0xx_hal_tim.o
-    0x0800123a   0x0800123a   0x00000004   Code   RO          140    i.HardFault_Handler  stm32l0xx_it.o
-    0x0800123e   0x0800123e   0x00000002   Code   RO          141    i.NMI_Handler       stm32l0xx_it.o
-    0x08001240   0x08001240   0x00000078   Code   RO         2523    i.NVIC_SetPriority  stm32l0xx_hal_cortex.o
-    0x080012b8   0x080012b8   0x00000002   Code   RO          142    i.PendSV_Handler    stm32l0xx_it.o
-    0x080012ba   0x080012ba   0x00000002   Code   RO          143    i.SVC_Handler       stm32l0xx_it.o
-    0x080012bc   0x080012bc   0x00000008   Code   RO          144    i.SysTick_Handler   stm32l0xx_it.o
-    0x080012c4   0x080012c4   0x00000074   Code   RO           13    i.SystemClock_Config  main.o
-    0x08001338   0x08001338   0x00000068   Code   RO         2621    i.SystemInit        system_stm32l0xx.o
-    0x080013a0   0x080013a0   0x00000010   Code   RO         2792    i.TIM2_IRQHandler   micros_mcutimer.o
-    0x080013b0   0x080013b0   0x0000007c   Code   RO          309    i.TIM_Base_SetConfig  stm32l0xx_hal_tim.o
-    0x0800142c   0x0800142c   0x0000001c   Code   RO          320    i.TIM_ETR_SetConfig  stm32l0xx_hal_tim.o
-    0x08001448   0x08001448   0x00000018   Code   RO          321    i.TIM_ITRx_SetConfig  stm32l0xx_hal_tim.o
-    0x08001460   0x08001460   0x00000032   Code   RO          327    i.TIM_TI1_ConfigInputStage  stm32l0xx_hal_tim.o
-    0x08001492   0x08001492   0x00000032   Code   RO          329    i.TIM_TI2_ConfigInputStage  stm32l0xx_hal_tim.o
-    0x080014c4   0x080014c4   0x0000000e   Code   RO         3108    i.__scatterload_copy  mc_p.l(handlers.o)
-    0x080014d2   0x080014d2   0x00000002   Code   RO         3109    i.__scatterload_null  mc_p.l(handlers.o)
-    0x080014d4   0x080014d4   0x0000000e   Code   RO         3110    i.__scatterload_zeroinit  mc_p.l(handlers.o)
-    0x080014e2   0x080014e2   0x00000002   PAD
-    0x080014e4   0x080014e4   0x0000004c   Code   RO         2651    i.addTaskSubscribeList  taskmanager.o
-    0x08001530   0x08001530   0x0000004c   Code   RO         2942    i.buttonLongPressOp  buttontask.o
-    0x0800157c   0x0800157c   0x00000002   Code   RO         2943    i.buttonPressOp     buttontask.o
-    0x0800157e   0x0800157e   0x00000002   PAD
-    0x08001580   0x08001580   0x00000034   Code   RO         2944    i.buttonShortPressOp  buttontask.o
-    0x080015b4   0x080015b4   0x000000ec   Code   RO         2945    i.buttonStateWaitDebounce  buttontask.o
-    0x080016a0   0x080016a0   0x00000038   Code   RO         2946    i.buttonStateWaitLongPress  buttontask.o
-    0x080016d8   0x080016d8   0x00000074   Code   RO         2947    i.buttonStateWaitPress  buttontask.o
-    0x0800174c   0x0800174c   0x00000074   Code   RO         2948    i.buttonStateWaitUnpress  buttontask.o
-    0x080017c0   0x080017c0   0x00000002   Code   RO         2949    i.buttonUnpressOp   buttontask.o
-    0x080017c2   0x080017c2   0x00000002   PAD
-    0x080017c4   0x080017c4   0x00000078   Code   RO         2836    i.controlTimeout    micros_softtimer.o
-    0x0800183c   0x0800183c   0x00000044   Code   RO         2652    i.deleteTaskSubscribeList  taskmanager.o
-    0x08001880   0x08001880   0x00000002   Code   RO         3037    i.errorHandler      errorhandler.o
-    0x08001882   0x08001882   0x00000002   PAD
-    0x08001884   0x08001884   0x00000054   Code   RO         3060    i.free              mc_p.l(malloc.o)
-    0x080018d8   0x080018d8   0x000000ec   Code   RO         2883    i.getOnlyIdSignal   ledtask.o
-    0x080019c4   0x080019c4   0x0000002c   Code   RO         2950    i.getOnlyIdSignal   buttontask.o
-    0x080019f0   0x080019f0   0x00000034   Code   RO         2653    i.getSignal         taskmanager.o
-    0x08001a24   0x08001a24   0x0000024c   Code   RO         2884    i.getSignalAndData  ledtask.o
-    0x08001c70   0x08001c70   0x00000002   Code   RO         2951    i.getSignalAndData  buttontask.o
-    0x08001c72   0x08001c72   0x00000002   PAD
-    0x08001c74   0x08001c74   0x0000000c   Code   RO         2837    i.getTimeCounterValue  micros_softtimer.o
-    0x08001c80   0x08001c80   0x0000000c   Code   RO         2838    i.getTimerList      micros_softtimer.o
-    0x08001c8c   0x08001c8c   0x00000018   Code   RO           14    i.main              main.o
-    0x08001ca4   0x08001ca4   0x0000006c   Code   RO         3061    i.malloc            mc_p.l(malloc.o)
-    0x08001d10   0x08001d10   0x00000020   Code   RO         2654    i.micrOs_allTaskInit  taskmanager.o
-    0x08001d30   0x08001d30   0x0000000c   Code   RO         2655    i.micrOs_cancelTimer  taskmanager.o
-    0x08001d3c   0x08001d3c   0x0000002c   Code   RO         2656    i.micrOs_dispatchEventToTask  taskmanager.o
-    0x08001d68   0x08001d68   0x00000008   Code   RO         2658    i.micrOs_init       taskmanager.o
-    0x08001d70   0x08001d70   0x000000e0   Code   RO         2659    i.micrOs_main       taskmanager.o
-    0x08001e50   0x08001e50   0x0000002c   Code   RO         2660    i.micrOs_publishEventToSubscribers  taskmanager.o
-    0x08001e7c   0x08001e7c   0x0000002c   Code   RO         2661    i.micrOs_setEventSubscriptionState  taskmanager.o
-    0x08001ea8   0x08001ea8   0x00000074   Code   RO         2664    i.micrOs_startEventDispachTimer  taskmanager.o
-    0x08001f1c   0x08001f1c   0x00000080   Code   RO         2793    i.microsMcuTimer_init  micros_mcutimer.o
-    0x08001f9c   0x08001f9c   0x000000bc   Code   RO         2839    i.microsSofttimer_createTimer  micros_softtimer.o
-    0x08002058   0x08002058   0x000000c0   Code   RO         2840    i.microsSofttimer_deleteTimer  micros_softtimer.o
-    0x08002118   0x08002118   0x00000058   Code   RO         2841    i.microsSofttimer_mcuTimerCallback  micros_softtimer.o
-    0x08002170   0x08002170   0x00000080   Code   RO         2667    i.setSignal         taskmanager.o
-    0x080021f0   0x080021f0   0x00000034   Code   RO         2952    i.taskButtonGetSignal  buttontask.o
-    0x08002224   0x08002224   0x00000054   Code   RO         2953    i.taskButtonInit    buttontask.o
-    0x08002278   0x08002278   0x00000010   Code   RO         2954    i.taskButtonMain    buttontask.o
-    0x08002288   0x08002288   0x00000034   Code   RO         2885    i.taskLedGetSignal  ledtask.o
-    0x080022bc   0x080022bc   0x000000c0   Code   RO         2886    i.taskLedInit       ledtask.o
-    0x0800237c   0x0800237c   0x00000002   Code   RO         2887    i.taskLedMain       ledtask.o
-    0x0800237e   0x0800237e   0x00000021   Data   RO         2622    .constdata          system_stm32l0xx.o
-    0x0800239f   0x0800239f   0x00000002   Data   RO         2668    .constdata          taskmanager.o
-    0x080023a1   0x080023a1   0x00000003   PAD
-    0x080023a4   0x080023a4   0x00000001   Data   RO         2889    .constdata          ledtask.o
-    0x080023a5   0x080023a5   0x00000003   PAD
-    0x080023a8   0x080023a8   0x0000000d   Data   RO         2955    .constdata          buttontask.o
-    0x080023b5   0x080023b5   0x00000003   PAD
-    0x080023b8   0x080023b8   0x00000020   Data   RO         3106    Region$$Table       anon$$obj.o
+    0x080003b8   0x080003b8   0x0000000c   Code   RO          944    i.HAL_GetTick       stm32l0xx_hal.o
+    0x080003c4   0x080003c4   0x00000018   Code   RO          950    i.HAL_IncTick       stm32l0xx_hal.o
+    0x080003dc   0x080003dc   0x0000002c   Code   RO          951    i.HAL_Init          stm32l0xx_hal.o
+    0x08000408   0x08000408   0x00000054   Code   RO          952    i.HAL_InitTick      stm32l0xx_hal.o
+    0x0800045c   0x0800045c   0x00000020   Code   RO          192    i.HAL_MspInit       stm32l0xx_hal_msp.o
+    0x0800047c   0x0800047c   0x00000012   Code   RO         2522    i.HAL_NVIC_SetPriority  stm32l0xx_hal_cortex.o
+    0x0800048e   0x0800048e   0x00000002   PAD
+    0x08000490   0x08000490   0x00000208   Code   RO         1646    i.HAL_RCC_ClockConfig  stm32l0xx_hal_rcc.o
+    0x08000698   0x08000698   0x000000d0   Code   RO         1654    i.HAL_RCC_GetSysClockFreq  stm32l0xx_hal_rcc.o
+    0x08000768   0x08000768   0x000006f4   Code   RO         1657    i.HAL_RCC_OscConfig  stm32l0xx_hal_rcc.o
+    0x08000e5c   0x08000e5c   0x00000038   Code   RO         2526    i.HAL_SYSTICK_Config  stm32l0xx_hal_cortex.o
+    0x08000e94   0x08000e94   0x00000004   Code   RO          145    i.HardFault_Handler  stm32l0xx_it.o
+    0x08000e98   0x08000e98   0x00000002   Code   RO          146    i.NMI_Handler       stm32l0xx_it.o
+    0x08000e9a   0x08000e9a   0x00000002   PAD
+    0x08000e9c   0x08000e9c   0x00000078   Code   RO         2528    i.NVIC_SetPriority  stm32l0xx_hal_cortex.o
+    0x08000f14   0x08000f14   0x00000002   Code   RO          147    i.PendSV_Handler    stm32l0xx_it.o
+    0x08000f16   0x08000f16   0x00000002   Code   RO          148    i.SVC_Handler       stm32l0xx_it.o
+    0x08000f18   0x08000f18   0x00000008   Code   RO          149    i.SysTick_Handler   stm32l0xx_it.o
+    0x08000f20   0x08000f20   0x00000074   Code   RO           13    i.SystemClock_Config  main.o
+    0x08000f94   0x08000f94   0x00000068   Code   RO         2626    i.SystemInit        system_stm32l0xx.o
+    0x08000ffc   0x08000ffc   0x0000000e   Code   RO         3107    i.__scatterload_copy  mc_p.l(handlers.o)
+    0x0800100a   0x0800100a   0x00000002   Code   RO         3108    i.__scatterload_null  mc_p.l(handlers.o)
+    0x0800100c   0x0800100c   0x0000000e   Code   RO         3109    i.__scatterload_zeroinit  mc_p.l(handlers.o)
+    0x0800101a   0x0800101a   0x00000036   Code   RO         2716    i.button_get_signal  button_task.o
+    0x08001050   0x08001050   0x0000002c   Code   RO         2717    i.button_get_signal_id  button_task.o
+    0x0800107c   0x0800107c   0x00000002   Code   RO         2718    i.button_get_signal_id_u8  button_task.o
+    0x0800107e   0x0800107e   0x00000002   PAD
+    0x08001080   0x08001080   0x00000054   Code   RO         2719    i.button_init       button_task.o
+    0x080010d4   0x080010d4   0x0000004c   Code   RO         2720    i.button_long_press_operation  button_task.o
+    0x08001120   0x08001120   0x00000010   Code   RO         2721    i.button_main       button_task.o
+    0x08001130   0x08001130   0x00000002   Code   RO         2722    i.button_press_operation  button_task.o
+    0x08001132   0x08001132   0x00000002   Code   RO         2723    i.button_release_operation  button_task.o
+    0x08001134   0x08001134   0x0000003c   Code   RO         2724    i.button_short_press_operation  button_task.o
+    0x08001170   0x08001170   0x000000f4   Code   RO         2725    i.button_state_wait_debounce  button_task.o
+    0x08001264   0x08001264   0x00000038   Code   RO         2726    i.button_state_wait_long_press  button_task.o
+    0x0800129c   0x0800129c   0x00000078   Code   RO         2727    i.button_state_wait_press  button_task.o
+    0x08001314   0x08001314   0x0000007c   Code   RO         2728    i.button_state_wait_release  button_task.o
+    0x08001390   0x08001390   0x00000054   Code   RO         3059    i.free              mc_p.l(malloc.o)
+    0x080013e4   0x080013e4   0x00000036   Code   RO         2658    i.led_get_signal    led_task.o
+    0x0800141a   0x0800141a   0x00000002   PAD
+    0x0800141c   0x0800141c   0x000000ec   Code   RO         2659    i.led_get_signal_id  led_task.o
+    0x08001508   0x08001508   0x00000254   Code   RO         2660    i.led_get_signal_id_u8  led_task.o
+    0x0800175c   0x0800175c   0x000000c0   Code   RO         2661    i.led_init          led_task.o
+    0x0800181c   0x0800181c   0x00000002   Code   RO         2662    i.led_main          led_task.o
+    0x0800181e   0x0800181e   0x00000002   PAD
+    0x08001820   0x08001820   0x00000040   Code   RO           14    i.main              main.o
+    0x08001860   0x08001860   0x0000006c   Code   RO         3060    i.malloc            mc_p.l(malloc.o)
+    0x080018cc   0x080018cc   0x00000010   Code   RO         3022    i.mcu_timer_fake_interrupt  micros_mcu_timer.o
+    0x080018dc   0x080018dc   0x0000003a   Code   RO         2808    i.micros_add_task_subs  micros_core.o
+    0x08001916   0x08001916   0x00000002   PAD
+    0x08001918   0x08001918   0x00000020   Code   RO         2809    i.micros_allTaskInit  micros_core.o
+    0x08001938   0x08001938   0x00000038   Code   RO         2810    i.micros_dequeue_signal  micros_core.o
+    0x08001970   0x08001970   0x00000064   Code   RO         2811    i.micros_enqueue_signal  micros_core.o
+    0x080019d4   0x080019d4   0x00000028   Code   RO         2812    i.micros_event_dispatch  micros_core.o
+    0x080019fc   0x080019fc   0x0000002c   Code   RO         2813    i.micros_event_publish  micros_core.o
+    0x08001a28   0x08001a28   0x0000002c   Code   RO         2814    i.micros_event_substate_set  micros_core.o
+    0x08001a54   0x08001a54   0x0000002c   Code   RO         2815    i.micros_init       micros_core.o
+    0x08001a80   0x08001a80   0x0000000e   Code   RO         2816    i.micros_is_empty_sig_list  micros_core.o
+    0x08001a8e   0x08001a8e   0x00000002   PAD
+    0x08001a90   0x08001a90   0x0000008c   Code   RO         2817    i.micros_main       micros_core.o
+    0x08001b1c   0x08001b1c   0x0000000c   Code   RO         2919    i.micros_memory_allocate  micros_mem.o
+    0x08001b28   0x08001b28   0x00000012   Code   RO         2920    i.micros_memory_deallocate  micros_mem.o
+    0x08001b3a   0x08001b3a   0x0000003c   Code   RO         2818    i.micros_remove_task_subs  micros_core.o
+    0x08001b76   0x08001b76   0x00000002   Code   RO         2937    i.micros_softtimer_init  micros_softtimer.o
+    0x08001b78   0x08001b78   0x00000088   Code   RO         2938    i.micros_softtimer_main  micros_softtimer.o
+    0x08001c00   0x08001c00   0x00000070   Code   RO         2939    i.micros_timer_add  micros_softtimer.o
+    0x08001c70   0x08001c70   0x00000014   Code   RO         2940    i.micros_timer_calc_elapsed_time  micros_softtimer.o
+    0x08001c84   0x08001c84   0x0000001c   Code   RO         2941    i.micros_timer_cancel  micros_softtimer.o
+    0x08001ca0   0x08001ca0   0x00000044   Code   RO         2942    i.micros_timer_create_tmkey  micros_softtimer.o
+    0x08001ce4   0x08001ce4   0x00000068   Code   RO         2943    i.micros_timer_delete  micros_softtimer.o
+    0x08001d4c   0x08001d4c   0x00000074   Code   RO         2944    i.micros_timer_event_dispatch  micros_softtimer.o
+    0x08001dc0   0x08001dc0   0x00000038   Code   RO         2947    i.micros_timer_search  micros_softtimer.o
+    0x08001df8   0x08001df8   0x0000003c   Code   RO         2949    i.micros_timer_timeout_ctrl  micros_softtimer.o
+    0x08001e34   0x08001e34   0x00000021   Data   RO         2627    .constdata          system_stm32l0xx.o
+    0x08001e55   0x08001e55   0x00000003   PAD
+    0x08001e58   0x08001e58   0x00000001   Data   RO         2663    .constdata          led_task.o
+    0x08001e59   0x08001e59   0x00000003   PAD
+    0x08001e5c   0x08001e5c   0x00000011   Data   RO         2729    .constdata          button_task.o
+    0x08001e6d   0x08001e6d   0x00000003   PAD
+    0x08001e70   0x08001e70   0x00000008   Data   RO         2823    .constdata          micros_core.o
+    0x08001e78   0x08001e78   0x00000020   Data   RO         3105    Region$$Table       anon$$obj.o
 
 
-    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x080023d8, Size: 0x000006d0, Max: 0x00005000, ABSOLUTE)
+    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x08001e98, Size: 0x000006a0, Max: 0x00005000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000   0x080023d8   0x00000009   Data   RW          957    .data               stm32l0xx_hal.o
-    0x20000009   0x080023e1   0x00000003   PAD
-    0x2000000c   0x080023e4   0x00000004   Data   RW         2623    .data               system_stm32l0xx.o
-    0x20000010   0x080023e8   0x0000002c   Data   RW         2669    .data               taskmanager.o
-    0x2000003c   0x08002414   0x0000000f   Data   RW         2842    .data               micros_softtimer.o
-    0x2000004b   0x08002423   0x00000001   PAD
-    0x2000004c   0x08002424   0x00000013   Data   RW         2890    .data               ledtask.o
-    0x2000005f   0x08002437   0x00000001   PAD
-    0x20000060   0x08002438   0x0000001f   Data   RW         2956    .data               buttontask.o
-    0x2000007f   0x08002457   0x00000001   PAD
-    0x20000080   0x08002458   0x00000004   Data   RW         3102    .data               mc_p.l(mvars.o)
-    0x20000084   0x0800245c   0x00000004   Data   RW         3103    .data               mc_p.l(mvars.o)
-    0x20000088        -       0x0000003c   Zero   RW         2794    .bss                micros_mcutimer.o
-    0x200000c4        -       0x0000000c   Zero   RW         2888    .bss                ledtask.o
-    0x200000d0        -       0x00000200   Zero   RW            2    HEAP                startup_stm32l072xx.o
-    0x200002d0        -       0x00000400   Zero   RW            1    STACK               startup_stm32l072xx.o
+    0x20000000   0x08001e98   0x00000002   Data   RW           15    .data               main.o
+    0x20000002   0x08001e9a   0x00000002   PAD
+    0x20000004   0x08001e9c   0x00000009   Data   RW          962    .data               stm32l0xx_hal.o
+    0x2000000d   0x08001ea5   0x00000003   PAD
+    0x20000010   0x08001ea8   0x00000004   Data   RW         2628    .data               system_stm32l0xx.o
+    0x20000014   0x08001eac   0x00000013   Data   RW         2664    .data               led_task.o
+    0x20000027   0x08001ebf   0x00000001   PAD
+    0x20000028   0x08001ec0   0x00000019   Data   RW         2730    .data               button_task.o
+    0x20000041   0x08001ed9   0x00000003   PAD
+    0x20000044   0x08001edc   0x00000030   Data   RW         2824    .data               micros_core.o
+    0x20000074   0x08001f0c   0x0000000d   Data   RW         2950    .data               micros_softtimer.o
+    0x20000081   0x08001f19   0x00000003   PAD
+    0x20000084   0x08001f1c   0x00000004   Data   RW         3025    .data               micros_mcu_timer.o
+    0x20000088   0x08001f20   0x00000004   Data   RW         3101    .data               mc_p.l(mvars.o)
+    0x2000008c   0x08001f24   0x00000004   Data   RW         3102    .data               mc_p.l(mvars.o)
+    0x20000090        -       0x0000000c   Zero   RW         2822    .bss                micros_core.o
+    0x2000009c   0x08001f28   0x00000004   PAD
+    0x200000a0        -       0x00000200   Zero   RW            2    HEAP                startup_stm32l072xx.o
+    0x200002a0        -       0x00000400   Zero   RW            1    STACK               startup_stm32l072xx.o
 
 
 ==============================================================================
@@ -1644,28 +1625,26 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-       854        212         13         31          0       9148   buttontask.o
-         2          0          0          0          0        479   errorhandler.o
-      1070         54          1         19         12       6405   ledtask.o
-       142          6          0          0          0     325500   main.o
-       156         12          0          0         60       5071   micros_mcutimer.o
-       612         78          0         15          0       5151   micros_softtimer.o
-        28          8        192          0       1536        648   startup_stm32l072xx.o
-       164         34          0          9          0       8685   stm32l0xx_hal.o
-       218         26          0          0          0      10785   stm32l0xx_hal_cortex.o
-       554         32          0          0          0       3596   stm32l0xx_hal_gpio.o
-        80         10          0          0          0       1297   stm32l0xx_hal_msp.o
-      2508         76          0          0          0       4672   stm32l0xx_hal_rcc.o
-      1034         14          0          0          0       9102   stm32l0xx_hal_tim.o
-        92          0          0          0          0       1264   stm32l0xx_hal_tim_ex.o
-        18          0          0          0          0       2167   stm32l0xx_it.o
-       104         16         33          4          0       1251   system_stm32l0xx.o
-       848         50          2         44          0      12006   taskmanager.o
+       884        220         17         25          0       9172   button_task.o
+      1080         56          1         19          0       6215   led_task.o
+       182         16          0          2          0     294324   main.o
+       632         40          8         48         12      11511   micros_core.o
+        16          6          0          4          0       1119   micros_mcu_timer.o
+        30          0          0          0          0       1208   micros_mem.o
+       702         70          0         13          0       7906   micros_softtimer.o
+        28          8        192          0       1536        668   startup_stm32l072xx.o
+       164         34          0          9          0       8825   stm32l0xx_hal.o
+       194         20          0          0          0      10208   stm32l0xx_hal_cortex.o
+       554         32          0          0          0       3696   stm32l0xx_hal_gpio.o
+        32          6          0          0          0        466   stm32l0xx_hal_msp.o
+      2508         76          0          0          0       4752   stm32l0xx_hal_rcc.o
+        18          0          0          0          0       2267   stm32l0xx_it.o
+       104         16         33          4          0       1311   system_stm32l0xx.o
 
     ----------------------------------------------------------------------
-      8498        628        282        128       1608     407227   Object Totals
+      7146        600        292        136       1552     363648   Object Totals
          0          0         32          0          0          0   (incl. Generated)
-        14          0          9          6          0          0   (incl. Padding)
+        18          0          9         12          4          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -1688,8 +1667,8 @@ Image component sizes
         44          0          0          0          0         72   uidiv.o
 
     ----------------------------------------------------------------------
-       396         36          0          8          0        444   Library Totals
-         2          0          0          0          0          0   (incl. Padding)
+       394         36          0          8          0        444   Library Totals
+         0          0          0          0          0          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -1698,7 +1677,7 @@ Image component sizes
        394         36          0          8          0        444   mc_p.l
 
     ----------------------------------------------------------------------
-       396         36          0          8          0        444   Library Totals
+       394         36          0          8          0        444   Library Totals
 
     ----------------------------------------------------------------------
 
@@ -1707,15 +1686,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-      8894        664        282        136       1608     404347   Grand Totals
-      8894        664        282        136       1608     404347   ELF Image Totals
-      8894        664        282        136          0          0   ROM Totals
+      7540        636        292        144       1552     361340   Grand Totals
+      7540        636        292        144       1552     361340   ELF Image Totals
+      7540        636        292        144          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                 9176 (   8.96kB)
-    Total RW  Size (RW Data + ZI Data)              1744 (   1.70kB)
-    Total ROM Size (Code + RO Data + RW Data)       9312 (   9.09kB)
+    Total RO  Size (Code + RO Data)                 7832 (   7.65kB)
+    Total RW  Size (RW Data + ZI Data)              1696 (   1.66kB)
+    Total ROM Size (Code + RO Data + RW Data)       7976 (   7.79kB)
 
 ==============================================================================
 

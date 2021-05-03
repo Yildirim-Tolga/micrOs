@@ -1,11 +1,10 @@
 ledbuttonexample\ledtask.o: ..\led\ledTask.c
 ledbuttonexample\ledtask.o: ..\led\ledTask.h
 ledbuttonexample\ledtask.o: ..\led\micrOsTask_led.h
-ledbuttonexample\ledtask.o: ..\led\../micrOS/signalStructures.h
+ledbuttonexample\ledtask.o: ..\micrOS\micros_tse_config.h
 ledbuttonexample\ledtask.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-ledbuttonexample\ledtask.o: ..\led\../micrOS/signalEventConfig.h
-ledbuttonexample\ledtask.o: ..\micrOS\taskManagerFunctions.h
 ledbuttonexample\ledtask.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+ledbuttonexample\ledtask.o: ..\micrOS\micros.h
 ledbuttonexample\ledtask.o: ../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal.h
 ledbuttonexample\ledtask.o: ../Inc/stm32l0xx_hal_conf.h
 ledbuttonexample\ledtask.o: ../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_rcc.h

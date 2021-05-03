@@ -23,7 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "taskManager.h"
+#include "micros_core.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -56,7 +56,8 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+extern void mcu_timer_fake_interrupt(void);
+static uint16_t fake_tm_counter = 0;
 /* USER CODE END 0 */
 
 /**
@@ -88,8 +89,8 @@ int main(void)
   /* Initialize all configured peripherals */
   
   /* USER CODE BEGIN 2 */
-	micrOs_init();
-	micrOs_allTaskInit();
+	micros_init();
+	micros_allTaskInit();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -99,7 +100,13 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		micrOs_main();
+		micros_main();
+		fake_tm_counter++;
+		if(fake_tm_counter == 50000)
+		{
+			fake_tm_counter = 0;
+			mcu_timer_fake_interrupt();
+		}
   }
   /* USER CODE END 3 */
 }

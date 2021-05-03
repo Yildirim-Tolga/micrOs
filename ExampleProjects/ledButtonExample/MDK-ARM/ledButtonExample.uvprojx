@@ -16,7 +16,7 @@
         <TargetCommonOption>
           <Device>STM32L072CZYx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32L0xx_DFP.2.0.0</PackID>
+          <PackID>Keil.STM32L0xx_DFP.2.0.1</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000-0x20004FFF) IROM(0x8000000-0x802FFFF) CLOCK(8000000) CPUTYPE("Cortex-M0+")</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32L072xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc;../Drivers/STM32L0xx_HAL_Driver/Inc;../Drivers/STM32L0xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32L0xx/Include;../Drivers/CMSIS/Include;..\micrOS;..\micrOS\micrOs_mcuTimer;..\micrOS\micrOs_softTimer;..\led;..\button;..\errorHandler</IncludePath>
+              <IncludePath>../Inc;../Drivers/STM32L0xx_HAL_Driver/Inc;../Drivers/STM32L0xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32L0xx/Include;../Drivers/CMSIS/Include;..\micrOS;..\led;..\button;..\..\..\micrOS</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -500,42 +500,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>micrOs</GroupName>
-          <Files>
-            <File>
-              <FileName>taskManager.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\micrOS\taskManager.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>micrOs/mcuTimer</GroupName>
-          <Files>
-            <File>
-              <FileName>micrOs_mcuTimer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\micrOS\micrOs_mcuTimer\micrOs_mcuTimer.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>micrOs/softTimer</GroupName>
-          <Files>
-            <File>
-              <FileName>micrOs_softTimer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\micrOS\micrOs_softTimer\micrOs_softTimer.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>led</GroupName>
           <Files>
             <File>
-              <FileName>ledTask.c</FileName>
+              <FileName>led_task.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\led\ledTask.c</FilePath>
+              <FilePath>..\led\led_task.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -543,19 +513,34 @@
           <GroupName>button</GroupName>
           <Files>
             <File>
-              <FileName>buttonTask.c</FileName>
+              <FileName>button_task.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\button\buttonTask.c</FilePath>
+              <FilePath>..\button\button_task.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>errorHandler</GroupName>
+          <GroupName>micrOS</GroupName>
           <Files>
             <File>
-              <FileName>errorHandler.c</FileName>
+              <FileName>micros_core.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\errorHandler\errorHandler.c</FilePath>
+              <FilePath>..\..\..\micrOS\micros_core.c</FilePath>
+            </File>
+            <File>
+              <FileName>micros_mem.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\micrOS\micros_mem.c</FilePath>
+            </File>
+            <File>
+              <FileName>micros_softtimer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\micrOS\micros_softtimer.c</FilePath>
+            </File>
+            <File>
+              <FileName>micros_mcu_timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\micrOS\micros_mcu_timer.c</FilePath>
             </File>
           </Files>
         </Group>
