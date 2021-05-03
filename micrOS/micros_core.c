@@ -156,6 +156,7 @@ static void micros_enqueue_signal(sSig_node **ppHead, sSig_node **ppTail, const 
     if (pNew == NULL)
     {
         // TODO: Add error function
+        while(1);
         return;
     }
     pNew->sig_gen.ptr_sig = micros_memory_allocate(sig_size[signal->sig_type]);
@@ -163,6 +164,7 @@ static void micros_enqueue_signal(sSig_node **ppHead, sSig_node **ppTail, const 
     {
         // TODO: Add free signal general allocated memory function
         // TODO: Add error function
+        while(1);
         return;
     }
     // memory copy for specific signal types
@@ -208,6 +210,7 @@ static void micros_add_task_subs(sEventSubs **ppNode, eTaskId task_id)
     if (*ppNode == NULL)
     {
         // TODO: error handler function will be added
+        while(1);
         return;
     }
     (*ppNode)->task_id = task_id;

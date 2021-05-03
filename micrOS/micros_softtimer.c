@@ -229,39 +229,39 @@ void micros_softtimer_init(void)
 
 void micros_softtimer_main(void)
 {
-    sMicros_tm_node *pNode = pTm_head;
-    while (pNode != NULL)
+    sMicros_tm_node **ppNode = &pTm_head;
+    while ((*ppNode) != NULL)
     {
-        if (pNode->tm.timeout == 0)
+        if ((*ppNode)->tm.timeout == 0)
         {
-            pNode = pNode->next;
+            ppNode = &((*ppNode)->next);
             continue;
         }
-        pNode->tm.timeout = 0;
-        switch (pNode->tm.cb_type)
+        (*ppNode)->tm.timeout = 0;
+        switch ((*ppNode)->tm.cb_type)
         {
         case TIMER_CALLBACK_TYPE_EVENT:
-            micros_event_publish(pNode->tm.event_id, &(pNode->tm.sig_gen));
+            micros_event_publish((*ppNode)->tm.event_id, &((*ppNode)->tm.sig_gen));
             break;
 
         case TIMER_CALLBACK_TYPE_TASK:
-            micros_event_dispatch(&(pNode->tm.sig_gen), pNode->tm.task_id);
+            micros_event_dispatch(&((*ppNode)->tm.sig_gen), (*ppNode)->tm.task_id);
             break;
 
         case TIMER_CALLBACK_TYPE_CALLBACK_FUNC:
-            pNode->tm.pfn_timeout_cb();
+            (*ppNode)->tm.pfn_timeout_cb();
             break;
         }
-        sMicros_tm_node *pTemp = pNode;
-        pNode = pNode->next;
-        switch (pTemp->tm.type)
+        sMicros_tm_node **ppTemp = ppNode;
+        ppNode = &((*ppNode)->next);
+        switch ((*ppTemp)->tm.type)
         {
         case MICROS_TM_TYPE_ONE_SHOT:
-            micros_timer_cancel(pTemp->tm.key);
+            micros_timer_cancel((*ppTemp)->tm.key);
             break;
 
         case MICROS_TM_TYPE_PERIODIC:
-            pTemp->tm.start = time_counter;
+            (*ppTemp)->tm.start = time_counter;
             break;
 
         default:
@@ -284,6 +284,7 @@ static uint8_t micros_timer_create_tmkey(void)
         if (tm_key == key_start)
         {
             // TODO: timer key full error will be added
+            while(1);
             return 0;
         }
     }
@@ -330,6 +331,7 @@ static void micros_timer_add(sMicros_timer *timer)
     if (newNode == NULL)
     {
         // TODO: Error function will be added
+        while(1);
         return;
     }
     memcpy(&(newNode->tm), timer, sizeof(sMicros_timer));
