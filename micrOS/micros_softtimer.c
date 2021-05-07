@@ -378,7 +378,7 @@ static void micros_timer_timeout_ctrl(void)
     sMicros_tm_node *pNode = pTm_head;
     while (pNode != NULL)
     {
-        if (pNode->tm.interval >= micros_timer_calc_elapsed_time(pNode->tm.start, time_counter))
+        if (pNode->tm.interval < micros_timer_calc_elapsed_time(pNode->tm.start, time_counter))
             pNode->tm.timeout = 1;
         pNode = pNode->next;
     }
