@@ -98,6 +98,18 @@ uint8_t micros_timer_event_dispatch(uint8_t tm_type, uint8_t cancelable, uint32_
 uint8_t micros_timer_start(uint8_t tm_type, uint8_t cancelable, uint32_t interval, void (*pfnCallbackFunc)(void));
 
 /**
+ * @brief Start timer and end of the interval time run callback function with parameter pointer
+ * 
+ * @param tm_type MICROS_TM_TYPE_ONE_SHOT or MICROS_TM_TYPE_PERIODIC
+ * @param cancelable true=cancelable. If cancelable event this function return timer_key else return 0.
+ * @param interval Timer interval
+ * @param pfnCallbackFunc Callback function
+ * @param param Function parameter pointer
+ * @return uint8_t If cancelable event this function return timer_key else return 0.
+ */
+uint8_t micros_timer_start_param(uint8_t tm_type, uint8_t cancelable, uint32_t interval, void (*pfnCallbackFunc)(const void *),const void *param);
+
+/**
  * @brief Cancel timer
  * 
  * @param tm_key Timer key

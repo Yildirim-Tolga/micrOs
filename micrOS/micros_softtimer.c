@@ -17,9 +17,10 @@
 #include "micros_config.h"
 #include <string.h>
 
-#define TIMER_CALLBACK_TYPE_CALLBACK_FUNC 0
+#define TIMER_CALLBACK_TYPE_CB_FUNC 0
 #define TIMER_CALLBACK_TYPE_TASK 1
 #define TIMER_CALLBACK_TYPE_EVENT 2
+#define TIMER_CALLBACK_TYPE_CB_FUNC_PARAM 3
 
 /* ========================================  Start of section using anonymous unions  ======================================== */
 #if defined(__CC_ARM)
@@ -59,6 +60,13 @@ typedef struct sMicros_timer
     union
     {
         void (*pfn_timeout_cb)(void); // timeout callback function
+
+        struct //timeout callback function with param
+        {
+            void (*pfn_timeout_cb_param)(const void *);
+            const void *param;
+        };
+
         struct
         {
             union
@@ -205,12 +213,31 @@ uint8_t micros_timer_start(uint8_t tm_type, uint8_t cancelable, uint32_t interva
         timer.key = micros_timer_create_tmkey();
     else
         timer.key = 0;
-    timer.cb_type = TIMER_CALLBACK_TYPE_CALLBACK_FUNC;
+    timer.cb_type = TIMER_CALLBACK_TYPE_CB_FUNC;
     timer.interval = interval;
     timer.pfn_timeout_cb = pfnCallbackFunc;
     timer.start = time_counter;
     timer.timeout = 0;
     timer.type = tm_type;
+    micros_timer_add(&timer);
+    return timer.key;
+}
+
+uint8_t micros_timer_start_param(uint8_t tm_type, uint8_t cancelable, uint32_t interval, void (*pfnCallbackFunc)(const void *),const void *param)
+{
+    sMicros_timer timer = {
+        .cb_type = TIMER_CALLBACK_TYPE_CB_FUNC_PARAM,
+        .interval = interval,
+        .pfn_timeout_cb_param = pfnCallbackFunc,
+        .param = param,
+        .start = time_counter,
+        .timeout = 0,
+        .type = tm_type
+    };
+    if (cancelable)
+        timer.key = micros_timer_create_tmkey();
+    else
+        timer.key = 0;
     micros_timer_add(&timer);
     return timer.key;
 }
@@ -248,8 +275,11 @@ void micros_softtimer_main(void)
             micros_event_dispatch(&((*ppNode)->tm.sig_gen), (*ppNode)->tm.task_id);
             break;
 
-        case TIMER_CALLBACK_TYPE_CALLBACK_FUNC:
+        case TIMER_CALLBACK_TYPE_CB_FUNC:
             (*ppNode)->tm.pfn_timeout_cb();
+            break;
+        case TIMER_CALLBACK_TYPE_CB_FUNC_PARAM:
+            (*ppNode)->tm.pfn_timeout_cb_param((*ppNode)->tm.param);
             break;
         default:
             // TODO: error function will be added
