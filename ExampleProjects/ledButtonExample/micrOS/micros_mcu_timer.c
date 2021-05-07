@@ -13,6 +13,7 @@
 
 #include "micros_mcu_timer.h"
 #include "micros_config.h"
+#include "stm32l0xx_hal.h"
 
 #ifdef MICROS_MCU_TIMER_TYPE_INTERRUPT
 /**
@@ -24,12 +25,14 @@ static void micros_mcu_timer_init_periph(void);
 
 void (*pfnCb)(void);
 
+TIM_HandleTypeDef mcuTimer;
+
 void micros_mcu_timer_init(void (*pfnCallback)(void))
 {
+    pfnCb = pfnCallback;
 #ifdef MICROS_MCU_TIMER_TYPE_INTERRUPT
     micros_mcu_timer_init_periph();
 #endif // MICROS_MCU_TIMER_TYPE_INTERRUPT
-    pfnCb = pfnCallback;
 }
 
 #ifdef MICROS_MCU_TIMER_TYPE_SYS_TIME_COUNTER
@@ -43,13 +46,50 @@ void micros_mcu_timer_main(void)
 static void micros_mcu_timer_init_periph(void)
 {
     // TODO: create timer peripheral will be added
+    TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+    TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+    mcuTimer.Instance = TIM2;
+    mcuTimer.Init.Prescaler = 0;
+    mcuTimer.Init.CounterMode = TIM_COUNTERMODE_UP;
+    mcuTimer.Init.Period = 2096;
+    mcuTimer.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+    mcuTimer.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
+    if (HAL_TIM_Base_Init(&mcuTimer) != HAL_OK)
+    {
+        // TODO: Error functions will be added
+    }
+    sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+    if (HAL_TIM_ConfigClockSource(&mcuTimer, &sClockSourceConfig) != HAL_OK)
+    {
+        // TODO: Error functions will be added
+    }
+    sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+    sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+    if (HAL_TIMEx_MasterConfigSynchronization(&mcuTimer, &sMasterConfig) != HAL_OK)
+    {
+        // TODO: Error functions will be added
+    }
+    HAL_TIM_Base_Start_IT(&mcuTimer);
 }
 
-// TODO: timer interrupt callback function will be added. Restart timer and run pfnCb();
-void mcu_timer_fake_interrupt(void);
-void mcu_timer_fake_interrupt(void)
+/**
+ * @brief Timer callback function
+ * 
+ * @param htim Timer
+ */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
     pfnCb();
+}
+
+/**
+ * @brief This function handles TIM2 global interrupt.
+ * 
+ */
+void TIM2_IRQHandler(void)
+{
+    HAL_TIM_IRQHandler(&mcuTimer);
 }
 
 #endif // MICROS_MCU_TIMER_TYPE_INTERRUPT

@@ -56,8 +56,7 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-extern void mcu_timer_fake_interrupt(void);
-static uint16_t fake_tm_counter = 0;
+
 /* USER CODE END 0 */
 
 /**
@@ -101,12 +100,6 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 		micros_main();
-		fake_tm_counter++;
-		if(fake_tm_counter == 2000)
-		{
-			fake_tm_counter = 0;
-			mcu_timer_fake_interrupt();
-		}
   }
   /* USER CODE END 3 */
 }
