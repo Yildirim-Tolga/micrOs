@@ -343,6 +343,8 @@ static uint8_t micros_timer_create_tmkey(void)
 
 static uint8_t micros_timer_search(uint8_t tm_key, sMicros_tm_node ***pppNode, sMicros_tm_node ***pppPrev)
 {
+    if(tm_key == 0)
+        return FALSE;
     sMicros_tm_node **ppNode_current = &pTm_head;
     *pppPrev = NULL;
     while (*ppNode_current != NULL)
