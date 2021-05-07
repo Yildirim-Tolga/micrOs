@@ -51,11 +51,11 @@
  */
 typedef struct sMicros_timer
 {
-    uint8_t key;         // timer key
+    const uint8_t key;         // timer key
     uint32_t start;      // starting time in millisecond
     uint32_t interval;   // interval time in millisecond
-    uint8_t type : 1;    // timer type one shot or periodic
-    uint8_t cb_type : 2; // callback type;
+    const uint8_t type : 1;    // timer type one shot or periodic
+    const uint8_t cb_type : 2; // callback type;
     uint8_t timeout : 1; // timeout flag
     union
     {
@@ -71,8 +71,8 @@ typedef struct sMicros_timer
         {
             union
             {
-                eEventId event_id : 16;
-                eTaskId task_id : 16;
+                const eEventId event_id : 16;
+                const eTaskId task_id : 16;
             };
             sSig_gen sig_gen;
         };
@@ -170,62 +170,76 @@ extern const size_t sig_size[SIGNAL_TYPE__COUNT];
 
 uint8_t micros_timer_event_publish(uint8_t tm_type, uint8_t cancelable, uint32_t interval, eEventId event_id, const sSig_gen *sig_gen)
 {
-    sMicros_timer timer;
+    uint8_t key = 0;
     if (cancelable)
-        timer.key = micros_timer_create_tmkey();
-    else
-        timer.key = 0;
-    timer.cb_type = TIMER_CALLBACK_TYPE_EVENT;
-    timer.event_id = event_id;
-    timer.interval = interval;
-    timer.sig_gen.ptr_sig = sig_gen->ptr_sig;
-    timer.sig_gen.sig_type = sig_gen->sig_type;
-    timer.start = time_counter;
-    timer.timeout = 0;
-    timer.type = tm_type;
+        key = micros_timer_create_tmkey();
+
+    sMicros_timer timer = {
+        .key = key,
+        .cb_type = TIMER_CALLBACK_TYPE_EVENT,
+        .event_id = event_id,
+        .interval = interval,
+        .sig_gen.ptr_sig = sig_gen->ptr_sig,
+        .sig_gen.sig_type = sig_gen->sig_type,
+        .start = time_counter,
+        .timeout = 0,
+        .type = tm_type
+    };
+    
     micros_timer_add(&timer);
     return timer.key;
 }
 
 uint8_t micros_timer_event_dispatch(uint8_t tm_type, uint8_t cancelable, uint32_t interval, eTaskId task_id, const sSig_gen *sig_gen)
 {
-    sMicros_timer timer;
+    uint8_t key = 0;
     if (cancelable)
-        timer.key = micros_timer_create_tmkey();
-    else
-        timer.key = 0;
-    timer.cb_type = TIMER_CALLBACK_TYPE_TASK;
-    timer.task_id = task_id;
-    timer.interval = interval;
-    timer.sig_gen.ptr_sig = sig_gen->ptr_sig;
-    timer.sig_gen.sig_type = sig_gen->sig_type;
-    timer.start = time_counter;
-    timer.timeout = 0;
-    timer.type = tm_type;
+        key = micros_timer_create_tmkey();
+
+    sMicros_timer timer = {
+        .key = key,
+        .cb_type = TIMER_CALLBACK_TYPE_TASK,
+        .task_id = task_id,
+        .interval = interval,
+        .sig_gen.ptr_sig = sig_gen->ptr_sig,
+        .sig_gen.sig_type = sig_gen->sig_type,
+        .start = time_counter,
+        .timeout = 0,
+        .type = tm_type
+    };
+    
     micros_timer_add(&timer);
     return timer.key;
 }
 
 uint8_t micros_timer_start(uint8_t tm_type, uint8_t cancelable, uint32_t interval, void (*pfnCallbackFunc)(void))
 {
-    sMicros_timer timer;
+    uint8_t key = 0;
     if (cancelable)
-        timer.key = micros_timer_create_tmkey();
-    else
-        timer.key = 0;
-    timer.cb_type = TIMER_CALLBACK_TYPE_CB_FUNC;
-    timer.interval = interval;
-    timer.pfn_timeout_cb = pfnCallbackFunc;
-    timer.start = time_counter;
-    timer.timeout = 0;
-    timer.type = tm_type;
+        key = micros_timer_create_tmkey();
+
+    sMicros_timer timer = {
+        .key = key,
+        .cb_type = TIMER_CALLBACK_TYPE_CB_FUNC,
+        .interval = interval,
+        .pfn_timeout_cb = pfnCallbackFunc,
+        .start = time_counter,
+        .timeout = 0,
+        .type = tm_type
+    };
+    
     micros_timer_add(&timer);
     return timer.key;
 }
 
 uint8_t micros_timer_start_param(uint8_t tm_type, uint8_t cancelable, uint32_t interval, void (*pfnCallbackFunc)(const void *),const void *param)
 {
+    uint8_t key = 0;
+    if (cancelable)
+        key = micros_timer_create_tmkey();
+
     sMicros_timer timer = {
+        .key = key,
         .cb_type = TIMER_CALLBACK_TYPE_CB_FUNC_PARAM,
         .interval = interval,
         .pfn_timeout_cb_param = pfnCallbackFunc,
@@ -234,10 +248,7 @@ uint8_t micros_timer_start_param(uint8_t tm_type, uint8_t cancelable, uint32_t i
         .timeout = 0,
         .type = tm_type
     };
-    if (cancelable)
-        timer.key = micros_timer_create_tmkey();
-    else
-        timer.key = 0;
+
     micros_timer_add(&timer);
     return timer.key;
 }
