@@ -36,7 +36,7 @@
 
 #define NULL 0
 
-#define TASK_STATE_RUN true
-#define TASK_STATE_STOP false
+#define TASK_STATE_RUN TRUE
+#define TASK_STATE_STOP FALSE
 
 #endif //MICROS_TASK_CONFIG_

@@ -53,9 +53,9 @@ typedef struct sMicros_timer
     uint8_t key;         // timer key
     uint32_t start;      // starting time in millisecond
     uint32_t interval;   // interval time in millisecond
-    bool type : 1;       // timer type one shot or periodic
+    uint8_t type : 1;    // timer type one shot or periodic
     uint8_t cb_type : 2; // callback type;
-    bool timeout : 1;    // timeout flag
+    uint8_t timeout : 1; // timeout flag
     union
     {
         void (*pfn_timeout_cb)(void); // timeout callback function
@@ -113,7 +113,7 @@ static uint8_t micros_timer_create_tmkey(void);
  * @return true Timer found
  * @return false Timer not found
  */
-static bool micros_timer_search(uint8_t tm_key, sMicros_tm_node ***pppNode, sMicros_tm_node ***ppPrev);
+static uint8_t micros_timer_search(uint8_t tm_key, sMicros_tm_node ***pppNode, sMicros_tm_node ***ppPrev);
 
 /**
  * @brief Delete timer node with node address and prev node address
@@ -160,7 +160,7 @@ static volatile uint32_t time_counter = 0;
 
 extern const size_t sig_size[SIGNAL_TYPE__COUNT];
 
-uint8_t micros_timer_event_publish(bool tm_type, bool cancelable, uint32_t interval, eEventId event_id, const sSig_gen *sig_gen)
+uint8_t micros_timer_event_publish(uint8_t tm_type, uint8_t cancelable, uint32_t interval, eEventId event_id, const sSig_gen *sig_gen)
 {
     sMicros_timer timer;
     if (cancelable)
@@ -179,7 +179,7 @@ uint8_t micros_timer_event_publish(bool tm_type, bool cancelable, uint32_t inter
     return timer.key;
 }
 
-uint8_t micros_timer_event_dispatch(bool tm_type, bool cancelable, uint32_t interval, eTaskId task_id, const sSig_gen *sig_gen)
+uint8_t micros_timer_event_dispatch(uint8_t tm_type, uint8_t cancelable, uint32_t interval, eTaskId task_id, const sSig_gen *sig_gen)
 {
     sMicros_timer timer;
     if (cancelable)
@@ -198,7 +198,7 @@ uint8_t micros_timer_event_dispatch(bool tm_type, bool cancelable, uint32_t inte
     return timer.key;
 }
 
-uint8_t micros_timer_start(bool tm_type, bool cancelable, uint32_t interval, void (*pfnCallbackFunc)(void))
+uint8_t micros_timer_start(uint8_t tm_type, uint8_t cancelable, uint32_t interval, void (*pfnCallbackFunc)(void))
 {
     sMicros_timer timer;
     if (cancelable)
@@ -251,6 +251,11 @@ void micros_softtimer_main(void)
         case TIMER_CALLBACK_TYPE_CALLBACK_FUNC:
             (*ppNode)->tm.pfn_timeout_cb();
             break;
+        default:
+            // TODO: error function will be added
+            while (1)
+                ;
+            break;
         }
         sMicros_tm_node **ppTemp = ppNode;
         ppNode = &((*ppNode)->next);
@@ -266,6 +271,8 @@ void micros_softtimer_main(void)
 
         default:
             // TODO: error function will be added
+            while (1)
+                ;
             break;
         }
     }
@@ -276,22 +283,24 @@ static uint8_t micros_timer_create_tmkey(void)
     static uint8_t tm_key = 1;
     uint8_t key_start = tm_key;
     sMicros_tm_node **temp1, **temp2;
-    while (micros_timer_search(tm_key, &temp1, &temp2))
+    do
     {
         tm_key++;
         if (tm_key == 0)
             tm_key = 1;
-        if (tm_key == key_start)
+        if (!micros_timer_search(tm_key, &temp1, &temp2))
         {
-            // TODO: timer key full error will be added
-            while(1);
-            return 0;
+            return tm_key;
         }
-    }
-    return tm_key;
+    } while (tm_key == key_start);
+
+    // TODO: timer key full error will be added
+    while (1)
+        ;
+    return 0;
 }
 
-static bool micros_timer_search(uint8_t tm_key, sMicros_tm_node ***pppNode, sMicros_tm_node ***pppPrev)
+static uint8_t micros_timer_search(uint8_t tm_key, sMicros_tm_node ***pppNode, sMicros_tm_node ***pppPrev)
 {
     sMicros_tm_node **ppNode_current = &pTm_head;
     *pppPrev = NULL;
@@ -300,13 +309,13 @@ static bool micros_timer_search(uint8_t tm_key, sMicros_tm_node ***pppNode, sMic
         if ((*ppNode_current)->tm.key == tm_key)
         {
             *pppNode = ppNode_current;
-            return true;
+            return TRUE;
         }
         *pppPrev = ppNode_current;
         ppNode_current = &((*ppNode_current)->next);
     }
     *pppNode = *pppPrev = NULL;
-    return false;
+    return FALSE;
 }
 
 static void micros_timer_delete(sMicros_tm_node **ppNode, sMicros_tm_node **ppPrev)
@@ -317,7 +326,7 @@ static void micros_timer_delete(sMicros_tm_node **ppNode, sMicros_tm_node **ppPr
         ppHead = &((*ppNode)->next);
     else
         (*ppPrev)->next = (*ppNode)->next;
-    if( (*ppNode)->tm.cb_type == TIMER_CALLBACK_TYPE_TASK || (*ppNode)->tm.cb_type == TIMER_CALLBACK_TYPE_EVENT)
+    if ((*ppNode)->tm.cb_type == TIMER_CALLBACK_TYPE_TASK || (*ppNode)->tm.cb_type == TIMER_CALLBACK_TYPE_EVENT)
         micros_memory_deallocate((*ppNode)->tm.sig_gen.ptr_sig, sig_size[(*ppNode)->tm.sig_gen.sig_type]);
     micros_memory_deallocate(*ppNode, sizeof(sMicros_tm_node));
     pTm_head = *ppHead;
@@ -334,11 +343,12 @@ static void micros_timer_add(sMicros_timer *timer)
     if (newNode == NULL)
     {
         // TODO: Error function will be added
-        while(1);
+        while (1)
+            ;
         return;
     }
     memcpy(&(newNode->tm), timer, sizeof(sMicros_timer));
-    if( newNode->tm.cb_type == TIMER_CALLBACK_TYPE_TASK || newNode->tm.cb_type == TIMER_CALLBACK_TYPE_EVENT)
+    if (newNode->tm.cb_type == TIMER_CALLBACK_TYPE_TASK || newNode->tm.cb_type == TIMER_CALLBACK_TYPE_EVENT)
     {
         newNode->tm.sig_gen.ptr_sig = micros_memory_allocate(sig_size[newNode->tm.sig_gen.sig_type]);
         memcpy(newNode->tm.sig_gen.ptr_sig, timer->sig_gen.ptr_sig, sig_size[newNode->tm.sig_gen.sig_type]);

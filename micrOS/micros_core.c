@@ -54,7 +54,7 @@ static sSig_gen micros_dequeue_signal(sSig_node **ppHead, sSig_node **ppTail);
  * @return true If linked list empty
  * @return false If linked list not empty
  */
-static bool micros_is_empty_sig_list(sSig_node *pHead);
+static uint8_t micros_is_empty_sig_list(sSig_node *pHead);
 
 /**
  * @brief Add task to event subscribe list
@@ -90,9 +90,9 @@ void micros_main(void)
     micros_softtimer_main();
     for (uint16_t task_id = 0; task_id < SYSTEM_TASK_COUNT; task_id++)
     {
-        if (micros_task[task_id].run_state == false)
+        if (micros_task[task_id].run_state == FALSE)
             continue;
-        while (micros_is_empty_sig_list(micros_task[task_id].pSig_head) == false)
+        while (micros_is_empty_sig_list(micros_task[task_id].pSig_head) == FALSE)
         {
             sSig_gen sig_gen = micros_dequeue_signal(&(micros_task[task_id].pSig_head), &(micros_task[task_id].pSig_tail));
             micros_task[task_id].pfnGetSignal(&sig_gen);
@@ -112,17 +112,17 @@ void micros_init(void)
     micros_softtimer_init();
 }
 
-void micros_task_runstate_set(eTaskId task_id, bool run_state)
+void micros_task_runstate_set(eTaskId task_id, uint8_t run_state)
 {
     if (task_id < SYSTEM_TASK_COUNT)
         micros_task[task_id].run_state = run_state;
 }
 
-bool micros_task_runstate_get(eTaskId task_id)
+uint8_t micros_task_runstate_get(eTaskId task_id)
 {
     if (task_id < SYSTEM_TASK_COUNT)
         return micros_task[task_id].run_state;
-    return false;
+    return FALSE;
 }
 
 void micros_event_dispatch(const sSig_gen *sig_gen, eTaskId task_id)
@@ -142,7 +142,7 @@ void micros_event_publish(eEventId event_id, const sSig_gen *sig_gen)
     }
 }
 
-void micros_event_substate_set(eEventId event_id, eTaskId task_id, bool sub_state)
+void micros_event_substate_set(eEventId event_id, eTaskId task_id, uint8_t sub_state)
 {
     if (sub_state)
         micros_add_task_subs(&pEvent_subs[event_id], task_id);
@@ -192,7 +192,7 @@ static sSig_gen micros_dequeue_signal(sSig_node **ppHead, sSig_node **ppTail)
     return retval;
 }
 
-static bool micros_is_empty_sig_list(sSig_node *pHead)
+static uint8_t micros_is_empty_sig_list(sSig_node *pHead)
 {
     return pHead == NULL;
 }

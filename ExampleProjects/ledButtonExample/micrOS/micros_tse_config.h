@@ -15,7 +15,6 @@
 #define MICROS_TSE_CONFIG_H_
 
 #include <stdint.h>
-#include <stdbool.h>
 
 /**
  * @brief Task IDs

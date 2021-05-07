@@ -17,6 +17,8 @@
 #include <stdlib.h>
 #include "micros_tse_config.h"
 #include "micros_config.h"
+#include "generic_def.h"
+
 #include "micros_task_button.h"
 #include "micros_task_led.h"
 
@@ -39,7 +41,7 @@ typedef struct sMicrOs_task
     void (*const pfnInitTask)(void);
     void (*const pfnMainTask)(void);
     void (*const pfnGetSignal)(sSig_gen *);
-    bool run_state;
+    uint8_t run_state : 1;
     sSig_node *pSig_head;
     sSig_node *pSig_tail;
 } sMicrOs_task;

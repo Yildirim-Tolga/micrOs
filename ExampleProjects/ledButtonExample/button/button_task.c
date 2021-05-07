@@ -46,8 +46,8 @@ static sSig_gen signal_container;
 
 static uint8_t tm_key_debounce;
 static uint8_t tm_key_long_press;
-static bool timeout_debounce = false;
-static bool timeout_long_press = false;
+static uint8_t timeout_debounce = FALSE;
+static uint8_t timeout_long_press = FALSE;
 static uint8_t selected_led = UNSELECTED_LED;
 
 void button_main(void)
@@ -93,10 +93,10 @@ static void button_get_signal_id(sSig_id *getting_signal)
 	switch (getting_signal->sig_id)
 	{
 	case SIGNAL_ID__DEBOUNCE_TIMEOUT:
-		timeout_debounce = true;
+		timeout_debounce = TRUE;
 		break;
 	case SIGNAL_ID__LONG_PRESS_TIMEOUT:
-		timeout_long_press = true;
+		timeout_long_press = TRUE;
 		break;
 	default:
 		break;
@@ -145,7 +145,7 @@ void button_state_wait_press(void)
 		signal_container.sig_type = SIGNAL_TYPE__ID;
 		sSig_id signal_only = {SIGNAL_ID__DEBOUNCE_TIMEOUT};
 		signal_container.ptr_sig = &signal_only;
-		timeout_debounce = false;
+		timeout_debounce = FALSE;
 		tm_key_debounce = micros_timer_event_dispatch(MICROS_TM_TYPE_ONE_SHOT, 1, DEBOUNCE_TIME, TASK_ID__BUTTON, &signal_container);
 		pfn_current_button_state = button_state_wait_debounce;
 		pfn_prev_button_state = button_state_wait_press;
@@ -160,7 +160,7 @@ void button_state_wait_release(void)
 		signal_container.sig_type = SIGNAL_TYPE__ID;
 		sSig_id signal_only = {SIGNAL_ID__DEBOUNCE_TIMEOUT};
 		signal_container.ptr_sig = &signal_only;
-		timeout_debounce = false;
+		timeout_debounce = FALSE;
 		tm_key_debounce = micros_timer_event_dispatch(MICROS_TM_TYPE_ONE_SHOT, 1, DEBOUNCE_TIME, TASK_ID__BUTTON, &signal_container);
 		pfn_current_button_state = button_state_wait_debounce;
 		pfn_prev_button_state = button_state_wait_release;
@@ -198,7 +198,7 @@ void button_state_wait_debounce(void)
 			signal_container.sig_type = SIGNAL_TYPE__ID;
 			sSig_id signal_only = {SIGNAL_ID__LONG_PRESS_TIMEOUT};
 			signal_container.ptr_sig = &signal_only;
-			timeout_long_press = false;
+			timeout_long_press = FALSE;
 			tm_key_long_press = micros_timer_event_dispatch(MICROS_TM_TYPE_ONE_SHOT, 1, LONG_PRESS_TIME - DEBOUNCE_TIME, TASK_ID__BUTTON, &signal_container);
 			// button pressed
 			button_press_operation();

@@ -15,7 +15,7 @@
 #define MICROS_H_
 
 #include "micros_tse_config.h"
-#include <stdbool.h>
+#include "generic_def.h"
 
 #define MICROS_TM_TYPE_ONE_SHOT 0
 #define MICROS_TM_TYPE_PERIODIC 1
@@ -26,7 +26,7 @@
  * @param task_id Task ID
  * @param run_state Run state true or false
  */
-void micros_task_runstate_set(eTaskId task_id, bool run_state);
+void micros_task_runstate_set(eTaskId task_id, uint8_t run_state);
 
 /**
  * @brief Get task state
@@ -35,7 +35,7 @@ void micros_task_runstate_set(eTaskId task_id, bool run_state);
  * @return true Run
  * @return false Stop
  */
-bool micros_task_runstate_get(eTaskId task_id);
+uint8_t micros_task_runstate_get(eTaskId task_id);
 
 /**
  * @brief Send signal to task with task ID
@@ -60,7 +60,7 @@ void micros_event_publish(eEventId event_id, const sSig_gen *sig_gen);
  * @param task_id Task ID
  * @param sub_state Subscription state true: Subscripe false: Unsubscripe
  */
-void micros_event_substate_set(eEventId event_id, eTaskId task_id, bool sub_state);
+void micros_event_substate_set(eEventId event_id, eTaskId task_id, uint8_t sub_state);
 
 /**
  * @brief Publish signal to tasks which in the subscribe list for event id after interval time
@@ -72,7 +72,7 @@ void micros_event_substate_set(eEventId event_id, eTaskId task_id, bool sub_stat
  * @param sig_gen Signal with signal general structure
  * @return uint8_t If cancelable event this function return timer_key else return 0.
  */
-uint8_t micros_timer_event_publish(bool tm_type, bool cancelable, uint32_t interval, eEventId event_id, const sSig_gen *sig_gen);
+uint8_t micros_timer_event_publish(uint8_t tm_type, uint8_t cancelable, uint32_t interval, eEventId event_id, const sSig_gen *sig_gen);
 
 /**
  * @brief Dispatch signal to task after interval time
@@ -84,7 +84,7 @@ uint8_t micros_timer_event_publish(bool tm_type, bool cancelable, uint32_t inter
  * @param sig_gen Signal with signal general structure
  * @return uint8_t If cancelable event this function return timer_key else return 0.
  */
-uint8_t micros_timer_event_dispatch(bool tm_type, bool cancelable, uint32_t interval, eTaskId task_id, const sSig_gen *sig_gen);
+uint8_t micros_timer_event_dispatch(uint8_t tm_type, uint8_t cancelable, uint32_t interval, eTaskId task_id, const sSig_gen *sig_gen);
 
 /**
  * @brief Start timer and end of the interval time run callback function
@@ -95,7 +95,7 @@ uint8_t micros_timer_event_dispatch(bool tm_type, bool cancelable, uint32_t inte
  * @param pfnCallbackFunc Callback function
  * @return uint8_t If cancelable event this function return timer_key else return 0.
  */
-uint8_t micros_timer_start(bool tm_type, bool cancelable, uint32_t interval, void (*pfnCallbackFunc)(void));
+uint8_t micros_timer_start(uint8_t tm_type, uint8_t cancelable, uint32_t interval, void (*pfnCallbackFunc)(void));
 
 /**
  * @brief Cancel timer

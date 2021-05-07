@@ -39,7 +39,7 @@ typedef struct sMicrOs_task
     void (*const pfnInitTask)(void);
     void (*const pfnMainTask)(void);
     void (*const pfnGetSignal)(sSig_gen *);
-    bool run_state;
+    uint8_t run_state : 1;
     sSig_node *pSig_head;
     sSig_node *pSig_tail;
 } sMicrOs_task;
